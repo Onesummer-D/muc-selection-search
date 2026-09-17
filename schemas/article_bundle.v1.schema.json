@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Onesummer-D/muc-selection-search/schemas/article_bundle.v1.schema.json",
+  "title": "Article Bundle v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "notice_id", "title", "source_url", "content_type", "asset_refs", "fetch_status", "fetched_at"],
+  "properties": {
+    "schema_version": {"const": "article_bundle.v1"},
+    "notice_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "source_url": {"type": "string", "format": "uri"},
+    "published_at": {"type": ["string", "null"], "format": "date-time"},
+    "content_type": {"enum": ["text", "poster", "mixed", "unknown"]},
+    "clean_text": {"type": ["string", "null"]},
+    "asset_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["asset_id", "kind", "local_ref", "sha256"],
+        "properties": {
+          "asset_id": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["poster", "image", "attachment"]},
+          "local_ref": {"type": "string", "pattern": "^private://"},
+          "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+        }
+      }
+    },
+    "fetch_status": {"enum": ["pending", "processed", "review_required", "failed"]},
+    "failure_reason": {"type": ["string", "null"]},
+    "fetched_at": {"type": "string", "format": "date-time"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"fetch_status": {"const": "failed"}}},
+      "then": {"required": ["failure_reason"], "properties": {"failure_reason": {"type": "string", "minLength": 1}}}
+    }
+  ]
+}
+
