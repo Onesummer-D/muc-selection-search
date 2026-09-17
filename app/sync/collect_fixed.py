@@ -4,8 +4,12 @@
     python -m app.sync.collect_fixed --count 5 --out evidence/week1/A/fixed_samples
 
 流程：人工 CAS 登录（有界面浏览器）→ 内存会话 → 抓取列表 →
+主题过滤（只留选调相关）→ 经验分享类优先排序 →
 按 2 文本 / 2 海报 / 1 混合优先选择（不满足时保留真实构成并打印说明）→
 输出 article_bundle.v1 JSON → Schema 校验 5/5 → 打印交接信息。
+
+选样规则：必须与选调相关；经验分享类（经验/心得/上岸/备考等，
+PORTAL_EXPERIENCE_KEYWORDS 可配）优先，纯选调通知仅在数量不足时补位。
 """
 from __future__ import annotations
 
@@ -29,6 +33,26 @@ def matches_topic(detail: dict, keywords: tuple) -> bool:
         return True
     haystack = f"{detail.get('title') or ''}{detail.get('content') or ''}"
     return any(kw in haystack for kw in keywords)
+
+
+def is_experience_sharing(detail: dict, experience_keywords: tuple) -> bool:
+    """是否为经验分享类内容（标题命中倾向词，或正文开头命中）。"""
+    if not experience_keywords:
+        return True
+    title = detail.get("title") or ""
+    head = (detail.get("content") or "")[:500]
+    return (any(kw in title for kw in experience_keywords)
+            or any(kw in head for kw in experience_keywords))
+
+
+def rank_by_relevance(details: list[dict], config) -> list[dict]:
+    """排序：选调主题内的经验分享类优先，其余选调相关殿后。"""
+    def score(d: dict) -> int:
+        if not matches_topic(d, config.topic_keywords):
+            return -1  # 非主题，直接排除
+        return 1 if is_experience_sharing(d, config.experience_keywords) else 0
+    ranked = sorted(details, key=score, reverse=True)
+    return [d for d in ranked if score(d) >= 0]
 
 
 def pick_fixed_samples(details: list[dict]) -> tuple[list[dict], dict]:
@@ -85,6 +109,12 @@ def main() -> int:
         print(f"[error] 候选池中没有命中主题关键词（{config.topic_keywords}）的文章，"
               "请确认栏目 ID 或关键词配置。")
         return 1
+
+    # 经验分享类优先：先统计，供选择与交接说明
+    exp_count = sum(1 for d in details
+                    if is_experience_sharing(d, config.experience_keywords))
+    print(f"[filter] 选调相关 {len(details)} 篇，其中经验分享类 {exp_count} 篇（优先入选）")
+    details = rank_by_relevance(details, config)
 
     chosen, composition = pick_fixed_samples(details)
     print(f"[composition] 实际构成: {json.dumps(composition, ensure_ascii=False)}")

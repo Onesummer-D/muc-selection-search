@@ -32,6 +32,10 @@ class PortalConfig:
     session_check_endpoint: str = "getNoticeByPage"
     # 主题过滤关键词（逗号分隔，命中标题或正文任一即视为相关；空 = 不过滤）
     topic_keywords: tuple = ("选调",)
+    # 内容倾向关键词（经验分享类）：命中则优先入选，只作排序不作硬过滤
+    experience_keywords: tuple = ("经验", "分享", "心得", "体会", "感悟",
+                                  "上岸", "备考", "攻略", "笔经", "面经",
+                                  "选调生说", "成长记")
 
     @classmethod
     def from_env(cls, env: dict | None = None) -> "PortalConfig":
@@ -50,6 +54,12 @@ class PortalConfig:
             topic_keywords=tuple(
                 kw.strip() for kw in e.get("PORTAL_TOPIC_KEYWORDS", "选调").split(",")
                 if kw.strip()
+            ),
+            experience_keywords=tuple(
+                kw.strip() for kw in e.get(
+                    "PORTAL_EXPERIENCE_KEYWORDS",
+                    "经验,分享,心得,体会,感悟,上岸,备考,攻略,笔经,面经,选调生说,成长记"
+                ).split(",") if kw.strip()
             ),
         )
 

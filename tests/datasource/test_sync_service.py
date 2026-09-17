@@ -169,3 +169,27 @@ class TestMatchesTopic(unittest.TestCase):
         self.assertTrue(matches_topic({"title": "分享", "content": "关于选调的体会"}, ("选调",)))
         self.assertFalse(matches_topic({"title": "运动会", "content": "报名"}, ("选调",)))
         self.assertTrue(matches_topic({"title": "任意", "content": ""}, ()))  # 空=不过滤
+
+
+class TestExperienceRanking(unittest.TestCase):
+    def setUp(self):
+        from app.datasource.config import PortalConfig as PC
+        self.config = PC()
+
+    def test_experience_sharing_preferred(self):
+        from app.sync.collect_fixed import rank_by_relevance, is_experience_sharing
+        exp = {"title": "我的选调上岸心得", "content": "分享备考经历"}
+        notice = {"title": "关于做好2026年选调生推荐工作的通知", "content": "各学院……"}
+        off = {"title": "运动会通知", "content": "报名"}
+        self.assertTrue(is_experience_sharing(exp, self.config.experience_keywords))
+        self.assertFalse(is_experience_sharing(notice, self.config.experience_keywords))
+        ranked = rank_by_relevance([off, notice, exp], self.config)
+        # 非选调内容被排除；经验分享排在普通选调通知之前
+        self.assertEqual([d["title"] for d in ranked],
+                         ["我的选调上岸心得", "关于做好2026年选调生推荐工作的通知"])
+
+    def test_content_head_counts(self):
+        from app.sync.collect_fixed import is_experience_sharing
+        # 标题平淡但正文开头是经验分享，也算
+        d = {"title": "选调之路（三）", "content": "写一些备考体会……" * 10}
+        self.assertTrue(is_experience_sharing(d, self.config.experience_keywords))
