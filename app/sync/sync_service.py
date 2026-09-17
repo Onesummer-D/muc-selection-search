@@ -14,7 +14,7 @@ from typing import Callable
 
 from ..datasource.portal_client import PortalClient, SessionExpiredError
 from .bundle import (build_article_bundle, content_type_for, sanitize_text,
-                     asset_refs_for, write_bundle)
+                     asset_refs_for, write_bundle, html_to_text)
 from .ledger import ArticleLedger, now_iso
 
 SESSION_EXPIRED = "session_expired"
@@ -125,7 +125,7 @@ class SyncService:
             source_url=detail.get("source_url") or "",
             content_type=content_type,
             published_at=detail.get("published_at"),
-            clean_text=sanitize_text(detail.get("content"))
+            clean_text=sanitize_text(html_to_text(detail.get("content")))
             if content_type in ("text", "mixed") else None,
             asset_refs=asset_refs_for(detail),
             fetch_status="processed",
