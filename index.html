@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f6f1" />
+    <title>选调研｜选调信息智能检索</title>
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <div class="app-shell" id="top">
+      <header class="topbar">
+        <button class="brand" data-action="home" aria-label="返回首页">
+          <span class="brand-mark">选</span>
+          <span class="brand-copy">
+            <strong>选调研</strong>
+            <small>evidence first</small>
+          </span>
+        </button>
+
+        <nav class="main-nav" aria-label="主导航">
+          <button class="nav-link is-active" data-action="home">探索</button>
+          <button class="nav-link" data-action="compare">对比台 <span class="nav-count" id="compareCount">0</span></button>
+          <button class="nav-link" data-action="space">我的空间</button>
+        </nav>
+
+        <div class="topbar-actions">
+          <span class="snapshot-status"><i></i> 已发布快照 · 09.16</span>
+          <button class="demo-control-button" data-action="open-demo-panel">演示控制</button>
+          <button class="role-button" id="roleButton" data-action="open-demo-panel">游客 <span>⌄</span></button>
+        </div>
+      </header>
+
+      <main>
+        <section class="view active" id="homeView" aria-labelledby="homeHeading">
+          <div class="hero-section">
+            <div class="hero-copy">
+              <div class="eyebrow"><span></span>选调信息智能检索</div>
+              <h1 id="homeHeading">先找到可信案例，<br /><em>再做你的选择。</em></h1>
+              <p>把散落在校园门户里的选调经验，整理成能搜索、能核验、能比较的决策材料。</p>
+            </div>
+
+            <div class="search-card" role="search">
+              <div class="mode-tabs" role="tablist" aria-label="搜索模式">
+                <button class="mode-tab" data-mode="traditional" role="tab" aria-selected="false"><span class="mode-icon">⌕</span> 传统搜索</button>
+                <button class="mode-tab is-selected" data-mode="ai" role="tab" aria-selected="true"><span class="mode-icon">✦</span> AI 搜索</button>
+              </div>
+              <div class="search-input-row">
+                <span class="search-leading">⌕</span>
+                <input id="homeSearchInput" type="text" autocomplete="off" placeholder="搜索专业、地区、单位，或直接描述你想了解的内容" aria-label="搜索选调信息" />
+                <button class="search-submit" data-action="search">开始探索 <span>→</span></button>
+              </div>
+              <div class="search-card-footer">
+                <span>试试这样搜</span>
+                <button class="query-chip" data-query="计算机本科，想看西部基层案例">计算机本科，想看西部基层案例</button>
+                <button class="query-chip" data-query="四川 软件工程">四川 · 软件工程</button>
+                <button class="filter-trigger" data-action="toggle-home-filters">筛选 <span>⌄</span></button>
+              </div>
+              <div class="home-filter-panel" id="homeFilterPanel" hidden>
+                <label>届别<select id="homeYearFilter"><option value="">不限</option><option value="2024">2024届</option><option value="2023">2023届</option></select></label>
+                <label>学历<select id="homeEducationFilter"><option value="">不限</option><option value="本科">本科</option><option value="硕士">硕士</option></select></label>
+                <label>地区<select id="homeRegionFilter"><option value="">不限</option><option value="四川省">四川省</option><option value="重庆市">重庆市</option><option value="陕西省">陕西省</option></select></label>
+              </div>
+            </div>
+
+            <div class="hero-meta">
+              <span><b>3</b> 条演示记录</span>
+              <span class="meta-dot">·</span>
+              <span><b>字段级</b> 证据链</span>
+              <span class="meta-dot">·</span>
+              <span><b>游客</b> 无需登录</span>
+            </div>
+          </div>
+
+          <div class="home-content">
+            <div class="section-heading-row">
+              <div>
+                <span class="section-kicker">HOW IT WORKS</span>
+                <h2>一次搜索，四步走完</h2>
+              </div>
+              <span class="heading-note">可信 · 省事 · 可控 · 可行动</span>
+            </div>
+            <div class="feature-grid">
+              <article class="feature-card feature-card-strong">
+                <span class="feature-number">01</span>
+                <div class="feature-icon icon-search">⌕</div>
+                <h3>统一检索</h3>
+                <p>关键词和自然语言共享同一套结果，不会越搜越不一致。</p>
+                <span class="feature-link">结构化字段 + 全文匹配</span>
+              </article>
+              <article class="feature-card">
+                <span class="feature-number">02</span>
+                <div class="feature-icon icon-evidence">✓</div>
+                <h3>证据可核验</h3>
+                <p>每个关键字段都尽量回到原文或 OCR 片段，不让结论悬空。</p>
+                <span class="feature-link">字段级 Evidence</span>
+              </article>
+              <article class="feature-card">
+                <span class="feature-number">03</span>
+                <div class="feature-icon icon-compare">⊞</div>
+                <h3>横向比较</h3>
+                <p>把 2-4 条案例放在一张表里，看清地区、学历和去向差异。</p>
+                <span class="feature-link">对比台 & 导出</span>
+              </article>
+              <article class="feature-card">
+                <span class="feature-number">04</span>
+                <div class="feature-icon icon-control">◌</div>
+                <h3>权限透明</h3>
+                <p>游客看到脱敏视图，校内用户在授权范围内查看完整素材。</p>
+                <span class="feature-link">角色化素材视图</span>
+              </article>
+            </div>
+
+            <div class="home-lower-grid">
+              <article class="demo-note-card">
+                <div class="note-label"><span class="pulse-dot"></span>本次演示说明</div>
+                <h3>你看到的是一份<br /><em>可点击的产品切片</em></h3>
+                <p>样例数据均为虚构，仅用于课堂演示界面和检索链路。真实版本将在服务端接入门户数据、CAS 权限、OCR 与持久化存储。</p>
+                <button class="text-button" data-action="open-demo-panel">查看演示边界 <span>→</span></button>
+              </article>
+              <article class="quick-start-card">
+                <div class="quick-start-top"><span class="section-kicker">QUICK START</span><span>3 条样例</span></div>
+                <button class="quick-query" data-query="四川基层"><span class="quick-icon">↗</span><span><b>四川基层</b><small>看看西部地区的基层案例</small></span><span class="quick-arrow">→</span></button>
+                <button class="quick-query" data-query="硕士 计算机"><span class="quick-icon">↗</span><span><b>硕士 · 计算机</b><small>筛选研究生背景的计算机案例</small></span><span class="quick-arrow">→</span></button>
+                <button class="quick-query" data-query="2024 本科"><span class="quick-icon">↗</span><span><b>2024 届本科</b><small>查看最新一届本科去向</small></span><span class="quick-arrow">→</span></button>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="resultsView" aria-labelledby="resultsHeading">
+          <div class="page-topline">
+            <button class="back-button" data-action="home">← 回到首页</button>
+            <div class="page-actions"><button class="quiet-button" data-action="export">导出结果</button><button class="primary-small-button" data-action="compare">打开对比台 <span id="resultsCompareCount">0</span></button></div>
+          </div>
+          <div class="results-title-row">
+            <div><span class="section-kicker">SEARCH RESULTS</span><h2 id="resultsHeading">找到值得继续看的案例</h2></div>
+            <div class="result-count"><strong id="resultCount">0</strong><span>条相关记录</span></div>
+          </div>
+          <div class="results-layout">
+            <aside class="filter-sidebar">
+              <div class="filter-title"><span>筛选结果</span><button data-action="clear-filters">重置</button></div>
+              <label class="filter-label">届别<select id="resultsYearFilter"><option value="">全部届别</option><option value="2024">2024届</option><option value="2023">2023届</option></select></label>
+              <label class="filter-label">学历<select id="resultsEducationFilter"><option value="">全部学历</option><option value="本科">本科</option><option value="硕士">硕士</option></select></label>
+              <label class="filter-label">地区<select id="resultsRegionFilter"><option value="">全部地区</option><option value="四川省">四川省</option><option value="重庆市">重庆市</option><option value="陕西省">陕西省</option></select></label>
+              <div class="filter-divider"></div>
+              <div class="status-legend"><span class="filter-title">数据状态</span><span><i class="status-dot verified"></i>已核验</span><span><i class="status-dot review"></i>待复核</span></div>
+              <div class="privacy-mini"><span>◌</span><div><b>无痕模式</b><small>本次不写入个人历史</small></div><button class="toggle" id="sidebarNoTrace" data-action="toggle-no-trace" aria-label="切换无痕模式"><i></i></button></div>
+            </aside>
+
+            <div class="results-main">
+              <div class="query-plan-card">
+                <div class="query-plan-heading"><div><span class="plan-spark">✦</span><b>系统理解</b><span class="plan-caption">AI 将查询变成了这些可修改条件</span></div><button class="edit-plan" data-action="edit-plan">修改理解</button></div>
+                <div class="plan-chips" id="queryPlanChips"></div>
+              </div>
+
+              <div id="aiAnswerPanel" class="ai-answer-card"></div>
+              <div id="degradedBanner" class="degraded-banner" hidden><span>◒</span><div><b>AI 总结暂不可用</b><small>已保留确定性的关键词检索结果，你仍可以浏览、比较和导出。</small></div><button data-action="toggle-ai">重新开启</button></div>
+
+              <div class="results-toolbar"><span id="searchDescriptor">基于当前已发布快照 · 按相关度排序</span><div><button class="sort-button">相关度最高⌄</button><span class="trace-label" id="traceLabel" hidden>◌ 无痕模式</span></div></div>
+              <div id="resultsList" class="results-list"></div>
+              <div id="emptyResults" class="empty-results" hidden><div class="empty-orbit">⌕</div><h3>暂时没有完全匹配的记录</h3><p>可以先放宽一个条件，或看看相近地区与单位的案例。</p><div class="empty-actions"><button class="primary-small-button" data-action="relax-search">放宽条件看看</button><button class="quiet-button" data-action="home">重新搜索</button></div></div>
+
+              <div class="distribution-card"><div class="distribution-head"><div><span class="section-kicker">CURRENT RESULTS</span><h3>这批结果的分布</h3></div><span>仅基于当前检索到的 <b id="distributionCount">0</b> 条记录</span></div><div class="distribution-grid"><div><div class="bar-label-row"><span>地区</span><span>记录数</span></div><div id="regionBars" class="bar-list"></div></div><div><div class="bar-label-row"><span>学历</span><span>记录数</span></div><div id="educationBars" class="bar-list"></div></div></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="compareView" aria-labelledby="compareHeading">
+          <div class="page-topline"><button class="back-button" data-action="results">← 返回结果</button><button class="quiet-button" data-action="clear-compare">清空对比</button></div>
+          <div class="compare-header"><div><span class="section-kicker">COMPARE DESK</span><h2 id="compareHeading">把差异放在一起看</h2><p>统一字段横向比较，资料没有提供的内容就保留为空。</p></div><button class="primary-small-button" data-action="export">导出当前对比</button></div>
+          <div id="compareContent"></div>
+        </section>
+
+        <section class="view" id="spaceView" aria-labelledby="spaceHeading">
+          <div class="page-topline"><button class="back-button" data-action="home">← 回到首页</button><span class="space-role-note" id="spaceRoleNote">游客预览空间</span></div>
+          <div class="space-header"><span class="section-kicker">MY SPACE</span><h2 id="spaceHeading">把重要线索留下来</h2><p>登录后可开启收藏、关注和搜索历史；演示模式下这些入口只展示产品结构。</p></div>
+          <div class="space-grid"><article class="space-card space-card-wide"><div class="space-card-head"><span class="space-card-icon">☆</span><div><h3>我的收藏</h3><small>0 条已收藏记录</small></div><button class="quiet-button" data-action="toast" data-message="演示模式下暂未接入持久化收藏">查看全部</button></div><div class="space-empty"><span>☆</span><b>收藏你想回来再看的案例</b><small>在结果卡片上点击收藏，方便之后继续比较。</small></div></article><article class="space-card"><div class="space-card-head"><span class="space-card-icon">⌁</span><div><h3>关注主题</h3><small>2 个建议主题</small></div></div><div class="topic-list"><span>四川 · 计算机类 <i>高</i></span><span>基层岗位 <i>中</i></span></div><button class="outline-button" data-action="toast" data-message="演示：关注后会生成站内新增提醒">管理关注</button></article><article class="space-card"><div class="space-card-head"><span class="space-card-icon">◌</span><div><h3>隐私中心</h3><small>你的控制权在这里</small></div></div><div class="privacy-list"><span><b>搜索历史</b><i class="switch-on"></i></span><span><b>用于推荐</b><i class="switch-on"></i></span><span><b>无痕模式</b><i id="spaceNoTraceSwitch" class="switch-off"></i></span></div><button class="outline-button" data-action="open-demo-panel">查看设置</button></article></div>
+        </section>
+      </main>
+
+      <footer class="app-footer"><span>选调研 · 证据优先的选调信息检索与比较工具</span><span>演示数据为虚构样例 · V3 产品切片</span></footer>
+    </div>
+
+    <div class="modal-backdrop" id="detailModal" aria-hidden="true"><div class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><div class="modal-topline"><span id="detailBreadcrumb">记录详情 / Evidence record</span><button class="modal-close" data-action="close-detail" aria-label="关闭">×</button></div><div id="detailContent"></div></div></div>
+    <div class="modal-backdrop" id="planModal" aria-hidden="true"><div class="plan-modal" role="dialog" aria-modal="true" aria-labelledby="planModalTitle"><div class="modal-topline"><span>QueryPlan / 可控理解</span><button class="modal-close" data-action="close-plan" aria-label="关闭">×</button></div><h3 id="planModalTitle">修改系统理解</h3><p>演示中可以删除一个条件，观察结果如何变化。正式版本会将修改后的 QueryPlan 送回统一检索服务。</p><div id="planEditor" class="plan-editor"></div><button class="primary-button full-width" data-action="apply-plan">应用修改</button></div></div>
+
+    <aside class="demo-panel" id="demoPanel" aria-hidden="true"><div class="demo-panel-head"><div><span class="section-kicker">DEMO CONTROL</span><h3>演示控制</h3></div><button class="modal-close" data-action="close-demo-panel">×</button></div><p class="demo-panel-intro">这些开关只用于模拟不同角色和降级路径，不代表真实登录或服务端权限。</p><div class="control-section"><span class="control-label">当前角色</span><div class="role-options"><button data-role="guest" class="role-option is-active"><span class="role-avatar guest-avatar">游</span><span><b>游客</b><small>脱敏公开视图</small></span></button><button data-role="campus" class="role-option"><span class="role-avatar campus-avatar">校</span><span><b>校内用户</b><small>授权完整视图</small></span></button><button data-role="admin" class="role-option"><span class="role-avatar admin-avatar">管</span><span><b>管理员</b><small>复核与同步状态</small></span></button></div></div><div class="control-divider"></div><div class="control-row"><div><b>AI 总结服务</b><small id="aiControlText">可用 · Evidence-RAG</small></div><button class="toggle large-toggle is-on" id="aiToggle" data-action="toggle-ai"><i></i></button></div><div class="control-row"><div><b>无痕模式</b><small>不保存个人历史或推荐信号</small></div><button class="toggle large-toggle" id="noTraceToggle" data-action="toggle-no-trace"><i></i></button></div><div class="control-divider"></div><div class="system-status"><div class="system-status-head"><span class="status-live"></span><b>系统状态</b><span>DEMO SNAPSHOT</span></div><div class="system-status-row"><span>数据快照</span><b>已发布 · 3 条</b></div><div class="system-status-row"><span>传统检索</span><b class="good-text">正常</b></div><div class="system-status-row"><span>门户同步</span><b class="muted-text">课堂演示已暂停</b></div></div><div class="demo-boundary"><span>ⓘ</span><p>角色、AI 和无痕开关会立即影响当前页面展示。真实版本中角色判断和素材 URL 必须由服务端 RolePolicy 决定。</p></div></aside>
+    <div class="toast" id="toast" role="status"></div>
+
+    <script src="app.js?v=4"></script>
+  </body>
+</html>
