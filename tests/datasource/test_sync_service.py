@@ -230,3 +230,14 @@ class TestTwoStagePicking(unittest.TestCase):
             experience_keywords=("经验", "分享"))
         self.assertEqual(len(chosen), 5)
         self.assertEqual(chosen[0]["title"], "选调经验分享")
+
+
+class TestPromoExclusion(unittest.TestCase):
+    def test_lecture_ads_excluded(self):
+        from app.sync.collect_fixed import is_experience_sharing
+        kws = ("经验", "分享", "上岸", "备考")
+        ad = {"title": "讲座预告| 9月18日 考公系列讲座2——《解密选调生，从报考到发展》",
+              "content": "助力咱们上岸啦！"}
+        event = {"title": "闪耀基层——河北定向选调经验分享", "content": ""}
+        self.assertFalse(is_experience_sharing(ad, kws))     # 广告被排除
+        self.assertTrue(is_experience_sharing(event, kws))   # 经验分享活动保留

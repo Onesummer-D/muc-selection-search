@@ -36,11 +36,22 @@ def matches_topic(detail: dict, keywords: tuple) -> bool:
     return any(kw in haystack for kw in keywords)
 
 
+# 宣传/推广类标记：标题命中即排除出经验分享类（考公机构讲座、付费活动等）
+PROMO_MARKERS = ("讲座预告", "活动预告", "讲座", "模拟考试", "咨询会", "宣讲会")
+
+
 def is_experience_sharing(detail: dict, experience_keywords: tuple) -> bool:
-    """是否为经验分享类内容（标题命中倾向词，或正文开头命中）。"""
+    """是否为经验分享类内容。
+
+    规则：
+    - 标题命中宣传/推广标记（讲座、活动预告等）→ 一票否决；
+    - 否则标题命中倾向词，或正文开头命中（标题平淡但正文确为分享）。
+    """
     if not experience_keywords:
         return True
     title = detail.get("title") or ""
+    if any(marker in title for marker in PROMO_MARKERS):
+        return False
     head = (detail.get("content") or "")[:500]
     return (any(kw in title for kw in experience_keywords)
             or any(kw in head for kw in experience_keywords))
@@ -78,23 +89,36 @@ def _pick_composition(details: list[dict], limit: int) -> tuple[list[dict], dict
 
 
 def pick_fixed_samples(details: list[dict],
-                       experience_keywords: tuple = ()) -> tuple[list[dict], dict]:
-    """两阶段选样：经验分享类优先；数量不足时才用其他选调相关内容补位。
+                       experience_keywords: tuple = (),
+                       pinned_ids: tuple = ()) -> tuple[list[dict], dict]:
+    """两阶段选样：指定必选（pinned）优先，其次经验分享类；不足时补位。
 
     details 应已按相关性排序（rank_by_relevance）。
+    pinned_ids 是人工指定的 notice_id（如经过确认的优质文章），无条件入选。
     """
+    pinned = [d for d in details if str(d.get("notice_id")) in set(pinned_ids)]
     if experience_keywords:
         exp = [d for d in details
-               if is_experience_sharing(d, experience_keywords)]
-        rest = [d for d in details if d not in exp]
+               if is_experience_sharing(d, experience_keywords)
+               and d not in pinned]
+        rest = [d for d in details
+                if not is_experience_sharing(d, experience_keywords)
+                and d not in pinned]
     else:
-        exp, rest = list(details), []
-    chosen, composition = _pick_composition(exp, 5)
-    if len(chosen) < 5 and rest:
-        more, comp2 = _pick_composition([d for d in rest if d not in chosen],
-                                        5 - len(chosen))
+        exp, rest = [d for d in details if d not in pinned], []
+    limit = 5
+    chosen, composition = _pick_composition(pinned, limit)
+    if len(chosen) < limit and exp:
+        more, comp2 = _pick_composition([d for d in exp if d not in chosen],
+                                        limit - len(chosen))
         chosen += more
         for kind, cnt in comp2.items():
+            composition[kind] += cnt
+    if len(chosen) < limit and rest:
+        more, comp3 = _pick_composition([d for d in rest if d not in chosen],
+                                        limit - len(chosen))
+        chosen += more
+        for kind, cnt in comp3.items():
             composition[kind] += cnt
     return chosen, composition
 
@@ -110,9 +134,13 @@ def main() -> int:
                         help="选调相关候选池缓存（仓库外，避免整池内容入库）")
     parser.add_argument("--from-pool", action="store_true",
                         help="用已缓存的候选池重新选样（无需登录）")
+    parser.add_argument("--include-ids", default="",
+                        help="指定必选的 notice_id（逗号分隔，人工确认后钉入选样）")
     args = parser.parse_args()
 
     config = PortalConfig.from_env()
+    pinned_ids = tuple(x.strip() for x in args.include_ids.split(",")
+                       if x.strip())
 
     if args.from_pool:
         with open(args.pool_path, encoding="utf-8") as fh:
@@ -158,7 +186,13 @@ def main() -> int:
     details = rank_by_relevance(details, config)
 
     chosen, composition = pick_fixed_samples(details,
-                                             config.experience_keywords)
+                                             config.experience_keywords,
+                                             pinned_ids)
+    if pinned_ids:
+        got = {str(d["notice_id"]) for d in chosen}
+        missing = [i for i in pinned_ids if i not in got]
+        if missing:
+            print(f"[warn] 指定必选但候选池中未找到: {missing}")
     print(f"[composition] 实际构成: {json.dumps(composition, ensure_ascii=False)}")
     if composition != {"text": 2, "poster": 2, "mixed": 1, "unknown": 0}:
         print("[composition] 注意：与理想构成（2文本/2海报/1混合）不符，"

@@ -54,8 +54,10 @@ def download_assets(pool_path: str, out_dir: str, only_ids: set | None = None,
                 resp = session.get(url, timeout=20)
                 resp.raise_for_status()
                 data = resp.content
-                if len(data) < 100 or not data[:2] == b"\xff\xd8":
-                    # 非 JPEG（可能是被重定向的登录页）：保留占位并记录
+                # 常见图片魔数：JPEG/PNG/GIF/WebP（防止把登录页 HTML 存成资产）
+                if len(data) < 100 or data[:4] not in (
+                        b"\xff\xd8\xff\xe0", b"\xff\xd8\xff\xe1",  # JPEG
+                        b"\x89PNG", b"GIF8", b"RIFF"):
                     stats["failed"].append({"asset_id": asset_id, "url": url,
                                             "reason": f"非图片响应({len(data)}B)"})
                     continue
