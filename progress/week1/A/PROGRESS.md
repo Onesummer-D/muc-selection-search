@@ -23,7 +23,17 @@
 - [x] 实现 app/datasource（配置化门户客户端、限速 0.8–1.5s、重试≤3、分页游标）。
 - [x] 实现 app/sync（状态台账、断点恢复、幂等、SyncService、Scheduler 单实例锁）。
 - [x] 实现 tests/datasource（分页/重复页/空列表/缺字段/429 退避/第三次失败/恢复/重复运行/调度/并发锁/Schema 校验）。
+- [x] 429 反向验证红→绿证据：`evidence/week1/A/retry-429-red.txt` / `retry-429-green.txt`；全量测试输出：`evidence/week1/A/test-output.txt`（53/53 OK）。
 - [ ] 待人工：CAS 登录获取真实会话后跑真实采集，产出 5 篇固定样本（工具：`python -m app.sync.collect_fixed`）。
+
+## 提交记录（feat/week1-portal-sync）
+
+1. `feat(sync): add CAS assisted portal session` — 人工登录 + 内存会话 + 配置化
+2. `feat(sync): add article bundle fetch` — 客户端、限速、重试、分页、bundle 构造
+3. `feat(sync): add resumable article ledger` — 台账、恢复、幂等
+4. `feat(sync): add scheduler and sync service` — 增量入口、单实例锁、会话失效暂停
+5. `test(sync): cover retry resume and dedupe` — 53 项测试
+6. `docs(week1): register role A progress and evidence` — 进度、阻塞与证据
 
 ## 环境
 
