@@ -41,7 +41,8 @@ def main() -> int:
     session = assisted_login(args.cas_base_url, args.portal_base_url)
     client = PortalClient(config, RequestsTransport(session), clock=SystemClock())
     service = SyncService(lambda: client, ledger, args.bundles,
-                          target_count=args.target)
+                          target_count=args.target,
+                          topic_keywords=config.topic_keywords)
     result = service.sync(session, last_cursor=args.last_cursor)
 
     # ---- 验收输出 ----

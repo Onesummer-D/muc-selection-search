@@ -23,6 +23,14 @@ from .ledger import now_iso
 DESIRED_COMPOSITION = {"text": 2, "poster": 2, "mixed": 1}
 
 
+def matches_topic(detail: dict, keywords: tuple) -> bool:
+    """标题或正文命中任一主题关键词即视为相关（keywords 为空时不过滤）。"""
+    if not keywords:
+        return True
+    haystack = f"{detail.get('title') or ''}{detail.get('content') or ''}"
+    return any(kw in haystack for kw in keywords)
+
+
 def pick_fixed_samples(details: list[dict]) -> tuple[list[dict], dict]:
     """按理想构成挑选 5 篇；不足时保留真实构成。"""
     chosen: list[dict] = []
@@ -58,13 +66,25 @@ def main() -> int:
     client = PortalClient(config, RequestsTransport(session), clock=SystemClock())
 
     details: list[dict] = []
+    skipped_off_topic = 0
     for item in client.iterate_notices():
         if len(details) >= args.count * 4:  # 候选池
             break
         try:
-            details.append(client.get_notice(item["notice_id"]))
+            detail = client.get_notice(item["notice_id"])
         except Exception as exc:  # noqa: BLE001 - 记录并继续
             print(f"[skip] {item['notice_id']}: {exc}")
+            continue
+        if not matches_topic(detail, config.topic_keywords):
+            skipped_off_topic += 1
+            continue
+        details.append(detail)
+    if skipped_off_topic:
+        print(f"[filter] 已跳过非{'/'.join(config.topic_keywords)}内容 {skipped_off_topic} 篇")
+    if not details:
+        print(f"[error] 候选池中没有命中主题关键词（{config.topic_keywords}）的文章，"
+              "请确认栏目 ID 或关键词配置。")
+        return 1
 
     chosen, composition = pick_fixed_samples(details)
     print(f"[composition] 实际构成: {json.dumps(composition, ensure_ascii=False)}")

@@ -123,3 +123,49 @@ class TestSyncService(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestTopicFilter(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+
+    def test_off_topic_not_registered(self):
+        details = {"n1": detail("n1"), "n2": detail("n2"),
+                   "off1": detail("off1", content="无关内容")}
+        portal = FakePortal(pages={1: [{"noticeId": "n1", "title": "选调公告"},
+                                       {"noticeId": "n2", "title": "选调经验分享"},
+                                       {"noticeId": "off1", "title": "普通通知"}]},
+                            details=details)
+        clock = FakeClock()
+        config = PortalConfig(base_url="https://portal.invalid")
+        client = PortalClient(config, portal, clock=clock, sleep=clock.sleep)
+        ledger = ArticleLedger(os.path.join(self.tmp, "ledger.json"))
+        svc = SyncService(lambda: client, ledger,
+                          os.path.join(self.tmp, "bundles"),
+                          topic_keywords=("选调",))
+        result = svc.sync(session=None)
+        self.assertEqual(result.success_count, 2)
+        self.assertIsNone(ledger.get("off1"))  # 非主题文章未登记
+
+    def test_no_keywords_disables_filter(self):
+        details = {"n1": detail("n1"), "off1": detail("off1")}
+        portal = FakePortal(pages={1: [{"noticeId": "n1", "title": "选调公告"},
+                                       {"noticeId": "off1", "title": "普通通知"}]},
+                            details=details)
+        clock = FakeClock()
+        config = PortalConfig(base_url="https://portal.invalid")
+        client = PortalClient(config, portal, clock=clock, sleep=clock.sleep)
+        ledger = ArticleLedger(os.path.join(self.tmp, "ledger.json"))
+        svc = SyncService(lambda: client, ledger,
+                          os.path.join(self.tmp, "bundles"))
+        result = svc.sync(session=None)
+        self.assertEqual(result.success_count, 2)
+
+
+class TestMatchesTopic(unittest.TestCase):
+    def test_keyword_in_title_or_content(self):
+        from app.sync.collect_fixed import matches_topic
+        self.assertTrue(matches_topic({"title": "选调生经验", "content": ""}, ("选调",)))
+        self.assertTrue(matches_topic({"title": "分享", "content": "关于选调的体会"}, ("选调",)))
+        self.assertFalse(matches_topic({"title": "运动会", "content": "报名"}, ("选调",)))
+        self.assertTrue(matches_topic({"title": "任意", "content": ""}, ()))  # 空=不过滤

@@ -36,11 +36,14 @@ class SyncService:
 
     def __init__(self, client_factory: Callable[[], PortalClient],
                  ledger: ArticleLedger, bundle_dir: str,
-                 target_count: int = 100):
+                 target_count: int = 100,
+                 topic_keywords: tuple = ()):
         self.client_factory = client_factory
         self.ledger = ledger
         self.bundle_dir = bundle_dir
         self.target_count = target_count
+        # 主题过滤：列表阶段按标题命中关键词，非主题文章不登记入台账（空 = 不过滤）
+        self.topic_keywords = topic_keywords
 
     # ------------------------------------------------------------------
     def sync(self, session, last_cursor: str | None = None,
@@ -65,6 +68,10 @@ class SyncService:
             for item in client.iterate_notices():
                 if len(self.ledger) >= self.target_count:
                     break
+                if self.topic_keywords:
+                    title = item.get("title") or ""
+                    if not any(kw in title for kw in self.topic_keywords):
+                        continue  # 非主题文章：不登记入台账
                 self.ledger.register_from_list(item)
                 cursor = item["notice_id"]
             self.ledger.save()

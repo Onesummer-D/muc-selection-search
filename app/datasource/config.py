@@ -30,6 +30,8 @@ class PortalConfig:
     backoff_base: float = 2.0
     # 只读会话验证接口
     session_check_endpoint: str = "getNoticeByPage"
+    # 主题过滤关键词（逗号分隔，命中标题或正文任一即视为相关；空 = 不过滤）
+    topic_keywords: tuple = ("选调",)
 
     @classmethod
     def from_env(cls, env: dict | None = None) -> "PortalConfig":
@@ -45,6 +47,10 @@ class PortalConfig:
             rate_min=float(e.get("PORTAL_RATE_MIN", "0.8")),
             rate_max=float(e.get("PORTAL_RATE_MAX", "1.5")),
             max_retries=int(e.get("PORTAL_MAX_RETRIES", "3")),
+            topic_keywords=tuple(
+                kw.strip() for kw in e.get("PORTAL_TOPIC_KEYWORDS", "选调").split(",")
+                if kw.strip()
+            ),
         )
 
     def list_url(self) -> str:
