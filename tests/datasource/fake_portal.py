@@ -46,7 +46,7 @@ class FakePortal:
             if kind == "timeout":
                 raise TimeoutError("simulated timeout")
         if "getNoticeByPage" in url:
-            page = int(params.get("page", 1))
+            page = int(params.get("page", params.get("currentPage", 1)))
             rows = self.pages.get(page, [])
             return FakeResponse(200, {"data": rows})
         if "getNotice" in url:
@@ -55,6 +55,23 @@ class FakePortal:
             if detail is None:
                 return FakeResponse(404, None)
             return FakeResponse(200, {"data": detail})
+        return FakeResponse(404, None)
+
+    def post(self, url: str, data: dict, timeout: float) -> FakeResponse:
+        """POST 表单模式：真实门户（comsys）走这条路，响应为 datas.tables。"""
+        self.calls.append({"url": url, "params": dict(data)})
+        step = self._next_script_step()
+        if step:
+            kind = step[0]
+            if kind == "status":
+                return FakeResponse(step[1], None)
+            if kind == "timeout":
+                raise TimeoutError("simulated timeout")
+        if "getNoticeByPage" in url:
+            page = int(data.get("currentPage", data.get("page", 1)))
+            rows = self.pages.get(page, [])
+            # 真实门户结构：{"datas": {"tables": [...]}}，字段为 snake_case
+            return FakeResponse(200, {"datas": {"tables": rows}})
         return FakeResponse(404, None)
 
 

@@ -43,6 +43,8 @@ class Transport(Protocol):
 
     def get(self, url: str, params: dict, timeout: float) -> Response: ...
 
+    def post(self, url: str, data: dict, timeout: float) -> Response: ...
+
 
 class RequestsTransport:
     """基于 requests.Session 的默认传输。Session 由调用方注入（内存 Cookie）。"""
@@ -52,6 +54,14 @@ class RequestsTransport:
 
     def get(self, url: str, params: dict, timeout: float) -> Response:
         resp = self._session.get(url, params=params, timeout=timeout)
+        return self._check_redirect(resp)
+
+    def post(self, url: str, data: dict, timeout: float) -> Response:
+        resp = self._session.post(url, data=data, timeout=timeout)
+        return self._check_redirect(resp)
+
+    @staticmethod
+    def _check_redirect(resp) -> Response:
         if resp.status_code in (301, 302) or (
             resp.history and any(r.status_code in (301, 302) for r in resp.history)
         ):
@@ -72,15 +82,22 @@ class PortalClient:
                                         sleep=sleep)
         # 请求日志：[(开始时间, 端点, 状态)]，供验收核对限速口径
         self.request_log: list[dict] = []
+        # 列表行缓存（list 模式详情查询复用；只存内存）
+        self._row_cache: dict[str, dict] = {}
 
     # ------------------------------------------------------------------
-    def _request(self, url: str, params: dict) -> object:
+    def _request(self, url: str, params: dict, method: str = "GET") -> object:
         waited = self.rate_limiter.wait_before_next()
         attempts_used = [0]
 
         def _do():
             attempts_used[0] += 1
-            resp = self.transport.get(url, params=params, timeout=self.config.timeout)
+            if method.upper() == "POST":
+                resp = self.transport.post(url, data=params,
+                                           timeout=self.config.timeout)
+            else:
+                resp = self.transport.get(url, params=params,
+                                          timeout=self.config.timeout)
             if resp.status_code in (401, 403):
                 raise SessionExpiredError(f"门户返回 HTTP {resp.status_code}，会话已失效")
             if resp.status_code == 429 or 500 <= resp.status_code < 600:
@@ -118,20 +135,39 @@ class PortalClient:
     def list_notices(self, page: int) -> list[dict]:
         """getNoticeByPage：返回规范化列表项。
 
-        每项包含 notice_id、title、published_at、source_url。
+        每项包含 notice_id、title、published_at、source_url、content。
+        真实门户为 POST 表单（currentPage/pageSize/type/searchValue/comsys_random_t）。
         """
         params = dict(self.config.list_params)
-        params.update({"page": page, "pageSize": self.config.page_size})
-        payload = self._request(self.config.list_url(), params)
+        params.update({self.config.page_param: page,
+                       self.config.page_size_param: self.config.page_size})
+        if self.config.random_param:
+            params[self.config.random_param] = self._random_value()
+        payload = self._request(self.config.list_url(), params,
+                                method=self.config.http_method)
         rows = self._extract_rows(payload)
         return [self._normalize_list_item(row) for row in rows]
+
+    def _random_value(self) -> str:
+        """comsys_random_t 之类的防缓存随机数（可注入 rng 供测试）。"""
+        rng = getattr(self, "_rng", None)
+        value = rng() if rng else None
+        if value is None or not (0 <= value < 1):
+            import random
+            value = random.random()
+        return repr(value)[:20]
 
     def get_notice(self, notice_id: str) -> dict:
         """getNotice：返回详情（正文、图片引用）。
 
+        - detail_source == "endpoint"：调用独立详情接口（逻辑接口，测试用）。
+        - detail_source == "list"：真实门户无独立详情 JSON 接口，
+          详情取列表行（notice_content/notice_link 等字段，含正文）。
         详情缺字段时：正文缺失 → clean_text=None；图片缺失 → 空列表；
         notice_id 缺失 → PortalError（无法登记台账）。
         """
+        if self.config.detail_source == "list":
+            return self._get_notice_from_list(notice_id)
         payload = self._request(self.config.detail_url(), {"noticeId": notice_id})
         if not isinstance(payload, dict):
             raise PortalError(f"详情响应不是对象: {notice_id}")
@@ -151,6 +187,10 @@ class PortalClient:
     @staticmethod
     def _extract_rows(payload: object) -> list:
         if isinstance(payload, dict):
+            # 真实门户结构：{"datas": {"tables": [...]}}
+            datas = payload.get("datas")
+            if isinstance(datas, dict) and isinstance(datas.get("tables"), list):
+                return datas["tables"]
             rows = payload.get("data", payload.get("rows", payload.get("list")))
             if isinstance(rows, dict):
                 rows = rows.get("records", rows.get("rows", []))
@@ -162,16 +202,66 @@ class PortalClient:
             return payload
         raise PortalError("列表响应无法解析为行数组")
 
-    def _normalize_list_item(self, row: dict) -> dict:
-        notice_id = row.get("noticeId") or row.get("id")
-        if not notice_id:
-            raise PortalError(f"列表项缺少 notice_id: {row!r}")
+    def _get_notice_from_list(self, notice_id: str) -> dict:
+        """真实门户模式：从列表行取详情（行含 notice_content 等字段）。"""
+        notice_id = str(notice_id)
+        row = self._row_cache.get(notice_id)
+        if row is None:
+            # 未命中缓存：逐页查找（限速由 _request 控制）
+            for item in self.iterate_notices():
+                if item["notice_id"] == notice_id:
+                    row = self._row_cache.get(notice_id)
+                    break
+        if row is None:
+            raise PortalError(f"列表中未找到该文章: {notice_id}")
+        return self._normalize_detail_row(row)
+
+    @staticmethod
+    def _pick(row: dict, *keys, default=None):
+        for key in keys:
+            if row.get(key) not in (None, ""):
+                return row.get(key)
+        return default
+
+    def _normalize_detail_row(self, row: dict) -> dict:
+        """真实门户行 → 详情（兼容 snake_case 与 camelCase 字段名）。"""
+        notice_id = self._pick(row, "notice_id", "noticeId", "id")
+        if notice_id is None:
+            raise PortalError(f"行缺少 notice_id: {row!r}")
+        content = self._pick(row, "notice_content", "content", default="") or ""
+        # 正文里的图片引用提取为 images（HTML <img src>）
+        images = row.get("images") or row.get("imageUrls") or []
+        if not images and "<img" in content:
+            import re
+            srcs = re.findall(r'<img[^>]+src=["\']([^"\']+)["\']', content)
+            images = [{"url": s} for s in srcs]
         return {
             "notice_id": str(notice_id),
-            "title": row.get("title") or "",
-            "published_at": row.get("publishTime"),
-            "source_url": row.get("url")
-            or f"{self.config.base_url.rstrip('/')}/notice/{notice_id}",
+            "title": self._pick(row, "notice_title", "title", default="") or "",
+            "content": content or None,
+            "published_at": self._pick(row, "notice_first_time",
+                                       "notice_create_time", "publishTime"),
+            "source_url": self._pick(
+                row, "notice_link", "url",
+                default=f"{self.config.base_url.rstrip('/')}/notice/{notice_id}"),
+            "images": images,
+            "organization": row.get("organization_name") or row.get("organization"),
+            "notice_type": row.get("notice_type_name") or row.get("noticeType"),
+        }
+
+    def _normalize_list_item(self, row: dict) -> dict:
+        notice_id = row.get("noticeId") or row.get("notice_id") or row.get("id")
+        if not notice_id:
+            raise PortalError(f"列表项缺少 notice_id: {row!r}")
+        # 缓存原始行，供 list 模式的详情查询复用
+        self._row_cache[str(notice_id)] = row
+        return {
+            "notice_id": str(notice_id),
+            "title": row.get("title") or row.get("notice_title") or "",
+            "published_at": (row.get("publishTime") or row.get("notice_first_time")
+                             or row.get("notice_create_time")),
+            "source_url": (row.get("url") or row.get("notice_link")
+                           or f"{self.config.base_url.rstrip('/')}/notice/{notice_id}"),
         }
 
     # ------------------------------------------------------------------
@@ -206,6 +296,10 @@ class PortalClient:
     def validate_session(self) -> bool:
         """同步前调用只读接口验证会话；失效抛 SessionExpiredError。"""
         params = dict(self.config.list_params)
-        params.update({"page": 1, "pageSize": 1})
-        self._request(self.config.session_check_url(), params)
+        params.update({self.config.page_param: 1,
+                       self.config.page_size_param: 1})
+        if self.config.random_param:
+            params[self.config.random_param] = self._random_value()
+        self._request(self.config.session_check_url(), params,
+                      method=self.config.http_method)
         return True
