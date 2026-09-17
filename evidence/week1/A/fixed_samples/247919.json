@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "247919",
+  "title": "1月13日||闪耀基层——河北定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/247919",
+  "published_at": "2025-01-08 11:52",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "247919-poster-01",
+      "kind": "poster",
+      "local_ref": "private://247919/poster-01",
+      "sha256": "c73ea41d4539709949b79fb75a9f63029fb8d27a8147c0a31bf42cf44b892544"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-18T00:36:59+08:00"
+}

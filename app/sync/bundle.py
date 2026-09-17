@@ -30,6 +30,27 @@ def sanitize_text(text: str | None) -> str | None:
     return text
 
 
+def html_to_text(html: str | None) -> str | None:
+    """HTML 正文转纯文本：去标签、解码实体、折叠空白（零依赖）。"""
+    if html is None:
+        return None
+    from html.parser import HTMLParser
+
+    class _TextExtractor(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.parts: list[str] = []
+
+        def handle_data(self, data: str) -> None:
+            self.parts.append(data)
+
+    extractor = _TextExtractor()
+    extractor.feed(html)
+    text = "".join(extractor.parts)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text or None
+
+
 def sha256_hex(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -86,8 +107,11 @@ def write_bundle(bundle: dict, directory: str) -> str:
 
 
 def content_type_for(detail: dict) -> str:
-    """根据详情判断内容类型：图片→poster，正文+图片→mixed，正文→text。"""
-    has_text = bool((detail.get("content") or "").strip())
+    """根据详情判断内容类型：图片→poster，正文+图片→mixed，正文→text。
+
+    文本存在性以标签剥离后的纯文本为准（整篇只有 <img> 的海报帖不含文本）。
+    """
+    has_text = html_to_text(detail.get("content")) is not None
     has_images = bool(detail.get("images"))
     if has_text and has_images:
         return "mixed"

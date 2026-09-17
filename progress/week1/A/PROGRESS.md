@@ -24,7 +24,23 @@
 - [x] 实现 app/sync（状态台账、断点恢复、幂等、SyncService、Scheduler 单实例锁）。
 - [x] 实现 tests/datasource（分页/重复页/空列表/缺字段/429 退避/第三次失败/恢复/重复运行/调度/并发锁/Schema 校验）。
 - [x] 429 反向验证红→绿证据：`evidence/week1/A/retry-429-red.txt` / `retry-429-green.txt`；全量测试输出：`evidence/week1/A/test-output.txt`（53/53 OK）。
-- [ ] 待人工：CAS 登录获取真实会话后跑真实采集，产出 5 篇固定样本（工具：`python -m app.sync.collect_fixed`）。
+
+### 2026-09-18（凌晨，A1/A2 完成）
+- [x] **A1 完成**：人工登录 + probe_endpoints 捕获真实接口（证据 `evidence/week1/A/endpoint-probe.json`）：
+  `POST /comsys-portal-notice-web/getNoticeByPage`（表单 currentPage/pageSize/type/searchValue/comsys_random_t，
+  响应 datas.tables），就业信息栏目 **type=10**；无独立详情 JSON 接口（readNotice 仅标记已读），
+  正文在列表行 notice_content（HTML）。B-1 解除。
+- [x] 客户端适配真实 API（POST 表单、snake_case、list 详情模式、HTML 正文图片提取、UEditor 占位图过滤）。
+- [x] **A2 完成**：5 篇固定样本已产出并通过 article_bundle.v1 校验 5/5
+  （`evidence/week1/A/fixed_samples/*.json` + REPORT.json）。
+  - 选样：就业信息栏目 type=10，选调相关 20 篇中经验分享类 13 篇优先入选；
+  - 实际构成 4 海报 + 1 混合（理想 2文本/2海报/1混合）：本栏目经验分享类内容以整篇海报为主，
+    纯文本帖均为行政通知（奖励申报/成绩公布），为满足"经验分享类"要求保留真实构成；
+  - 海报原图（5 张，含真实 SHA-256）存于仓库外 `../controlled_assets/`，交接 B 时走受控渠道，
+    bundle 内只含 private:// 引用与摘要；
+  - 重现方式：`python -m app.sync.collect_fixed --from-pool`（候选池缓存，无需重新登录）。
+- [x] 全套测试 67 项通过。
+
 
 ## 提交记录（feat/week1-portal-sync）
 

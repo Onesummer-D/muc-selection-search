@@ -234,6 +234,8 @@ class PortalClient:
         if not images and "<img" in content:
             import re
             srcs = re.findall(r'<img[^>]+src=["\']([^"\']+)["\']', content)
+            # 过滤编辑器占位图（UEditor spacer/loadingclass 等）
+            srcs = [s for s in srcs if "spacer.gif" not in s]
             images = [{"url": s} for s in srcs]
         return {
             "notice_id": str(notice_id),

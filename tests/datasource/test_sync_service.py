@@ -193,3 +193,40 @@ class TestExperienceRanking(unittest.TestCase):
         # 标题平淡但正文开头是经验分享，也算
         d = {"title": "选调之路（三）", "content": "写一些备考体会……" * 10}
         self.assertTrue(is_experience_sharing(d, self.config.experience_keywords))
+
+
+class TestHtmlToText(unittest.TestCase):
+    def test_strips_tags_and_entities(self):
+        from app.sync.bundle import html_to_text
+        self.assertEqual(html_to_text("<p>各位&nbsp;考生：</p><p>请查收</p>"),
+                         "各位 考生：请查收")
+        self.assertIsNone(html_to_text(None))
+        self.assertIsNone(html_to_text("   <p><br/></p>  "))
+
+
+class TestTwoStagePicking(unittest.TestCase):
+    def test_experience_only_pool_preferred(self):
+        from app.sync.collect_fixed import pick_fixed_samples
+        def exp(i):
+            return {"title": f"选调经验分享{i}", "content": "体会",
+                    "images": [{"url": f"img{i}"}]}
+        def admin(i):
+            return {"title": f"关于选调推荐工作的通知{i}", "content": "各学院",
+                    "images": []}
+        chosen, comp = pick_fixed_samples(
+            [admin(i) for i in range(5)] + [exp(i) for i in range(5)],
+            experience_keywords=("经验", "分享"))
+        titles = [d["title"] for d in chosen]
+        # 经验类足够时不选行政通知
+        self.assertFalse(any(t.startswith("关于选调") for t in titles))
+        self.assertEqual(len(chosen), 5)
+
+    def test_admin_fills_when_experience_insufficient(self):
+        from app.sync.collect_fixed import pick_fixed_samples
+        exp = {"title": "选调经验分享", "content": "体会", "images": []}
+        chosen, comp = pick_fixed_samples(
+            [exp] + [{"title": f"选调通知{i}", "content": "各学院", "images": []}
+                     for i in range(5)],
+            experience_keywords=("经验", "分享"))
+        self.assertEqual(len(chosen), 5)
+        self.assertEqual(chosen[0]["title"], "选调经验分享")
