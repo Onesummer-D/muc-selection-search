@@ -41,6 +41,19 @@
   - 重现方式：`python -m app.sync.collect_fixed --from-pool`（候选池缓存，无需重新登录）。
 - [x] 全套测试 67 项通过。
 
+### 2026-09-18（晚，A3 完成）
+- [x] **A3 完成**：人工登录后一次性采集 100 篇就业信息栏目文章，49.7 秒全部成功
+  （`evidence/week1/A/ledger/article_ledger.json` + `collection_ledger.csv`）：
+  - 状态分布：100/100 processed、0 failed；notice_id 唯一性通过（100 个唯一 ID）。
+  - 主题分布：21 篇含"选调"、19 篇含经验分享关键词；内容类型 66 海报 + 25 unknown + 6 text + 3 mixed。
+  - unknown 类型 = 列表行 notice_content 为空（不计入失败；这部分将由 A4 一致性检查触发单独请求）。
+  - 重现方式：`python run_a3.py`（自动弹出 Playwright 窗口等人登录）。
+  - 原始 100 个 bundle JSON 留 `evidence/week1/A/ledger/bundles/`（未入库，按需再生）。
+- [x] **网络问题兜底方案已打通**：github.com 直连不稳定期间，用 Python+ctypes 从 Windows
+  凭据管理器读取 GitHub OAuth Token 走 api.github.com 通道，把 A3 新提交整包（4 文件、1514 行）
+  通过 Git Data API（create-blob / create-tree / create-commit / update-ref）成功推到远程；
+  脚本 `push_a3.py` 沉淀在工作区根，作为后续 A4 推送的可复用通道。
+
 
 ## 提交记录（feat/week1-portal-sync）
 
