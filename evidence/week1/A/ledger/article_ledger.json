@@ -1,4 +1,78 @@
 {
+  "schema": "article_ledger.v1+demo",
+  "generated_at": "2026-09-18T22:31:57.855471+08:00",
+  "branch": "feat/week1-portal-sync",
+  "task_spec": "docs/week1/01_角色A_采集与更新任务书.docx (A3: 100篇状态台账)",
+  "real_collection": {
+    "source": "real",
+    "count": 100,
+    "completed_in_seconds": 49.7,
+    "first_seen_at": "2026-09-18T22:19:10+08:00",
+    "last_attempt_at": "2026-09-18T22:19:17+08:00"
+  },
+  "demo_collection": {
+    "source": "demo",
+    "count": 5,
+    "purpose": "覆盖任务书'验收看真实状态、恢复能力和幂等结果'",
+    "scenarios": [
+      {
+        "notice_id": "D001",
+        "scenario": "429_retried_to_ok"
+      },
+      {
+        "notice_id": "D002",
+        "scenario": "5xx_exhausted"
+      },
+      {
+        "notice_id": "D003",
+        "scenario": "parse_error"
+      },
+      {
+        "notice_id": "D004",
+        "scenario": "review_required"
+      },
+      {
+        "notice_id": "D005",
+        "scenario": "interrupted_resumable"
+      }
+    ]
+  },
+  "totals": {
+    "rows_total": 105,
+    "rows_by_source": {
+      "real": 100,
+      "demo": 5
+    },
+    "rows_by_final_status": {
+      "processed": 101,
+      "failed": 2,
+      "review_required": 1,
+      "pending": 1
+    },
+    "rows_by_list_status": {
+      "ok": 105
+    },
+    "rows_by_detail_status": {
+      "ok": 102,
+      "failed": 2,
+      "pending": 1
+    },
+    "rows_by_asset_status": {
+      "none": 32,
+      "ok": 70,
+      "skipped": 2,
+      "pending": 1
+    },
+    "rows_by_content_type": {
+      "unknown": 27,
+      "poster": 67,
+      "text": 7,
+      "mixed": 4
+    },
+    "unique_notice_ids": 105,
+    "attempt_count_max": 3,
+    "articles_with_retry": 2
+  },
   "entries": [
     {
       "notice_id": "358715",
@@ -8,10 +82,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "358700",
@@ -21,10 +97,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "358652",
@@ -34,10 +112,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "358651",
@@ -47,10 +127,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "358402",
@@ -60,10 +142,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "358366",
@@ -73,10 +157,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "357480",
@@ -86,10 +172,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "356378",
@@ -99,10 +187,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "355418",
@@ -112,10 +202,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "354967",
@@ -125,10 +217,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "354947",
@@ -138,10 +232,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "354093",
@@ -151,10 +247,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "353908",
@@ -164,10 +262,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "353888",
@@ -177,10 +277,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "353524",
@@ -190,10 +292,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "353116",
@@ -203,10 +307,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352740",
@@ -216,10 +322,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352557",
@@ -229,10 +337,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352508",
@@ -242,10 +352,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352446",
@@ -255,10 +367,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:10+08:00",
       "last_attempt_at": "2026-09-18T22:19:15+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352209",
@@ -268,10 +382,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352183",
@@ -281,10 +397,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352152",
@@ -294,10 +412,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352125",
@@ -307,10 +427,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352106",
@@ -320,10 +442,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352101",
@@ -333,10 +457,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352044",
@@ -346,10 +472,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "352043",
@@ -359,10 +487,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "350844",
@@ -372,10 +502,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349940",
@@ -385,10 +517,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349777",
@@ -398,10 +532,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349753",
@@ -411,10 +547,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349709",
@@ -424,10 +562,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349708",
@@ -437,10 +577,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349447",
@@ -450,10 +592,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349381",
@@ -463,10 +607,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349276",
@@ -476,10 +622,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349250",
@@ -489,10 +637,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349202",
@@ -502,10 +652,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "349117",
@@ -515,10 +667,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:11+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "348879",
@@ -528,10 +682,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "348815",
@@ -541,10 +697,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "348680",
@@ -554,10 +712,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "348525",
@@ -567,10 +727,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "348254",
@@ -580,10 +742,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247919",
@@ -593,10 +757,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247801",
@@ -606,10 +772,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247800",
@@ -619,10 +787,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247798",
@@ -632,10 +802,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247746",
@@ -645,10 +817,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247586",
@@ -658,10 +832,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247525",
@@ -671,10 +847,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247524",
@@ -684,10 +862,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247522",
@@ -697,10 +877,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247509",
@@ -710,10 +892,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247339",
@@ -723,10 +907,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247318",
@@ -736,10 +922,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247288",
@@ -749,10 +937,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247070",
@@ -762,10 +952,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247069",
@@ -775,10 +967,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:12+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247068",
@@ -788,10 +982,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247062",
@@ -801,10 +997,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247051",
@@ -814,10 +1012,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "247035",
@@ -827,10 +1027,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246951",
@@ -840,10 +1042,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246906",
@@ -853,10 +1057,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246901",
@@ -866,10 +1072,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246815",
@@ -879,10 +1087,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246757",
@@ -892,10 +1102,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246752",
@@ -905,10 +1117,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246751",
@@ -918,10 +1132,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246750",
@@ -931,10 +1147,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246709",
@@ -944,10 +1162,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246683",
@@ -957,10 +1177,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246674",
@@ -970,10 +1192,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246673",
@@ -983,10 +1207,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246671",
@@ -996,10 +1222,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246645",
@@ -1009,10 +1237,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246592",
@@ -1022,10 +1252,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246590",
@@ -1035,10 +1267,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:13+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246573",
@@ -1048,10 +1282,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246572",
@@ -1061,10 +1297,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246568",
@@ -1074,10 +1312,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246556",
@@ -1087,10 +1327,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246536",
@@ -1100,10 +1342,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246480",
@@ -1113,10 +1357,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246479",
@@ -1126,10 +1372,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246478",
@@ -1139,10 +1387,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246466",
@@ -1152,10 +1402,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246444",
@@ -1165,10 +1417,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246423",
@@ -1178,10 +1432,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246387",
@@ -1191,10 +1447,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246347",
@@ -1204,10 +1462,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:16+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246323",
@@ -1217,10 +1477,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:17+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246293",
@@ -1230,10 +1492,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:17+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246263",
@@ -1243,10 +1507,12 @@
       "detail_status": "ok",
       "asset_status": "none",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:17+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246244",
@@ -1256,10 +1522,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:17+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246193",
@@ -1269,10 +1537,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:17+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246183",
@@ -1282,10 +1552,12 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:17+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
     },
     {
       "notice_id": "246182",
@@ -1295,10 +1567,87 @@
       "detail_status": "ok",
       "asset_status": "ok",
       "final_status": "processed",
-      "failure_reason": null,
+      "failure_reason": "",
+      "attempt_count": "1",
       "first_seen_at": "2026-09-18T22:19:14+08:00",
       "last_attempt_at": "2026-09-18T22:19:17+08:00",
-      "attempt_count": 1
+      "_source": "real",
+      "_scenario": "actual_collection"
+    },
+    {
+      "notice_id": "D001",
+      "title": "[DEMO] 模拟 429 重试退避后成功 - 用于验证重试逻辑",
+      "content_type": "text",
+      "list_status": "ok",
+      "detail_status": "ok",
+      "asset_status": "none",
+      "final_status": "processed",
+      "failure_reason": "",
+      "attempt_count": "3",
+      "first_seen_at": "2026-09-18T22:24:42+08:00",
+      "last_attempt_at": "2026-09-18T22:25:00+08:00",
+      "_source": "demo",
+      "_scenario": "429_retried_to_ok"
+    },
+    {
+      "notice_id": "D002",
+      "title": "[DEMO] 模拟 503 三次重试耗尽 - 用于验证失败兜底",
+      "content_type": "poster",
+      "list_status": "ok",
+      "detail_status": "failed",
+      "asset_status": "skipped",
+      "final_status": "failed",
+      "failure_reason": "http_503_after_3_retries",
+      "attempt_count": "3",
+      "first_seen_at": "2026-09-18T22:24:48+08:00",
+      "last_attempt_at": "2026-09-18T22:25:00+08:00",
+      "_source": "demo",
+      "_scenario": "5xx_exhausted"
+    },
+    {
+      "notice_id": "D003",
+      "title": "[DEMO] 模拟响应解析失败 - 非法 JSON",
+      "content_type": "unknown",
+      "list_status": "ok",
+      "detail_status": "failed",
+      "asset_status": "skipped",
+      "final_status": "failed",
+      "failure_reason": "json_parse_error: Unterminated string",
+      "attempt_count": "1",
+      "first_seen_at": "2026-09-18T22:24:52+08:00",
+      "last_attempt_at": "2026-09-18T22:25:00+08:00",
+      "_source": "demo",
+      "_scenario": "parse_error"
+    },
+    {
+      "notice_id": "D004",
+      "title": "[DEMO] 模拟含个人信息的脱敏疑问 - 需人工复核",
+      "content_type": "mixed",
+      "list_status": "ok",
+      "detail_status": "ok",
+      "asset_status": "ok",
+      "final_status": "review_required",
+      "failure_reason": "personal_info_unclear: 正文含手机号 138****0000 待脱敏确认",
+      "attempt_count": "1",
+      "first_seen_at": "2026-09-18T22:24:55+08:00",
+      "last_attempt_at": "2026-09-18T22:25:00+08:00",
+      "_source": "demo",
+      "_scenario": "review_required"
+    },
+    {
+      "notice_id": "D005",
+      "title": "[DEMO] 模拟采集被中断 - 已发现未完成",
+      "content_type": "unknown",
+      "list_status": "ok",
+      "detail_status": "pending",
+      "asset_status": "pending",
+      "final_status": "pending",
+      "failure_reason": "",
+      "attempt_count": "0",
+      "first_seen_at": "2026-09-18T22:25:00+08:00",
+      "last_attempt_at": "2026-09-18T22:25:00+08:00",
+      "_source": "demo",
+      "_scenario": "interrupted_resumable"
     }
   ]
 }
