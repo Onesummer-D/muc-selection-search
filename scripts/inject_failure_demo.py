@@ -16,7 +16,7 @@ from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-LEDGER_DIR = Path(__file__).resolve().parent / "repo" / "evidence" / "week1" / "A" / "ledger"
+LEDGER_DIR = Path(__file__).resolve().parent.parent / "evidence" / "week1" / "A" / "ledger"
 CSV_PATH = LEDGER_DIR / "collection_ledger.csv"
 JSON_PATH = LEDGER_DIR / "article_ledger.json"
 
