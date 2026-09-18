@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-09-18T22:53:45+0800",
+  "branch": "feat/week1-portal-sync",
+  "scenarios_total": 7,
+  "scenarios_passed": 7,
+  "results": [
+    {
+      "scenario": "single_instance_lock",
+      "passed": true,
+      "log": [
+        "Lock1 acquired by pid=1001",
+        "Lock2 rejected as expected: 另一实例正在运行 pid=1001 lock=C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\week1_a4_locks\\single_instance.lock",
+        "Lock1 released"
+      ],
+      "lock_file": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\week1_a4_locks\\single_instance.lock",
+      "first_holder_pid": 1001,
+      "rejected_holder_pid": 1002
+    },
+    {
+      "scenario": "idempotency",
+      "passed": true,
+      "runs": [
+        5,
+        5,
+        5
+      ],
+      "log": [
+        "Run 1: success=5 failure=0 ledger_size=5 processed_ids=['N001', 'N002', 'N003', 'N004', 'N005']",
+        "Run 2: success=0 failure=0 ledger_size=5 processed_ids=[]",
+        "Run 3: success=0 failure=0 ledger_size=5 processed_ids=[]"
+      ],
+      "conclusion": "3 次跑下来台账条目数不变 = 幂等通过"
+    },
+    {
+      "scenario": "retry_recovery",
+      "passed": true,
+      "after_fail": 5,
+      "after_ok": 5,
+      "stats_after_fail": {
+        "pending": 0,
+        "processed": 0,
+        "review_required": 0,
+        "failed": 5
+      },
+      "stats_after_ok": {
+        "pending": 0,
+        "processed": 5,
+        "review_required": 0,
+        "failed": 0
+      },
+      "log": [
+        "Run 1 (always_fail): status=review_required success=0 failure=5 stats={'pending': 0, 'processed': 0, 'review_required': 0, 'failed': 5}",
+        "Run 2 (ok): status=processed success=5 failure=0 stats={'pending': 0, 'processed': 5, 'review_required': 0, 'failed': 0}"
+      ],
+      "conclusion": "失败后重跑可恢复 processed 状态"
+    },
+    {
+      "scenario": "scheduler_interval",
+      "passed": true,
+      "interval_seconds": 60.0,
+      "ticks": [
+        {
+          "now": 1000.0,
+          "triggered": true
+        },
+        {
+          "now": 1030.0,
+          "triggered": false
+        },
+        {
+          "now": 1060.0,
+          "triggered": true
+        },
+        {
+          "now": 1090.0,
+          "triggered": false
+        },
+        {
+          "now": 1121.0,
+          "triggered": true
+        }
+      ],
+      "log": [
+        "tick(t=1000.0): triggered=True",
+        "tick(t=1030.0): triggered=False",
+        "tick(t=1060.0): triggered=True",
+        "tick(t=1090.0): triggered=False",
+        "tick(t=1121.0): triggered=True"
+      ],
+      "conclusion": "按 interval_seconds 正确触发/不触发"
+    },
+    {
+      "scenario": "session_expired",
+      "passed": true,
+      "ticks": [
+        1789743219.1885316,
+        1789743219.2380385
+      ],
+      "log": [
+        "tick #1 (session_expired): triggered=True needs_login=True",
+        "tick #2 (after expired): triggered=False needs_login=True",
+        "resume_after_login: needs_login=False",
+        "tick #3 (after resume): triggered=True"
+      ],
+      "conclusion": "会话失效时暂停 + 人工登录后恢复"
+    },
+    {
+      "scenario": "429_red_then_green",
+      "passed": true,
+      "log_file": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\a4\\429-red-then-green.txt",
+      "test_files": [
+        "test_scheduler.py",
+        "test_sync_service.py",
+        "test_portal_client.py"
+      ],
+      "summary": "============================= 38 passed in 1.67s ==============================",
+      "exit_code": 0
+    },
+    {
+      "scenario": "full_pytest",
+      "passed": true,
+      "log_file": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\a4\\test-output.txt",
+      "summary": "============================= 68 passed in 2.13s ==============================",
+      "exit_code": 0
+    }
+  ]
+}

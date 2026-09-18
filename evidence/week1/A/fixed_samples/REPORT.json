@@ -1,0 +1,36 @@
+{
+  "samples": [
+    {
+      "notice_id": "352508",
+      "content_type": "text",
+      "path": "evidence/week1/A/fixed_samples\\352508.json"
+    },
+    {
+      "notice_id": "348879",
+      "content_type": "mixed",
+      "path": "evidence/week1/A/fixed_samples\\348879.json"
+    },
+    {
+      "notice_id": "247919",
+      "content_type": "poster",
+      "path": "evidence/week1/A/fixed_samples\\247919.json"
+    },
+    {
+      "notice_id": "247746",
+      "content_type": "poster",
+      "path": "evidence/week1/A/fixed_samples\\247746.json"
+    },
+    {
+      "notice_id": "247586",
+      "content_type": "poster",
+      "path": "evidence/week1/A/fixed_samples\\247586.json"
+    }
+  ],
+  "composition": {
+    "text": 1,
+    "poster": 3,
+    "mixed": 1,
+    "unknown": 0
+  },
+  "generated_at": "2026-09-18T00:54:20+08:00"
+}

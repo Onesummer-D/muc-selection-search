@@ -120,3 +120,9 @@ settings.local.*
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# 角色A 运行时台账（证据快照已提交，运行时再生成不重复入库）
+evidence/week1/A/ledger/
+
+# A4 临时文件（驱动器运行时生成，证据已单独落到 scenarios-summary.json）
+evidence/week1/A/a4/_*
