@@ -67,3 +67,11 @@
 ## 环境
 
 - Python 3.13（本地 venv）；依赖新增：requests、jsonschema（登记 PR 说明，由 C 处理根配置）。
+
+### A4 运行证据（2026-09-18 22:53）
+
+- **7/7 场景通过**：`evidence/week1/A/a4/scenarios-summary.json`
+- 单实例锁、幂等、恢复（重试）、调度周期、会话失效暂停、429 红→绿、全量 pytest 全部 PASS
+- 全量 pytest：**68 项**测试通过（`evidence/week1/A/a4/test-output.txt`）
+- 429 重试相关：**38 项**测试通过（`evidence/week1/A/a4/429-red-then-green.txt`）
+- 驱动器：`run_a4.py`（一键复跑：`python run_a4.py`）

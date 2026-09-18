@@ -116,3 +116,6 @@ htmlcov/
 config.local.*
 settings.local.*
 evidence/week1/A/ledger/
+
+# A4 临时文件（驱动器运行时生成，证据已单独落到 scenarios-summary.json）
+evidence/week1/A/a4/_*
