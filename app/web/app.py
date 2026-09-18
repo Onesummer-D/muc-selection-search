@@ -15,13 +15,35 @@ from werkzeug.exceptions import NotFound
 from ..domain.errors import ContractViolation, MissingArticleError, StorageIntegrityError
 from ..repository.sqlite_repository import SQLiteRepository
 from ..search.answer_service import AnswerService
+from ..search.llm_provider import LLMProvider
 from ..search.search_service import SearchService
 from .api import build_api_blueprint
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
-def create_app(repository: SQLiteRepository | None = None) -> Flask:
+def load_env_file(path: Path) -> None:
+    """极简 .env 加载：KEY=VALUE，# 注释；已存在的环境变量优先，不覆盖。
+
+    .env 只存放本机密钥与配置，已在 .gitignore 中，永不进入仓库。
+    """
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key, value = key.strip(), value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+def create_app(
+    repository: SQLiteRepository | None = None,
+    llm_provider: "LLMProvider | None" = None,
+) -> Flask:
+    load_env_file(PROJECT_ROOT / ".env")
     app = Flask(__name__)
     app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-insecure-key")
     app.config["APP_ENV"] = os.environ.get("APP_ENV", "development")
@@ -32,7 +54,7 @@ def create_app(repository: SQLiteRepository | None = None) -> Flask:
         os.environ.get("DATABASE_URL", "data/app.db")
     )
     search = SearchService(repo)
-    answer = AnswerService(repo, search)
+    answer = AnswerService(repo, search, llm_provider=llm_provider)
     app.extensions["repository"] = repo
     app.extensions["search"] = search
     app.extensions["answer"] = answer

@@ -10,6 +10,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from app.repository.sqlite_repository import SQLiteRepository
+from app.search.llm_provider import NullProvider
 from app.web.app import create_app
 from app.web.seed import seed
 from app.domain import role_policy
@@ -19,7 +20,8 @@ class ApiTests(unittest.TestCase):
     def setUp(self):
         self.repo = SQLiteRepository(":memory:")
         seed(self.repo)
-        self.app = create_app(repository=self.repo)
+        # 注入 NullProvider 隔离本机 .env：API 集成测试不依赖机器密钥配置
+        self.app = create_app(repository=self.repo, llm_provider=NullProvider())
         self.app.config["TESTING"] = True
         self.client = self.app.test_client()
 
