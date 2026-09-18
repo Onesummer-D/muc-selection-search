@@ -122,6 +122,19 @@ export interface MeResponse {
   campus_original_asset_enabled: boolean
 }
 
+export interface StatsResponse {
+  query_plan: QueryPlan
+  role: Role
+  total: number
+  distributions: {
+    education: Record<string, number>
+    city: Record<string, number>
+    cohort: Record<string, number>
+  }
+  with_field_evidence: number
+  review_status_distribution?: Record<string, number>
+}
+
 export const FIELD_LABELS: Record<string, string> = {
   cohort: '届别',
   grade: '年级',

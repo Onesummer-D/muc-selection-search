@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api, ApiError } from './api'
 import { AnswerPanel } from './components/AnswerPanel'
+import { CompareModal } from './components/CompareModal'
 import { DetailModal } from './components/DetailModal'
 import { QueryPlanPanel } from './components/QueryPlanPanel'
 import {
   REVIEW_STATUS_LABELS, type AnswerResponse, type MeResponse, type Role,
-  type SearchResponse,
+  type SearchResponse, type StatsResponse,
 } from './types'
 
 type Mode = 'traditional' | 'ai'
@@ -31,6 +32,9 @@ export default function App() {
   const [searchResult, setSearchResult] = useState<SearchResponse | null>(null)
   const [answer, setAnswer] = useState<AnswerResponse | null>(null)
   const [lastParams, setLastParams] = useState<Record<string, string | undefined>>({})
+  const [stats, setStats] = useState<StatsResponse | null>(null)
+  const [compareKeys, setCompareKeys] = useState<string[]>([])
+  const [showCompare, setShowCompare] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<'home' | 'results'>('home')
@@ -38,6 +42,14 @@ export default function App() {
 
   useEffect(() => {
     api.me().then(setMe).catch(() => setMe(null))
+  }, [])
+
+  const refreshStats = useCallback(async (params: Record<string, string | undefined>) => {
+    try {
+      setStats(await api.stats(params))
+    } catch {
+      setStats(null)
+    }
   }, [])
 
   const runSearch = useCallback(async (
@@ -66,10 +78,14 @@ export default function App() {
         setLastParams(params)
         setSearchResult(result)
         setAnswer(null)
+        setCompareKeys([])
+        void refreshStats(params)
       } else {
         const result = await api.answer(nextText)
         setAnswer(result)
         setSearchResult(null)
+        setCompareKeys([])
+        setStats(null)
       }
       setView('results')
     } catch (exc) {
@@ -77,7 +93,7 @@ export default function App() {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [refreshStats])
 
   const applyRelaxation = useCallback((field: string) => {
     // 放宽 = 在上一次检索参数的基础上去掉该条件后重查
@@ -90,12 +106,30 @@ export default function App() {
         setLastParams(next)
         setSearchResult(result)
         setAnswer(null)
+        setCompareKeys([])
+        void refreshStats(next)
         setView('results')
       })
       .catch((exc) => {
         setError(exc instanceof ApiError ? exc.detail : '网络错误，请确认服务已启动')
       })
       .finally(() => setLoading(false))
+  }, [lastParams, refreshStats])
+
+  const toggleCompare = useCallback((key: string) => {
+    setCompareKeys((prev) => {
+      if (prev.includes(key)) return prev.filter((k) => k !== key)
+      if (prev.length >= 4) return prev  // 最多 4 条（接口约束）
+      return [...prev, key]
+    })
+  }, [])
+
+  const exportUrl = useCallback((format: 'csv' | 'xlsx') => {
+    const query = new URLSearchParams({ format })
+    for (const [key, value] of Object.entries(lastParams)) {
+      if (value && key !== 'page' && key !== 'page_size') query.set(key, value)
+    }
+    return `/api/export?${query.toString()}`
   }, [lastParams])
 
   const switchRole = useCallback(async (role: Role) => {
@@ -230,6 +264,15 @@ export default function App() {
               >
                 应用筛选
               </button>
+              <button
+                className="btn-ghost"
+                disabled={compareKeys.length < 2}
+                onClick={() => setShowCompare(true)}
+              >
+                对比{compareKeys.length > 0 ? `（${compareKeys.length}）` : ''}
+              </button>
+              <a className="btn-ghost" href={exportUrl('csv')}>导出 CSV</a>
+              <a className="btn-ghost" href={exportUrl('xlsx')}>导出 Excel</a>
             </div>
           </div>
 
@@ -249,9 +292,41 @@ export default function App() {
             {me && me.role === 'guest' && ' · 游客视图：仅展示人工确认且已发布的记录'}
           </div>
 
+          {stats && (
+            <div className="stats-bar">
+              <span className="muted small">
+                城市分布 · 带字段证据 {stats.with_field_evidence}/{stats.total} 条
+              </span>
+              <div className="stats-rows">
+                {Object.entries(stats.distributions.city).map(([city, count]) => (
+                  <div key={city} className="stats-row">
+                    <span className="stats-label">{city}</span>
+                    <span className="stats-track">
+                      <span
+                        className="stats-fill"
+                        style={{ width: `${Math.round((count / stats.total) * 100)}%` }}
+                      />
+                    </span>
+                    <span className="muted small">{count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <ul className="result-list">
             {records.map((item) => (
               <li key={item.record_key} className="result-card">
+                <label className="compare-check">
+                  <input
+                    type="checkbox"
+                    checked={compareKeys.includes(item.record_key)}
+                    onChange={() => toggleCompare(item.record_key)}
+                    disabled={!compareKeys.includes(item.record_key) && compareKeys.length >= 4}
+                    aria-label={`选择对比 ${item.record_key}`}
+                  />
+                  对比
+                </label>
                 <div className="result-main">
                   <div className="result-title-row">
                     <button
@@ -320,6 +395,10 @@ export default function App() {
 
       {detailKey && (
         <DetailModal recordKey={detailKey} onClose={() => setDetailKey(null)} />
+      )}
+
+      {showCompare && compareKeys.length >= 2 && (
+        <CompareModal recordKeys={compareKeys} onClose={() => setShowCompare(false)} />
       )}
 
       <footer className="footer">

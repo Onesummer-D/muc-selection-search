@@ -1,5 +1,6 @@
 import type {
   AnswerResponse, MeResponse, ParseResponse, RecordDetail, Role, SearchResponse,
+  StatsResponse,
 } from './types'
 
 export class ApiError extends Error {
@@ -56,6 +57,21 @@ export const api = {
 
   recordDetail: (recordKey: string) =>
     request<RecordDetail>(`/api/records/${encodeURIComponent(recordKey)}`),
+
+  stats: (params: SearchParams) => {
+    const query = new URLSearchParams()
+    for (const [key, value] of Object.entries(params)) {
+      if (value) query.set(key, value)
+    }
+    const qs = query.toString()
+    return request<StatsResponse>(`/api/search/stats${qs ? `?${qs}` : ''}`)
+  },
+
+  compare: (recordKeys: string[]) =>
+    request<{ records: RecordDetail[] }>('/api/compare', {
+      method: 'POST',
+      body: JSON.stringify({ record_keys: recordKeys }),
+    }),
 
   me: () => request<MeResponse>('/api/auth/me'),
 
