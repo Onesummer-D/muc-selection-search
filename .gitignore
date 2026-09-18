@@ -83,6 +83,8 @@ logs/
 tmp/
 temp/
 .cache/
+.qa/
+*.inspect.ndjson
 
 # =========================
 # Frontend / Node

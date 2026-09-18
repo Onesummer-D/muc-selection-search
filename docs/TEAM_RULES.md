@@ -67,11 +67,11 @@ DataSourceAdapter
 Extractor
 Repository
 Retriever
-VectorStore
-EmbeddingProvider
 LLMProvider
 
 不得绕过接口直接依赖其他模块内部实现。
+
+本期不实现语义检索，不创建 `VectorStore` 或 `EmbeddingProvider` 空壳；以后只有重新拍板并有评测收益时再补充。
 
 ---
 

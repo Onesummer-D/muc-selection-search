@@ -7,6 +7,8 @@
 
 两部分必须分开理解。文中标记为“目标”的模块不能当作已经接入的功能。
 
+附录 G 已在 2026 年 9 月 18 日完成拍板。正式前端使用 React、TypeScript 和 Vite，Flask 只提供 API；视觉使用学校官方民大红 `#A20000`，不再沿用当前 Demo 的墨绿主色；第一周不启用 Embedding，当前项目不排期语义检索。完整决定和产品规则见 [`APPENDIX_G_DECISIONS.md`](APPENDIX_G_DECISIONS.md)。本文件如与决策记录冲突，以决策记录为准。
+
 ## 1. 架构约束
 
 系统围绕可信检索设计，以下约束优先级高于单个功能的便利性
@@ -39,8 +41,8 @@ flowchart LR
 
 | 文件 | 当前职责 | 迁移时的去向 |
 | --- | --- | --- |
-| `index.html` | 页面结构、控件、弹窗和语义标记 | 保留为前端页面层，或拆成组件模板 |
-| `styles.css` | 颜色、间距、组件状态和窄屏规则 | 保留为前端样式层 |
+| `index.html` | 页面结构、控件、弹窗和语义标记 | 迁移为 React 页面和组件，不作为正式入口保留 |
+| `styles.css` | 颜色、间距、组件状态和窄屏规则 | 迁移为 React 前端样式，并替换为民大红品牌变量 |
 | `app.js` 中的 `records` | 3 条虚构记录和字段级证据 | 替换为 API 返回的 DTO |
 | `app.js` 中的 `state` | 当前视图、搜索模式、角色、AI 开关、无痕状态和对比选择 | 拆为前端 UI 状态与服务端会话状态 |
 | `runSearch` | 规范化、解析、筛选、排序和结果更新 | 迁移为服务端 `SearchService`，前端只发查询请求 |
@@ -117,13 +119,13 @@ sequenceDiagram
 
 ```mermaid
 flowchart TB
-  Client[Web Client] --> API[Web / API Layer]
+  Client[React TypeScript Vite] --> API[Flask API Layer]
   API --> App[Application Services]
   App --> Search[SearchService]
   App --> User[UserService / RolePolicy]
   App --> RAG[AnswerService]
   App --> Compare[Compare and Export Service]
-  Search --> Retriever[Structured + Lexical + Semantic Retrievers]
+  Search --> Retriever[Structured + Lexical Retrievers]
   Search --> Ranker[FusionRanker]
   Ranker --> EvidencePack[EvidencePack]
   RAG --> EvidencePack
@@ -134,8 +136,6 @@ flowchart TB
   Sync[SyncService] --> Portal[PortalAdapter + AuthProvider]
   Sync --> Process[OCR / Extractor / Validator]
   Process --> Repo
-  Embedding[EmbeddingProvider] --> Semantic[SemanticRetriever]
-  Vector[VectorStore] --> Semantic
   LLM[LLMProvider] --> RAG
 ```
 
@@ -146,11 +146,18 @@ flowchart TB
 | Web / API | 参数校验、响应格式、认证上下文、错误映射 | 业务排序、OCR、提示词拼接 |
 | Application | 编排搜索、详情、对比、导出和用户用例 | 绑定具体数据库或模型供应商 |
 | Domain | 记录、证据、查询计划、权限策略和状态规则 | 页面渲染、HTTP 细节 |
-| Search | 结构化检索、全文检索、语义检索和融合排序 | 生成答案、用户认证、同步门户 |
+| Search | 结构化检索、全文检索和可解释排序 | 生成答案、用户认证、同步门户 |
 | RAG | 解释查询、消费 Evidence Pack、生成带引用答案 | 直接查数据库或补齐缺失字段 |
 | Data processing | 获取内容、OCR、字段抽取、校验、人工复核 | 决定页面权限或答案措辞 |
-| Infrastructure | SQLite、向量存储、门户认证、LLM、Embedding 和通知适配器 | 暴露给业务层的具体实现细节 |
-| Frontend | 查询输入、结果展示、详情、对比和状态反馈 | 判断真实权限、生成脱敏原图 |
+| Infrastructure | SQLite、门户认证、LLM 和通知适配器 | 暴露给业务层的具体实现细节 |
+| Frontend | React 页面、查询输入、结果展示、详情、对比、导出和状态反馈 | 判断真实权限、生成脱敏原图、直接访问数据库 |
+
+### 4.2 前后端边界
+
+- 前端代码位于 `frontend/`，使用 React、TypeScript 和 Vite。开发环境通过 Vite proxy 访问 `/api`。
+- Flask 位于 `app/web/`，只提供 JSON API、认证会话、健康检查和生产静态文件入口。
+- 生产环境把 Vite 构建产物与 Flask 放在同一域名下，由 Nginx 或等价反向代理统一提供 HTTPS，避免把宽泛 CORS 作为部署前提。
+- 现有静态 Demo 是迁移验收基线。React 版本必须保留首页分段搜索、结果、详情、对比、导出、降级和移动端流程，但不能继续复制浏览器内虚构数据作为正式数据源。
 
 ## 5. 数据域与生命周期
 
@@ -305,29 +312,11 @@ FTS5 trigram 召回
 
 ### 6.3 语义检索
 
-语义检索是增强能力，不能成为首版运行前提。业务层只依赖下面的接口
+附录 G6 和 G7 已决定第一周不启用 Embedding，当前项目也不排期语义检索。本期不得创建 `EmbeddingProvider`、`VectorStore`、`SemanticRetriever` 空壳，不下载模型，也不把向量服务写成验收依赖。未来只有团队重新拍板且固定查询评测证明存在可重复收益时，才另开设计记录。
 
-```text
-EmbeddingProvider
-VectorStore
-SemanticRetriever
-```
+### 6.4 未来融合排序边界（本期不实现）
 
-初始实现可以使用本地 Embedding 和内存或 NumPy 向量存储。更换到 pgvector、Qdrant 或 Milvus 时，业务层不应跟着重写。
-
-`VectorStore` 至少应支持
-
-```text
-upsert(document_id, vector, metadata)
-delete(document_id)
-search(query_vector, top_k, filters)
-rebuild()
-health_check()
-```
-
-### 6.4 融合排序
-
-同时启用关键词和语义检索时，使用独立的 `FusionRanker` 合并候选结果。第一版优先采用容易解释和测试的 RRF 等方法，暂不设计大量未经评测的人工权重。
+若未来经新一轮评测决定同时启用关键词和语义检索，再使用独立的 `FusionRanker` 合并候选结果，并优先采用容易解释和测试的 RRF。本期不得创建该模块或把它列入验收。
 
 ## 7. AI 与 RAG 边界
 
@@ -384,7 +373,7 @@ AnswerResult
 | 角色 | 默认视图 | 主要能力 |
 | --- | --- | --- |
 | `GUEST` | 公开、脱敏视图 | 公开检索、基础结果、公开统计和脱敏详情 |
-| `STUDENT` | 校内授权视图 | 授权字段、完整海报、收藏、搜索历史和关注 |
+| `STUDENT` | 校内授权视图 | 授权字段、收藏、保存搜索、隐私控制和站内提醒；完整海报默认关闭 |
 | `ADMIN` | 管理视图 | 同步、复核、发布、异常处理和管理日志 |
 
 ### 8.1 权限执行位置
@@ -397,7 +386,7 @@ AnswerResult
 ExperienceRecord
   ↓ RolePolicy + RecordPresenter
 GUEST   → 脱敏字段和脱敏资源
-STUDENT → 授权字段和完整资源
+STUDENT → 授权字段；完整海报由默认关闭的策略开关控制
 ADMIN   → 完整字段、证据和管理状态
 ```
 
@@ -417,16 +406,40 @@ poster_guest.webp
 
 无痕模式的目标行为是当前搜索不写入长期搜索历史、不更新用户画像、不产生长期推荐信号。它不等同于完全关闭安全审计日志，安全日志仍需遵守最小化和权限控制原则。
 
-## 9. Repository 与外部适配器
+搜索历史和推荐画像默认关闭。用户明确开启后，普通搜索历史保存 90 天并允许随时清空。安全审计日志与个人历史分开，日志不记录完整查询文本。“系统眼中的我”只展示可核对、可删除的保存搜索、关注主题、常用筛选和提醒频率，不生成政治倾向、性格、能力或去向判断。
 
-业务服务不得直接绑定 SQLite、某一个向量库、某一家 LLM 或某一种 CAS 实现。
+### 8.4 CAS 与开发角色开关
+
+正式环境使用 CAS/SSO 跳转和服务端票据验证，应用不得接收学校密码。开发环境可通过显式环境变量启用 `GUEST`、`STUDENT`、`ADMIN` 角色开关；生产配置必须关闭该入口，并用自动化测试确认接口不可访问。角色开关只用于开发和课堂演示，不属于认证功能。
+
+### 8.5 游客资源矩阵
+
+游客 DTO 必须删除姓名、头像、二维码、联系方式、会议入口、原始海报、本机路径和需要 CAS 的直接来源 URL。游客只接收匿名记录编号、公开业务字段、脱敏证据和脱敏派生素材。校内完整海报仍由独立策略开关控制，学校授权前保持关闭。详细矩阵见附录 G 决策记录。
+
+## 9. 已选 P1 功能
+
+当前项目实现下面六项：对比台、Excel/CSV 导出、当前结果可视化、保存搜索与站内关注提醒、系统眼中的我/隐私中心、无痕模式。不实现 ICS 日历和语义检索。
+
+- Excel 固定导出 `搜索结果`、`字段证据`、`来源文章`、`导出说明` 四个工作表；CSV 只导出当前结果的扁平公开字段。
+- 保存搜索由用户主动创建，站内提醒默认每周，可改为每日或关闭，不发送邮件或短信。
+- 第一周保住对比、导出和结果可视化，并冻结保存搜索、提醒、隐私和无痕所需 API；第二周完成持久化和用户设置。
+
+## 10. 部署架构
+
+最终方案为云服务器或学校可用服务器加 HTTPS，并保留 LAN 灾备镜像。生产建议使用 Nginx 或等价反向代理处理 TLS 和静态资源，Flask 进程只监听内部端口。证书使用 Let’s Encrypt、Certbot 或云平台托管方式签发并自动续期。
+
+第一周的部署硬门槛是本机和同一局域网另一台设备可访问首页、搜索、详情和 `/healthz`，并提交服务器、域名、端口、反向代理、证书及备份清单。没有公网服务器或域名不构成第一周 P0。公共 HTTPS 在资源就绪后的第二周完成。
+
+## 11. Repository 与外部适配器
+
+业务服务不得直接绑定 SQLite、某一家 LLM 或某一种 CAS 实现。
 
 ```text
 Application Service
   ↓ interface
-Repository / PortalAdapter / AuthProvider / LLMProvider / VectorStore
+Repository / PortalAdapter / AuthProvider / LLMProvider
   ↓ implementation
-SQLite / School Portal / CAS / External LLM / Vector Backend
+SQLite / School Portal / CAS / External LLM
 ```
 
 首版可以从下面的实现开始
@@ -435,14 +448,12 @@ SQLite / School Portal / CAS / External LLM / Vector Backend
 Repository        → SQLiteRepository
 PortalAdapter     → SchoolPortalAdapter
 AuthProvider      → CASProvider
-EmbeddingProvider → LocalEmbeddingProvider
-VectorStore       → NumpyVectorStore
 LLMProvider       → ConfiguredLLMProvider
 ```
 
 接口的目的在于隔离变化。只有在具体实现已经成为真实约束时，才新增适配器，不为尚未确定的服务堆叠空壳模块。
 
-## 10. 可靠性与降级
+## 12. 可靠性与降级
 
 能力按依赖从少到多排列
 
@@ -450,8 +461,6 @@ LLMProvider       → ConfiguredLLMProvider
 已发布本地数据
   ↓
 结构化 + 关键词检索
-  ↓
-语义检索
   ↓
 RAG 答案
 ```
@@ -461,13 +470,11 @@ RAG 答案
 | 故障 | 处理方式 |
 | --- | --- |
 | LLM 不可用 | 隐藏或标记 AI 摘要，保留传统结果和证据详情 |
-| Embedding 不可用 | 跳过语义召回，继续结构化和全文检索 |
 | 门户认证失效 | 将同步任务标记为需要授权，继续提供上一份已发布快照 |
 | OCR 或抽取置信度低 | 进入人工复核，禁止直接发布为确定字段 |
-| 向量库不可用 | 暂停语义检索，不影响传统检索 |
 | 通知服务不可用 | 保留关注关系，延迟发送通知，不影响检索 |
 
-## 11. 从 Demo 迁移到服务端
+## 13. 从 Demo 迁移到服务端
 
 | Demo 位置 | 服务端迁移方向 |
 | --- | --- |
@@ -480,11 +487,11 @@ RAG 答案
 | `exportCurrent` | 经过权限校验的导出服务 |
 | `toggleAi` | 服务健康状态和前端降级提示 |
 | `toggleNoTrace` | 用户会话选项与历史记录策略 |
-| `data-role` 角色按钮 | CAS/SSO 登录后的服务端身份，不保留前端伪造入口 |
+| `data-role` 角色按钮 | CAS/SSO 登录后的服务端身份；仅开发环境保留受开关保护的模拟入口 |
 
-推荐迁移顺序是先替换数据来源，再迁移传统检索，接着补充服务端权限和脱敏，最后接入语义检索与 RAG。每一步都要保留可运行的传统检索路径。
+推荐迁移顺序是先建立 Flask API 与 React/Vite 骨架，再替换数据来源和传统检索，接着补充服务端权限、脱敏与带引用回答。当前阶段不接入语义检索。每一步都要保留可运行的传统检索路径。
 
-## 12. 安全底线
+## 14. 安全底线
 
 - 数据库查询使用参数化接口。
 - HTML 和富文本输出经过转义或白名单清洗。
@@ -495,7 +502,7 @@ RAG 答案
 - 日志不记录密码、Cookie、完整个人信息和原始敏感内容。
 - 导出接口重新执行权限校验，不能信任前端传入的记录 ID 列表。
 
-## 13. 当前不做
+## 15. 当前不做
 
 在团队正式调整范围前，当前版本不引入下面内容
 
@@ -503,6 +510,8 @@ RAG 答案
 复杂微服务拆分
 Redis 或消息队列
 完整 Elasticsearch 集群
+Embedding 与语义检索
+ICS 日历导出
 强依赖独立向量数据库
 AI Agent 自动执行高风险操作
 任意文件上传和文件内容搜索
