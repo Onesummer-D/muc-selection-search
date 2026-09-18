@@ -74,6 +74,10 @@ class Repository(ABC):
         ...
 
     @abstractmethod
+    def set_visibility(self, record_key: str, visibility: str) -> None:
+        """人工复核后的发布状态变更（draft/published/withdrawn）。"""
+
+    @abstractmethod
     def count_articles(self) -> int:
         ...
 

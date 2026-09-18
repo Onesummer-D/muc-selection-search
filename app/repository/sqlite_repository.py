@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+import threading
 from contextlib import contextmanager
 from datetime import datetime
 from typing import Iterator
@@ -106,6 +107,25 @@ CREATE TABLE IF NOT EXISTS processing_events (
 CREATE INDEX IF NOT EXISTS idx_records_notice ON experience_records(notice_id);
 CREATE INDEX IF NOT EXISTS idx_evidence_record ON evidence(record_key);
 CREATE INDEX IF NOT EXISTS idx_events_notice ON processing_events(notice_id);
+
+-- 文章全文索引：外部内容表 + trigram 分词（任务0已验证本机支持）
+CREATE VIRTUAL TABLE IF NOT EXISTS articles_fts USING fts5(
+  title, clean_text, content='articles', content_rowid='rowid', tokenize='trigram'
+);
+CREATE TRIGGER IF NOT EXISTS articles_ai AFTER INSERT ON articles BEGIN
+  INSERT INTO articles_fts(rowid, title, clean_text)
+  VALUES (new.rowid, new.title, new.clean_text);
+END;
+CREATE TRIGGER IF NOT EXISTS articles_ad AFTER DELETE ON articles BEGIN
+  INSERT INTO articles_fts(articles_fts, rowid, title, clean_text)
+  VALUES ('delete', old.rowid, old.title, old.clean_text);
+END;
+CREATE TRIGGER IF NOT EXISTS articles_au AFTER UPDATE ON articles BEGIN
+  INSERT INTO articles_fts(articles_fts, rowid, title, clean_text)
+  VALUES ('delete', old.rowid, old.title, old.clean_text);
+  INSERT INTO articles_fts(rowid, title, clean_text)
+  VALUES (new.rowid, new.title, new.clean_text);
+END;
 """
 
 _UPSERT_ARTICLE = """
@@ -178,7 +198,9 @@ class SQLiteRepository(Repository):
     """SQLite 实现；file 路径或 ':memory:'。"""
 
     def __init__(self, path: str = ":memory:") -> None:
-        self._conn = sqlite3.connect(path, isolation_level=None)
+        # Flask 在请求线程中访问连接，check_same_thread=False + 全局锁串行化
+        self._lock = threading.RLock()
+        self._conn = sqlite3.connect(path, isolation_level=None, check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         self._conn.execute("PRAGMA foreign_keys = ON")
         self.init_schema()
@@ -193,26 +215,28 @@ class SQLiteRepository(Repository):
 
     @contextmanager
     def transaction(self) -> Iterator[None]:
-        self._conn.execute("BEGIN IMMEDIATE")
-        try:
-            yield
-        except BaseException:
-            self._conn.execute("ROLLBACK")
-            raise
-        else:
-            self._conn.execute("COMMIT")
+        with self._lock:
+            self._conn.execute("BEGIN IMMEDIATE")
+            try:
+                yield
+            except BaseException:
+                self._conn.execute("ROLLBACK")
+                raise
+            else:
+                self._conn.execute("COMMIT")
 
     def _execute(self, sql: str, params: tuple) -> None:
         """执行写入语句，并把完整性错误翻译成领域异常。"""
-        try:
-            self._conn.execute(sql, params)
-        except sqlite3.IntegrityError as exc:
-            message = str(exc)
-            if "FOREIGN KEY" in message:
-                raise MissingArticleError(
-                    f"外键约束失败：引用的 notice_id 尚未导入，请先导入对应 article bundle（{message}）"
-                ) from exc
-            raise StorageIntegrityError(f"完整性约束失败：{message}") from exc
+        with self._lock:
+            try:
+                self._conn.execute(sql, params)
+            except sqlite3.IntegrityError as exc:
+                message = str(exc)
+                if "FOREIGN KEY" in message:
+                    raise MissingArticleError(
+                        f"外键约束失败：引用的 notice_id 尚未导入，请先导入对应 article bundle（{message}）"
+                    ) from exc
+                raise StorageIntegrityError(f"完整性约束失败：{message}") from exc
 
     # ---- 写入 ----
 
@@ -272,13 +296,23 @@ class SQLiteRepository(Repository):
              event.failure_reason, event.occurred_at, _now()),
         )
 
+    def set_visibility(self, record_key: str, visibility: str) -> None:
+        if visibility not in ("draft", "published", "withdrawn"):
+            raise StorageIntegrityError(f"非法的发布状态：{visibility!r}")
+        self._execute(
+            "UPDATE experience_records SET visibility = ?, updated_at = ? WHERE record_key = ?",
+            (visibility, _now(), record_key),
+        )
+
     # ---- 查询 ----
 
     def _query_one(self, sql: str, params: tuple) -> sqlite3.Row | None:
-        return self._conn.execute(sql, params).fetchone()
+        with self._lock:
+            return self._conn.execute(sql, params).fetchone()
 
     def _query_all(self, sql: str, params: tuple) -> list[sqlite3.Row]:
-        return self._conn.execute(sql, params).fetchall()
+        with self._lock:
+            return self._conn.execute(sql, params).fetchall()
 
     def get_article(self, notice_id: str) -> Article | None:
         row = self._query_one("SELECT * FROM articles WHERE notice_id = ?", (notice_id,))
@@ -329,11 +363,94 @@ class SQLiteRepository(Repository):
             )
         return [_event_from_row(row) for row in rows]
 
+    # ---- 检索支持 ----
+
+    def find_notice_ids_by_keywords(self, keywords: list[str]) -> set[str]:
+        """关键词召回：FTS5 trigram MATCH（≥3字）+ 归一化 LIKE 回退（1-2字中文短词）。
+
+        关键词是参数化传入的用户输入，MATCH 查询把每个词用双引号包裹成短语，
+        防止词内特殊字符被解释为 FTS 查询语法。
+        """
+        matched: set[str] = set()
+        with self._lock:
+            for keyword in keywords:
+                fts_rows = self._conn.execute(
+                    "SELECT notice_id FROM articles WHERE rowid IN "
+                    "(SELECT rowid FROM articles_fts WHERE articles_fts MATCH ?)",
+                    (f'"{keyword}"',),
+                ).fetchall()
+                matched.update(row["notice_id"] for row in fts_rows)
+                if not fts_rows:
+                    like_rows = self._conn.execute(
+                        "SELECT notice_id FROM articles WHERE title LIKE ? OR clean_text LIKE ?",
+                        (f"%{keyword}%", f"%{keyword}%"),
+                    ).fetchall()
+                    matched.update(row["notice_id"] for row in like_rows)
+        return matched
+
+    def list_records_with_articles(
+        self, visibility: str | None = None
+    ) -> list[tuple[ExperienceRecord, Article]]:
+        """记录与文章联查（角色可见性过滤在调用方按 RolePolicy 决定）。"""
+        if visibility is None:
+            rows = self._query_all(
+                "SELECT r.*, a.title AS a_title, a.source_url AS a_source_url, "
+                "a.published_at AS a_published_at, a.content_type AS a_content_type, "
+                "a.fetch_status AS a_fetch_status, a.clean_text AS a_clean_text, "
+                "a.schema_version AS a_schema_version, a.fetched_at AS a_fetched_at, "
+                "a.failure_reason AS a_failure_reason "
+                "FROM experience_records r JOIN articles a ON r.notice_id = a.notice_id",
+                (),
+            )
+        else:
+            rows = self._query_all(
+                "SELECT r.*, a.title AS a_title, a.source_url AS a_source_url, "
+                "a.published_at AS a_published_at, a.content_type AS a_content_type, "
+                "a.fetch_status AS a_fetch_status, a.clean_text AS a_clean_text, "
+                "a.schema_version AS a_schema_version, a.fetched_at AS a_fetched_at, "
+                "a.failure_reason AS a_failure_reason "
+                "FROM experience_records r JOIN articles a ON r.notice_id = a.notice_id "
+                "WHERE r.visibility = ?",
+                (visibility,),
+            )
+        results: list[tuple[ExperienceRecord, Article]] = []
+        for row in rows:
+            record = _record_from_row(row)
+            article = Article(
+                notice_id=row["notice_id"],
+                title=row["a_title"],
+                source_url=row["a_source_url"],
+                content_type=row["a_content_type"],
+                fetch_status=row["a_fetch_status"],
+                fetched_at=row["a_fetched_at"],
+                published_at=row["a_published_at"],
+                clean_text=row["a_clean_text"],
+                failure_reason=row["a_failure_reason"],
+                schema_version=row["a_schema_version"],
+            )
+            results.append((record, article))
+        return results
+
+    def count_evidence_by_record(self) -> dict[str, int]:
+        rows = self._query_all(
+            "SELECT record_key, COUNT(*) AS n FROM evidence GROUP BY record_key", ()
+        )
+        return {row["record_key"]: row["n"] for row in rows}
+
+    def database_ok(self) -> bool:
+        try:
+            with self._lock:
+                self._conn.execute("SELECT 1").fetchone()
+            return True
+        except sqlite3.Error:
+            return False
+
     # ---- 计数 ----
 
     def _count(self, table: str) -> int:
         # 表名来自本模块内部常量调用点，不接收外部输入
-        return int(self._conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0])
+        with self._lock:
+            return int(self._conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0])
 
     def count_articles(self) -> int:
         return self._count("articles")
