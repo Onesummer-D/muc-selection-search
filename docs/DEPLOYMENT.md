@@ -46,3 +46,120 @@ CAS 回调地址必须使用最终 HTTPS 域名，并在学校 CAS 侧登记为�
 ## 4. 不具备公网条件时
 
 没有服务器、域名或学校 CAS 配置时，第一周按 LAN 验收，不得编造公网地址或把自签名证书截图写成正式通过。把缺失资源、负责人和预计完成时间记录到 `progress/week1/C/BLOCKED.md`，演示时明确“正式 HTTPS 待资源到位”。
+
+## 5. 命令级执行手册（服务器资源到位后照此执行）
+
+### 5.1 服务器准备（Ubuntu 22.04/24.04）
+
+```bash
+sudo apt update && sudo apt install -y nginx certbot python3-certbot-nginx
+sudo ufw allow 80,443/tcp && sudo ufw enable
+# 创建运行账号与目录（数据库和受限素材不放 Web 静态目录）
+sudo useradd -r -s /usr/sbin/nologin xuandiaoyan
+sudo mkdir -p /opt/xuandiaoyan /var/lib/xuandiaoyan /etc/xuandiaoyan
+```
+
+### 5.2 应用发布
+
+```bash
+# 服务器上拉取 main（合并后），构建前端
+git clone https://github.com/Onesummer-D/muc-selection-search.git /opt/xuandiaoyan/app
+cd /opt/xuandiaoyan/app/frontend && npm ci && npm run build
+python3 -m venv /opt/xuandiaoyan/venv
+/opt/xuandiaoyan/venv/bin/pip install flask openpyxl gunicorn
+# 数据库与密钥
+python3 -m app.web.seed /var/lib/xuandiaoyan/app.db
+```
+
+生产环境变量只放 `/etc/xuandiaoyan/env`（root:root 600），至少包含：
+
+```text
+APP_ENV=production
+SECRET_KEY=<openssl rand -hex 32 生成>
+ENABLE_DEV_ROLE_SWITCH=false          # 生产必须 false
+CAMPUS_ORIGINAL_ASSET_ENABLED=false   # 学校书面授权前必须 false
+DATABASE_URL=/var/lib/xuandiaoyan/app.db
+LLM_PROVIDER=deepseek
+LLM_API_KEY=<由负责人从受控存储注入，不入库>
+```
+
+### 5.3 systemd 常驻（Gunicorn，Flask 只监听本机回环）
+
+```ini
+# /etc/systemd/system/xuandiaoyan.service
+[Unit]
+Description=xuandiaoyan Flask API
+After=network.target
+
+[Service]
+User=xuandiaoyan
+EnvironmentFile=/etc/xuandiaoyan/env
+WorkingDirectory=/opt/xuandiaoyan/app
+ExecStart=/opt/xuandiaoyan/venv/bin/gunicorn -w 2 -b 127.0.0.1:8000 \
+  "app.web.app:create_app()"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+sudo systemctl daemon-reload && sudo systemctl enable --now xuandiaoyan
+curl -s http://127.0.0.1:8000/healthz   # 本机自检
+```
+
+### 5.4 Nginx 反向代理 + 静态资源
+
+```nginx
+# /etc/nginx/sites-available/xuandiaoyan
+server {
+  listen 80;
+  server_name <你的域名>;
+  return 301 https://$host$request_uri;
+}
+server {
+  listen 443 ssl;
+  server_name <你的域名>;
+  root /opt/xuandiaoyan/app/frontend/dist;
+  index index.html;
+
+  location /api/     { proxy_pass http://127.0.0.1:8000; proxy_set_header Host $host; }
+  location /healthz  { proxy_pass http://127.0.0.1:8000; }
+  location / { try_files $uri /index.html; }   # SPA 回落
+}
+```
+
+### 5.5 证书签发与自动续期
+
+```bash
+sudo certbot --nginx -d <你的域名>          # 签发并自动写 443 配置
+sudo certbot renew --dry-run               # 续期演练必须通过
+systemctl list-timers | grep certbot       # 确认自动续期定时器存在
+```
+
+### 5.6 数据库备份
+
+```bash
+# /etc/cron.daily/xuandiaoyan-backup —— SQLite 在线备份，保留 14 天
+sqlite3 /var/lib/xuandiaoyan/app.db ".backup /var/backups/xuandiaoyan/app-$(date +\%F).db"
+find /var/backups/xuandiaoyan -name 'app-*.db' -mtime +14 -delete
+```
+
+### 5.7 LAN 灾备（任一成员电脑即可启动）
+
+```bash
+python -m app.web.seed data/app.db        # 刷新演示库（可选）
+python -c "from app.web.app import create_app; create_app().run(host='0.0.0.0', port=5000)"
+# Windows 防火墙放行 5000（演示后删除规则）：
+# netsh advfirewall firewall add rule name="xuandiaoyan-demo" dir=in action=allow protocol=TCP localport=5000
+# 同一局域网设备访问 http://<本机内网IP>:5000 与 http://<本机内网IP>:5000/healthz
+```
+
+LAN 灾备只服务演示兜底：数据用最近一次脱敏快照，不承担公网流量，不开启开发角色开关以外的任何生产配置。
+
+### 5.8 上线前最后一遍核对
+
+- `curl -I https://<域名>` 无证书警告，HTTP 全部 301 到 HTTPS
+- 三角色 + 传统检索 + AI 回答 + 导出 + `/healthz` 全链路复测
+- `ENABLE_DEV_ROLE_SWITCH=false` 时 `POST /api/dev/role` 返回 404
+- 敏感文件扫描通过（任务4 统一执行），备份可恢复
