@@ -1,0 +1,216 @@
+/* 选调研 前端样式 —— 附录 G G2：校园官方可信感 + Answer Engine 轻交互。
+   品牌强调色为民大红 #A20000；禁用墨绿主色、大面积渐变、玻璃拟态。 */
+
+:root {
+  --brand: #a20000;
+  --brand-dark: #7d0000;
+  --ink: #1f2329;
+  --ink-2: #4e5561;
+  --muted: #8a919c;
+  --line: #e3e6ea;
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --ok: #1a7f37;
+  --warn: #b26a00;
+  --bad: #c62828;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+
+button { font: inherit; cursor: pointer; }
+input, select { font: inherit; }
+
+/* ---- 顶栏 ---- */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px; background: var(--card); border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: baseline; gap: 10px; }
+.brand-mark { font-size: 20px; font-weight: 700; color: var(--brand); }
+.brand-sub { font-size: 13px; color: var(--ink-2); }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.role-badge {
+  font-size: 12px; padding: 3px 10px; border-radius: 999px;
+  background: #f1e3e3; color: var(--brand-dark);
+}
+.role-badge.role-admin { background: var(--brand); color: #fff; }
+.role-switch { border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; }
+
+/* ---- 首页 ---- */
+.home { flex: 1; max-width: 720px; width: 100%; margin: 0 auto; padding: 64px 20px; }
+.hero-title {
+  text-align: center; font-size: 28px; font-weight: 700; margin: 0 0 28px;
+}
+.search-box {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+.segmented {
+  display: inline-flex; border: 1px solid var(--line); border-radius: 8px;
+  overflow: hidden; margin-bottom: 14px;
+}
+.segmented button {
+  border: none; background: transparent; padding: 7px 18px; color: var(--ink-2);
+}
+.segmented button.active { background: var(--brand); color: #fff; }
+.search-form { display: flex; gap: 10px; }
+.search-form input {
+  flex: 1; padding: 11px 14px; border: 1px solid var(--line);
+  border-radius: 8px; outline: none;
+}
+.search-form input:focus { border-color: var(--brand); }
+.search-form button {
+  padding: 11px 22px; border: none; border-radius: 8px;
+  background: var(--brand); color: #fff;
+}
+.search-form button:hover { background: var(--brand-dark); }
+.search-form button:disabled { opacity: .6; cursor: default; }
+.examples { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.center { text-align: center; }
+
+/* ---- 结果页 ---- */
+.results-page { flex: 1; max-width: 860px; width: 100%; margin: 0 auto; padding: 20px; }
+.results-toolbar {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;
+}
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter-bar select, .filter-bar input {
+  padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card);
+}
+.filter-bar button {
+  padding: 8px 16px; border: none; border-radius: 8px;
+  background: var(--brand); color: #fff;
+}
+.filter-bar button:disabled { opacity: .6; }
+
+.btn-ghost {
+  border: 1px solid var(--line); background: var(--card); color: var(--ink-2);
+  border-radius: 8px; padding: 6px 12px;
+}
+.btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+.results-meta { font-size: 13px; color: var(--ink-2); margin: 10px 0; }
+
+/* ---- AI 回答面板 ---- */
+.answer-panel {
+  background: var(--card); border: 1px solid var(--line);
+  border-left: 3px solid var(--brand); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 14px;
+}
+.answer-panel.degraded { border-left-color: var(--warn); }
+.answer-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.answer-header h3 { margin: 0; font-size: 15px; }
+.degraded-note { color: var(--warn); font-size: 13px; margin: 4px 0; }
+.answer-text { margin: 8px 0; line-height: 1.7; }
+.citation-list { margin: 10px 0 0; padding-left: 20px; font-size: 13px; }
+.citation-list li { margin-bottom: 4px; }
+.citation-record { font-weight: 600; }
+
+/* ---- 查询计划 ---- */
+.plan-panel {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px;
+}
+.plan-panel h3 { margin: 0 0 8px; font-size: 14px; color: var(--ink-2); }
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.chip {
+  font-size: 12px; padding: 3px 10px; border-radius: 999px;
+  background: #f1e3e3; color: var(--brand-dark);
+}
+.chip-reason { background: #f0f2f5; color: var(--ink-2); }
+.chip-action { background: var(--card); border: 1px dashed var(--brand); color: var(--brand); }
+.reason-list { margin: 8px 0 0; padding-left: 18px; font-size: 13px; color: var(--ink-2); }
+.reason-weight { color: var(--brand); }
+
+/* ---- 结果列表：桌面紧凑列表，移动单列大卡 ---- */
+.result-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.result-card {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px 18px;
+}
+.result-card:hover { border-color: #c9a0a0; }
+.result-title-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.result-title {
+  border: none; background: none; padding: 0; font-size: 16px; font-weight: 600;
+  color: var(--ink); text-align: left;
+}
+.result-title:hover { color: var(--brand); }
+.result-fields { margin: 6px 0 2px; color: var(--ink-2); font-size: 14px; }
+.btn-detail {
+  flex-shrink: 0; border: 1px solid var(--brand); background: var(--card);
+  color: var(--brand); border-radius: 8px; padding: 7px 16px;
+}
+.btn-detail:hover { background: var(--brand); color: #fff; }
+
+.empty-state {
+  background: var(--card); border: 1px dashed var(--line);
+  border-radius: var(--radius); padding: 28px; text-align: center;
+}
+
+/* ---- 状态徽章 ---- */
+.badge {
+  font-size: 12px; padding: 2px 9px; border-radius: 999px; background: #f0f2f5;
+  color: var(--ink-2);
+}
+.badge-warn { background: #fdf3e0; color: var(--warn); }
+.status-processed { background: #e5f3e8; color: var(--ok); }
+.status-review_required { background: #fdf3e0; color: var(--warn); }
+.status-pending { background: #f0f2f5; color: var(--ink-2); }
+.status-failed { background: #fbe4e4; color: var(--bad); }
+
+/* ---- 详情弹窗：字段与证据并排 ---- */
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(31,35,41,.45);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 16px; overflow-y: auto; z-index: 50;
+}
+.modal {
+  background: var(--card); border-radius: var(--radius);
+  max-width: 860px; width: 100%; padding: 22px 24px;
+}
+.modal-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.modal-header h2 { margin: 0; font-size: 18px; flex: 1; }
+.evidence-table {
+  width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 14px;
+}
+.evidence-table th, .evidence-table td {
+  border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top;
+}
+.evidence-table thead th { background: #f7f8fa; }
+.evidence-list { margin: 0; padding-left: 16px; }
+
+/* ---- 通用 ---- */
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.error-text { color: var(--bad); background: #fbe4e4; border-radius: 8px; padding: 10px 14px; }
+.footer {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
+  padding: 14px 24px; font-size: 12px; color: var(--muted);
+  border-top: 1px solid var(--line); background: var(--card);
+}
+
+/* ---- 移动端 390×844 / 平板 768×1024 适配 ---- */
+@media (max-width: 768px) {
+  .topbar { padding: 10px 14px; }
+  .home { padding: 40px 14px; }
+  .hero-title { font-size: 22px; }
+  .search-form { flex-direction: column; }
+  .search-form button { width: 100%; }
+  .result-card { flex-direction: column; align-items: stretch; }
+  .btn-detail { width: 100%; }
+  .filter-bar { flex-direction: column; }
+  .filter-bar select, .filter-bar input, .filter-bar button { width: 100%; }
+  .evidence-table { font-size: 12px; }
+  .evidence-table th, .evidence-table td { padding: 6px; }
+}
