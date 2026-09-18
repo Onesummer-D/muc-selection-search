@@ -81,8 +81,62 @@ class SearchService:
         self._presenter = presenter or RecordPresenter()
 
     def search(self, plan: QueryPlan, role: str) -> SearchOutcome:
+        scored, evidence_counts = self._scored(plan, role)
+        outcome = SearchOutcome(
+            plan=plan,
+            total=len(scored),
+            page=plan.page,
+            page_size=plan.page_size,
+            empty_plan=plan.is_empty(),
+        )
+        start = (plan.page - 1) * plan.page_size
+        for score, reasons, record, article in scored[start:start + plan.page_size]:
+            dto = self._presenter.present_summary(record, article, role)
+            dto["score"] = score
+            dto["match_reasons"] = reasons
+            dto["evidence_count"] = evidence_counts.get(record.record_key, 0)
+            outcome.items.append(dto)
+
+        if not scored and not plan.is_empty():
+            outcome.relaxations = self._relaxations(plan, self._candidates(role))
+        return outcome
+
+    def stats(self, plan: QueryPlan, role: str) -> dict:
+        """当前查询 + 当前角色可见记录的聚合统计，不泄露隐藏分组。"""
+        scored, evidence_counts = self._scored(plan, role)
+        distributions: dict[str, dict[str, int]] = {
+            "education": {}, "city": {}, "cohort": {},
+        }
+        review_status: dict[str, int] = {}
+        with_evidence = 0
+        for _score, _reasons, record, _article in scored:
+            for key in distributions:
+                value = getattr(record, key)
+                if value:
+                    distributions[key][value] = distributions[key].get(value, 0) + 1
+            review_status[record.review_status] = \
+                review_status.get(record.review_status, 0) + 1
+            if evidence_counts.get(record.record_key, 0) > 0:
+                with_evidence += 1
+        return {
+            "total": len(scored),
+            "distributions": distributions,
+            "with_field_evidence": with_evidence,
+            **({"review_status_distribution": review_status}
+               if role == "admin" else {}),
+        }
+
+    def _candidates(
+        self, role: str
+    ) -> list[tuple[ExperienceRecord, Article]]:
         visibility = "published" if published_only(role) else None
-        candidates = self._repo.list_records_with_articles(visibility)
+        return self._repo.list_records_with_articles(visibility)
+
+    def _scored(
+        self, plan: QueryPlan, role: str
+    ) -> tuple[list[tuple[int, list[dict], ExperienceRecord, Article]], dict[str, int]]:
+        """候选过滤 + 评分排序；search 与 stats 共用。"""
+        candidates = self._candidates(role)
         evidence_counts = self._repo.count_evidence_by_record()
 
         keyword_hit_notices: set[str] | None = None
@@ -139,25 +193,7 @@ class SearchService:
             ),
             reverse=True,
         )
-
-        outcome = SearchOutcome(
-            plan=plan,
-            total=len(scored),
-            page=plan.page,
-            page_size=plan.page_size,
-            empty_plan=plan.is_empty(),
-        )
-        start = (plan.page - 1) * plan.page_size
-        for score, reasons, record, article in scored[start:start + plan.page_size]:
-            dto = self._presenter.present_summary(record, article, role)
-            dto["score"] = score
-            dto["match_reasons"] = reasons
-            dto["evidence_count"] = evidence_counts.get(record.record_key, 0)
-            outcome.items.append(dto)
-
-        if not scored and not plan.is_empty():
-            outcome.relaxations = self._relaxations(plan, candidates)
-        return outcome
+        return scored, evidence_counts
 
     def _relaxations(
         self,

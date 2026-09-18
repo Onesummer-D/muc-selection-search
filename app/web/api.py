@@ -7,16 +7,19 @@
 
 from __future__ import annotations
 
-from flask import Blueprint, jsonify, request, session
+import io
+
+from flask import Blueprint, jsonify, request, send_file, session
 
 from ..domain.errors import ContractViolation
 from ..domain.presenter import RecordPresenter, assert_no_restricted_fields, role_label
-from ..domain.query_plan import QueryPlan
+from ..domain.query_plan import MAX_PAGE_SIZE, QueryPlan
 from ..domain import role_policy
 from ..repository.base import Repository
 from ..search.answer_service import AnswerService
 from ..search.query_parser import parse_query
 from ..search.search_service import SearchService
+from .exporter import filename, to_csv, to_xlsx
 
 # GET /api/search 允许的查询参数（QueryPlan 白名单）
 SEARCH_PARAMS = ("cohort", "education", "college", "major", "city",
@@ -34,18 +37,7 @@ def build_api_blueprint(repo: Repository, search: SearchService,
 
     @bp.get("/api/search")
     def api_search():
-        _reject_unknown_params()
-        raw = {name: request.args.get(name) for name in SEARCH_PARAMS
-               if request.args.get(name) not in (None, "")}
-        if "page" in raw:
-            raw["page"] = _to_int(raw["page"], "page")
-        if "page_size" in raw:
-            raw["page_size"] = _to_int(raw["page_size"], "page_size")
-        if "keywords" in raw:
-            raw["keywords"] = [
-                token for token in raw["keywords"].replace("，", " ").replace(",", " ").split()
-            ]
-        plan = QueryPlan.from_dict(raw)
+        plan = _plan_from_args()
         outcome = search.search(plan, current_role())
         return jsonify({
             "query_plan": outcome.plan.to_dict(),
@@ -57,6 +49,76 @@ def build_api_blueprint(repo: Repository, search: SearchService,
             "empty_plan": outcome.empty_plan,
             "role": current_role(),
         })
+
+    @bp.get("/api/search/stats")
+    def api_search_stats():
+        """当前查询 + 当前角色可见记录的聚合统计（不泄露隐藏分组）。"""
+        plan = _plan_from_args()
+        return jsonify({
+            "query_plan": plan.to_dict(),
+            "role": current_role(),
+            **search.stats(plan, current_role()),
+        })
+
+    @bp.post("/api/compare")
+    def api_compare():
+        """按 record_key 返回可并列比较的角色 DTO；最多 4 条，继续过 RolePolicy。"""
+        body = _json_body(allowed_keys=("record_keys",))
+        keys = body.get("record_keys")
+        if not isinstance(keys, list) or not keys or len(keys) > 4:
+            raise ContractViolation("body.record_keys: 必须是 1-4 个 record_key 的数组")
+        role = current_role()
+        records = []
+        for key in keys:
+            if not isinstance(key, str):
+                raise ContractViolation("body.record_keys: 元素必须是字符串")
+            record = repo.get_record(key)
+            if record is None:
+                return jsonify({"error": "not_found", "detail": f"记录不存在: {key}"}), 404
+            if role_policy.published_only(role) and record.visibility != "published":
+                return jsonify({"error": "not_found", "detail": f"记录不存在: {key}"}), 404
+            article = repo.get_article(record.notice_id)
+            evidence = repo.list_evidence_for_record(key)
+            dto = presenter.present_full(record, article, evidence, role)
+            assert_no_restricted_fields(dto, role)
+            records.append(dto)
+        return jsonify({"records": records, "role": role})
+
+    @bp.get("/api/export")
+    def api_export():
+        """导出当前查询结果；CSV 扁平字段，XLSX 固定四个工作表。"""
+        fmt = request.args.get("format", "csv").strip().lower()
+        if fmt not in ("csv", "xlsx"):
+            raise ContractViolation("format: 只允许 csv 或 xlsx")
+        plan = _plan_from_args("format")
+        role = current_role()
+        # 导出全量当前匹配：逐页取完（page_size 上限沿用白名单约束）
+        all_items: list[dict] = []
+        page = 1
+        while True:
+            paged = QueryPlan.from_dict({**plan.to_dict(), "page": page,
+                                         "page_size": MAX_PAGE_SIZE})
+            outcome = search.search(paged, role)
+            all_items.extend(outcome.items)
+            if len(all_items) >= outcome.total or not outcome.items:
+                break
+            page += 1
+        if fmt == "csv":
+            data, mimetype = to_csv(all_items, role)
+            download = filename("csv")
+        else:
+            evidence_map = {
+                item["record_key"]: repo.list_evidence_for_record(item["record_key"])
+                for item in all_items
+            }
+            data, mimetype = to_xlsx(all_items, evidence_map, role, plan.to_dict())
+            download = filename("xlsx")
+        return send_file(
+            io.BytesIO(data),
+            mimetype=mimetype,
+            as_attachment=True,
+            download_name=download,
+        )
 
     @bp.post("/api/query/parse")
     def api_query_parse():
@@ -164,8 +226,27 @@ def build_api_blueprint(repo: Repository, search: SearchService,
 # ---- 请求处理辅助 ----
 
 
-def _reject_unknown_params() -> None:
-    unknown = sorted(set(request.args) - set(SEARCH_PARAMS))
+def _plan_from_args(*extra_allowed: str) -> QueryPlan:
+    """从 GET 查询参数构造 QueryPlan；未知参数与非法值一律 400。
+
+    extra_allowed 是个别接口自身的控制参数（如 export 的 format）。
+    """
+    _reject_unknown_params(*extra_allowed)
+    raw = {name: request.args.get(name) for name in SEARCH_PARAMS
+           if request.args.get(name) not in (None, "")}
+    if "page" in raw:
+        raw["page"] = _to_int(raw["page"], "page")
+    if "page_size" in raw:
+        raw["page_size"] = _to_int(raw["page_size"], "page_size")
+    if "keywords" in raw:
+        raw["keywords"] = [
+            token for token in raw["keywords"].replace("，", " ").replace(",", " ").split()
+        ]
+    return QueryPlan.from_dict(raw)
+
+
+def _reject_unknown_params(*extra_allowed: str) -> None:
+    unknown = sorted(set(request.args) - set(SEARCH_PARAMS) - set(extra_allowed))
     if unknown:
         raise ContractViolation(f"存在不允许的查询参数 {unknown}")
 
