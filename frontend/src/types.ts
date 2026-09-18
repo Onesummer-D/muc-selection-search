@@ -124,6 +124,7 @@ export interface MeResponse {
 
 export const FIELD_LABELS: Record<string, string> = {
   cohort: '届别',
+  grade: '年级',
   education: '学历',
   college: '学院',
   major: '专业',

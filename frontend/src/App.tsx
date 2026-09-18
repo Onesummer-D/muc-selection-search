@@ -30,6 +30,7 @@ export default function App() {
   const [filters, setFilters] = useState<Filters>(EMPTY_FILTERS)
   const [searchResult, setSearchResult] = useState<SearchResponse | null>(null)
   const [answer, setAnswer] = useState<AnswerResponse | null>(null)
+  const [lastParams, setLastParams] = useState<Record<string, string | undefined>>({})
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<'home' | 'results'>('home')
@@ -48,12 +49,21 @@ export default function App() {
     setError(null)
     try {
       if (nextMode === 'traditional') {
-        const result = await api.search({
-          education: nextFilters.education,
-          city: nextFilters.city,
-          major: nextFilters.major,
-          keywords: nextText || undefined,
-        })
+        // 传统模式同样先解析为白名单 QueryPlan（规则解析，确定性）；显式筛选优先于解析结果
+        const params: Record<string, string | undefined> = { ...nextFilters }
+        if (nextText.trim()) {
+          const parsed = await api.parseQuery(nextText)
+          const plan = parsed.query_plan
+          params.cohort = plan.cohort || undefined
+          params.education = nextFilters.education || plan.education || undefined
+          params.city = nextFilters.city || plan.city || undefined
+          params.major = nextFilters.major || plan.major || undefined
+          params.college = plan.college || undefined
+          params.position_or_unit = plan.position_or_unit || undefined
+          params.keywords = plan.keywords.length ? plan.keywords.join(' ') : undefined
+        }
+        const result = await api.search(params)
+        setLastParams(params)
         setSearchResult(result)
         setAnswer(null)
       } else {
@@ -70,14 +80,23 @@ export default function App() {
   }, [])
 
   const applyRelaxation = useCallback((field: string) => {
-    const nextFilters: Filters = {
-      ...filters,
-      [field]: field in filters ? '' : filters[field as keyof Filters],
-    }
-    setFilters(nextFilters)
-    if (field === 'keywords') setText('')
-    void runSearch(mode, field === 'keywords' ? '' : text, nextFilters)
-  }, [filters, mode, text, runSearch])
+    // 放宽 = 在上一次检索参数的基础上去掉该条件后重查
+    const next: Record<string, string | undefined> = { ...lastParams }
+    delete next[field]
+    setLoading(true)
+    setError(null)
+    api.search(next)
+      .then((result) => {
+        setLastParams(next)
+        setSearchResult(result)
+        setAnswer(null)
+        setView('results')
+      })
+      .catch((exc) => {
+        setError(exc instanceof ApiError ? exc.detail : '网络错误，请确认服务已启动')
+      })
+      .finally(() => setLoading(false))
+  }, [lastParams])
 
   const switchRole = useCallback(async (role: Role) => {
     try {
