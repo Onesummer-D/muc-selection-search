@@ -9,7 +9,8 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
+from werkzeug.exceptions import NotFound
 
 from ..domain.errors import ContractViolation, MissingArticleError, StorageIntegrityError
 from ..repository.sqlite_repository import SQLiteRepository
@@ -73,8 +74,12 @@ def _register_frontend(app: Flask) -> None:
     @app.route("/", defaults={"asset_path": ""})
     @app.route("/<path:asset_path>")
     def frontend(asset_path: str):
-        if asset_path and (dist / asset_path).is_file():
-            return app.send_static_file(str((dist / asset_path).relative_to(dist)))
+        if asset_path:
+            # send_from_directory 同时防御路径穿越；不存在的路径回落到 SPA 入口
+            try:
+                return send_from_directory(dist, asset_path)
+            except NotFound:
+                pass
         return index_file.read_text(encoding="utf-8"), 200, {
             "Content-Type": "text/html; charset=utf-8"
         }
