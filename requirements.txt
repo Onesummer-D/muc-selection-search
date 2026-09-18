@@ -1,0 +1,12 @@
+# 服务端依赖（角色 C 维护根配置；变更须在 PR 说明中声明）
+flask>=3.0
+openpyxl>=3.1          # XLSX 四工作表导出（接口字典 6.1）
+
+# 角色A 采集模块依赖（feat/week1-portal-sync PR #4 声明）
+requests>=2.31         # 门户 HTTP 会话（CAS Cookie 仅内存）
+jsonschema>=4.20       # bundle Schema 校验（A 的测试与运行）
+
+# 角色 A 的 playwright 仅用于人工 CAS 登录（有界面浏览器，一次性操作），
+# 不作为服务端运行依赖，部署时无需安装；如需采集请单独：
+#   pip install playwright && playwright install chromium
+# playwright>=1.40
