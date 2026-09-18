@@ -117,3 +117,6 @@ htmlcov/
 # =========================
 config.local.*
 settings.local.*
+
+# TypeScript incremental build info
+*.tsbuildinfo
