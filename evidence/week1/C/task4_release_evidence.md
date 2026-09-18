@@ -51,10 +51,20 @@ docs/DEPLOYMENT.md 新增第 5 节"命令级执行手册"，覆盖：
 ## 4. LAN 另一台设备验证（待办，需要人工操作）
 
 步骤（另一台手机/电脑连接同一 WiFi）：
-1. 本机查询内网 IP：`ipconfig | findstr IPv4`
+1. 本机查询内网 IP：`ipconfig | findstr IPv4`（当前为 192.168.43.50，热点网段）
 2. 对方浏览器访问 `http://<内网IP>:5000/` 与 `http://<内网IP>:5000/healthz`
 3. 执行一次传统搜索与一次详情查看，截图（含 URL 与时间）
 4. 演示后删除防火墙临时规则
+
+LAN 环境准备（2026-09-19 完成）：
+- 服务监听确认：`netstat -ano | findstr :5000` → `TCP 0.0.0.0:5000 LISTENING`
+- 本机内网 IP 自测：`curl http://192.168.43.50:5000/healthz` → 200
+- 防火墙放行：新增入站规则 `xuandiaoyan-demo-5000`（TCP 5000，演示后删除：
+  `netsh advfirewall firewall delete rule name="xuandiaoyan-demo-5000"`）
+- 自启动：`start_server.bat`（仓库根目录，GBK+CRLF 编码）已放入 Windows 启动
+  文件夹（`shell:startup` 下的 `xuandiaoyan-server.cmd` 最小化拉起），登录即自动
+  启动服务；数据库缺失时自动 seed。删除自启动 = 删除该 cmd 文件。
+- 若对端设备无法访问但同网段：优先怀疑 AP 隔离，改用手机热点组网。
 
 ## 5. 敏感文件扫描
 
