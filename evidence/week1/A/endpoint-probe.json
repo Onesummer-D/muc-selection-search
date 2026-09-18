@@ -1,0 +1,192 @@
+{
+  "portal_base_url": "https://my.muc.edu.cn",
+  "captured_requests": [
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getOrgList",
+      "status": 200,
+      "post_data": "comsys_random_t=0.7317627501944939",
+      "response_head": "{\"datas\":{\"list\":[],\"orgId\":\"bks1044104407202525rg2\"},\"msg\":\"success\",\"state\":true}",
+      "captured_at": "2026-09-17T16:15:42.259507+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/initNews",
+      "status": 200,
+      "post_data": "portletInstanceId=comsys-publicity-portlet_1&comsys_random_t=0.6930162781803878",
+      "response_head": "{\"data\":[{\"noticeTypeId\":\"9\",\"noticeTypeName\":\"æ ¡å›­æ–°é—»\"},{\"noticeTypeId\":\"11\",\"noticeTypeName\":\"å…¬ç¤ºå…¬å‘Š\"}],\"state\":true}",
+      "captured_at": "2026-09-17T16:15:42.312970+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/getNoticeData",
+      "status": 200,
+      "post_data": "portletInstanceId=comsys-imgNewsList-portlet_1&more=5&comsys_random_t=0.566410595052559",
+      "response_head": "{\"data\":{\"admin\":false,\"noticeType\":\"1\",\"notices\":[{\"isAdministration\":false,\"isNewestPublish\":false,\"newCount\":0,\"noticeAnnexPath\":\"https://news.muc.edu.cn//__local/A/7B/38/F9B79430717D93279BBF5B39884_2DCFF418_4F9D9.jpg\",\"noticeId\":358778,\"noticeLink\":\"https://news.muc.edu.cn/info/1011/69164.htm\",\"noticeReleaseTime\":\"2026-09-17\",\"noticeSource\":1,\"noticeTitle\":\"â€œè¾¹ç–†å‘å±•ä¸­å›½è®ºå›2026â€å›...",
+      "captured_at": "2026-09-17T16:15:42.375479+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/initNews",
+      "status": 200,
+      "post_data": "portletInstanceId=comsys-importantNews-portlet_1&comsys_random_t=0.7723861738964206",
+      "response_head": "{\"data\":[{\"noticeTypeId\":\"9978\",\"noticeTypeName\":\"ä¼šè®®çºªè¦\"},{\"noticeTypeId\":\"9979\",\"noticeTypeName\":\"æ°‘å¤§è¦æƒ…\"}],\"state\":true}",
+      "captured_at": "2026-09-17T16:15:42.494864+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/initNews",
+      "status": 200,
+      "post_data": "portletInstanceId=comsys-campusNews-portlet_1&comsys_random_t=0.5687182252768771",
+      "response_head": "{\"data\":[{\"noticeTypeId\":\"9977\",\"noticeTypeName\":\"æŽ¨æ–‡çŸ©é˜µ\"},{\"noticeTypeId\":\"36\",\"noticeTypeName\":\"æ´»åŠ¨æŠ¥é“\"}],\"state\":true}",
+      "captured_at": "2026-09-17T16:15:42.494925+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/initNews",
+      "status": 200,
+      "post_data": "portletInstanceId=comsys-news-portlet_1&comsys_random_t=0.43382413070690007",
+      "response_head": "{\"data\":[{\"noticeTypeId\":\"4\",\"noticeTypeName\":\"æ—¶æ”¿å¤´æ¡\"},{\"noticeTypeId\":\"3\",\"noticeTypeName\":\"æ°‘å§”è¦é—»\"}],\"state\":true}",
+      "captured_at": "2026-09-17T16:15:42.501200+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/initNotice",
+      "status": 200,
+      "post_data": "comsys_random_t=0.7365980892396997",
+      "response_head": "{\"data\":[{\"noticeTypeId\":\"5\",\"noticeTypeName\":\"åŠžå…¬é€šçŸ¥\",\"pageSize\":\"10\",\"selected\":true},{\"noticeTypeId\":\"8\",\"noticeTypeName\":\"ç§‘ç ”é€šçŸ¥\",\"pageSize\":\"7\",\"selected\":true},{\"noticeTypeId\":\"6\",\"noticeTypeName\":\"æ•™å­¦é€šçŸ¥\",\"pageSize\":\"8\",\"selected\":true},{\"noticeTypeId\":\"32\",\"noticeTypeName\":\"å­¦å·¥é€šçŸ¥\",\"pageSize\":\"7\",\"selected\":true}],\"message\":\"\",\"state\":true}",
+      "captured_at": "2026-09-17T16:15:43.023311+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=5&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=9&searchDepartment=&start_date=&end_date=&comsys_random_t=0.8759552666204652",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"“边疆发展中国论坛2026”国际学术会议在中央民族大学召开\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":1,\"notice_link_state\":0,\"notice_type_name\":\"校园新闻\",\"cat_state\":0,\"notice_link\":\"https://news.muc.edu.cn/info/1011/69164.htm\",\"notice_create_time\":\"2026-09-17 09:00\",\"notice_id\":358780,\"notice_type\":9,\"cat_state1\":0,\"notice_release_time\":\"2026-09-17 09:00\"},{\"notice_title\":\"校馆弦歌 | 中央...",
+      "captured_at": "2026-09-17T16:15:43.376394+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=5&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=9977&searchDepartment=&start_date=&end_date=&comsys_random_t=0.9538422100271233",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"民大“没有围墙”的思政课堂，登上《人民日报》！\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":1,\"notice_link_state\":0,\"notice_content\":\"民大“没有围墙”的思政课堂，登上《人民日报》！\",\"notice_type_name\":\"推文矩阵\",\"notice_first_time\":\"2026-07-27 22:13\",\"cat_state\":0,\"notice_link\":\"https://mp.weixin.qq.com/s/qg5M4_yRoKXSyRvzGm9Chw\",\"notice_create_time\":\"2026-07-27 22:13\",\"notice_id\":358094,\"notice_type\":997...",
+      "captured_at": "2026-09-17T16:15:43.470174+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=5&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=9978&searchDepartment=&start_date=&end_date=&comsys_random_t=0.3481511941645866",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"中央民族大学疫情防控工作领导小组会议纪要第30期\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":0,\"notice_link_state\":0,\"notice_content\":\"<p style=\\\"padding: 0px; margin-top: 0px; margin-bottom: 0px; color: rgb(60, 60, 60); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; white-space: normal; line-height: 1.5em; background-color: rgb(255, 255, 255);\\\"><span style=\\\"paddi...",
+      "captured_at": "2026-09-17T16:15:43.680245+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=5&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=4&searchDepartment=&start_date=&end_date=&comsys_random_t=0.49436596845375225",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"习近平致信祝贺吉林大学建校80周年\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":1,\"notice_link_state\":0,\"notice_type_name\":\"时政头条\",\"cat_state\":0,\"notice_link\":\"http://paper.people.com.cn/rmrb/pc/content/202609/17/content_30181507.html\",\"notice_create_time\":\"2026-09-17 06:00\",\"notice_id\":358775,\"notice_type\":4,\"cat_state1\":0,\"notice_release_time\":\"2026-09-17 06:00\"},{\"notic...",
+      "captured_at": "2026-09-17T16:15:43.680441+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/initNews",
+      "status": 200,
+      "post_data": "portletInstanceId=comsys-job-portlet_1&comsys_random_t=0.8680581139387329",
+      "response_head": "{\"data\":[{\"noticeTypeId\":\"10\",\"noticeTypeName\":\"å°±ä¸šä¿¡æ¯\"},{\"noticeTypeId\":\"9980\",\"noticeTypeName\":\"å­¦æœ¯ä¿¡æ¯\"}],\"state\":true}",
+      "captured_at": "2026-09-17T16:15:43.680525+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-notice-portlet-web/initNews",
+      "status": 200,
+      "post_data": "portletInstanceId=comsys-filePublish-portlet_1&comsys_random_t=0.5879368684899591",
+      "response_head": "{\"data\":[{\"noticeTypeId\":\"9981\",\"noticeTypeName\":\"æ–‡ä»¶å‘å¸ƒ\"},{\"noticeTypeId\":\"9982\",\"noticeTypeName\":\"å¸¸ç”¨ä¸‹è½½\"}],\"state\":true}",
+      "captured_at": "2026-09-17T16:15:44.005082+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=7&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=8&searchDepartment=&start_date=&end_date=&new_total=&comsys_random_t=0.4471676387247472",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"关于开展2026年博士研究生拔尖创新人才项目申报的通知\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":0,\"notice_link_state\":0,\"notice_content\":\"<p style=\\\"text-indent:38px;text-align:justify;text-justify:inter-ideograph;line-height:37px\\\"><span style=\\\"font-family: 仿宋;letter-spacing: 0;font-size: 19px\\\"><span style=\\\"font-family:仿宋\\\">为深入贯彻落实国家关于加快新时代研究生教育改革发展的有关精神，加强高层次复合型拔尖创新人才培养，全面...",
+      "captured_at": "2026-09-17T16:15:44.061301+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=7&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=32&searchDepartment=&start_date=&end_date=&new_total=&comsys_random_t=0.7650489513257168",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"中央民族大学出版社关于招聘勤工助学岗的通知\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":0,\"notice_link_state\":0,\"notice_content\":\"<p style=\\\"background: white; margin: 5px 0px 0px; line-height: 21px;\\\"><strong><span style=\\\"background: white; font-family: 仿宋; font-size: 20px;\\\">一、岗位工作职责</span></strong></p><p style=\\\"background: white; margin: 5px 0px 0px; line-height: 21px;\\\"...",
+      "captured_at": "2026-09-17T16:15:44.212949+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeStickCount",
+      "status": 200,
+      "post_data": "comsys_random_t=0.15853706342574714",
+      "response_head": "0",
+      "captured_at": "2026-09-17T16:15:44.224006+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=10&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=5&searchDepartment=&start_date=&end_date=&new_total=&comsys_random_t=0.803491037484505",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"关于清理废旧非机动车和消防通道的通知\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":0,\"notice_link_state\":0,\"notice_content\":\"<p style=\\\"text-autospace:ideograph-numeric;line-height:37px;background:rgb(255,255,255)\\\"><span style=\\\"font-family: 仿宋_GB2312;font-size: 21px\\\"><span style=\\\"font-family:仿宋_GB2312\\\">全体师生：</span></span></p><p style=\\\"text-indent: 43px; line-height: 3...",
+      "captured_at": "2026-09-17T16:15:44.258813+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/mail/getRecListCount",
+      "status": 200,
+      "post_data": "isread=0&pageNo=1&pageSize=10&comsys_random_t=0.8698014534420616",
+      "response_head": "{\"msg\":\"获取收件列表总数成功!\",\"total\":239,\"code\":1}",
+      "captured_at": "2026-09-17T16:15:44.258900+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=8&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=6&searchDepartment=&start_date=&end_date=&new_total=&comsys_random_t=0.17760645458777702",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"关于开展2026年秋季学期研究生课程“行业专家进课堂”工作的通知\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":0,\"notice_link_state\":0,\"notice_content\":\"<p style=\\\"white-space: normal; line-height: 37px;\\\"><span style=\\\"font-family: 仿宋_GB2312; font-size: 21px;\\\">各研究生培养单位：</span></p><p style=\\\"white-space: normal; text-indent: 43px; line-height: 37px;\\\"><span style=\\\"font-family: 仿宋_GB231...",
+      "captured_at": "2026-09-17T16:15:44.449785+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=5&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=10&searchDepartment=&start_date=&end_date=&comsys_random_t=0.22720550607298973",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"体制转外贸｜ “职”点迷津校友分享会（第21期）\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":1,\"notice_link_state\":1,\"notice_content\":\"\",\"notice_type_name\":\"就业信息\",\"notice_first_time\":\"2026-09-16 10:15\",\"cat_state\":0,\"organization_name\":\"中国少数民族语言文学学院\",\"notice_link\":\"https://mp.weixin.qq.com/s/2bZPjAOMnp2rE8PeBq5m0w\",\"notice_create_time\":\"2026-09-16 10:15\",\"notice_id\":358715,\"not...",
+      "captured_at": "2026-09-17T16:15:44.614215+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=5&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=9980&searchDepartment=&start_date=&end_date=&comsys_random_t=0.1486172287654457",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"外语新译丨外国语学院贾长龙译著《中国特色社会主义道路是怎样的道路》（俄文版）在俄罗斯出版\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":1,\"notice_link_state\":1,\"notice_content\":\"\",\"notice_type_name\":\"学术信息\",\"notice_first_time\":\"2026-09-11 10:20\",\"cat_state\":0,\"organization_name\":\"外国语学院\",\"notice_link\":\"https://mp.weixin.qq.com/s/wObSpE5p11dVr-9zg6wmPA\",\"notice_create_time\":\"2026-09-11 10:20\",\"notice_id...",
+      "captured_at": "2026-09-17T16:15:46.683630+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage",
+      "status": 200,
+      "post_data": "currentPage=1&pageSize=5&searchValue=&state=&is_add=0&totalCounts=0&total=-1&select_all=false&select_notice=&type=9979&searchDepartment=&start_date=&end_date=&comsys_random_t=0.4568895268161034",
+      "response_head": "{\"datas\":{\"tables\":[{\"notice_title\":\"2021年《民大要情》第39期\",\"notice_stick\":0,\"notice_state\":1,\"notice_source\":0,\"notice_link_state\":0,\"notice_content\":\"<p style=\\\"padding: 0px; margin-top: 0px; margin-bottom: 0px; color: rgb(60, 60, 60); font-family: &quot;Microsoft YaHei&quot;; font-size: 14px; white-space: normal; background-color: rgb(255, 255, 255); line-height: 28px;\\\"><span style=\\\"padding: 0px; m...",
+      "captured_at": "2026-09-17T16:15:51.972741+00:00"
+    },
+    {
+      "method": "POST",
+      "url": "https://my.muc.edu.cn/comsys-portal-notice-web/readNotice",
+      "status": 200,
+      "post_data": "notice_id=358710&type=5&show_type=1&comsys_random_t=0.5795689510284083",
+      "response_head": "{\"datas\":\"\",\"msg\":\"success\",\"state\":true}",
+      "captured_at": "2026-09-17T16:15:55.962081+00:00"
+    }
+  ],
+  "candidate_column_ids": {},
+  "tips": "请人工核对 captured_requests，找出列表/详情接口的真实 URL 与参数，回填到 .env 的 PORTAL_BASE_URL / 端点与栏目配置。",
+  "generated_at": "2026-09-17T16:22:45.763893+00:00"
+}

@@ -1,0 +1,85 @@
+# 完整 pytest 输出（tests/datasource/）
+# 期望：所有测试 PASS
+
+=== STDOUT ===
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Administrator\.workbuddy\binaries\python\envs\default\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Administrator\WorkBuddy\2026-09-17-23-07-25\repo
+collecting ... collected 68 items
+
+tests/datasource/test_bundle.py::TestSchemaValidation::test_failed_requires_reason PASSED [  1%]
+tests/datasource/test_bundle.py::TestSchemaValidation::test_private_ref_pattern PASSED [  2%]
+tests/datasource/test_bundle.py::TestSchemaValidation::test_required_fields PASSED [  4%]
+tests/datasource/test_bundle.py::TestSchemaValidation::test_success_must_not_keep_reason PASSED [  5%]
+tests/datasource/test_bundle.py::TestSchemaValidation::test_valid_bundle_passes PASSED [  7%]
+tests/datasource/test_bundle.py::TestSanitize::test_email_masked PASSED  [  8%]
+tests/datasource/test_bundle.py::TestSanitize::test_id_card_masked PASSED [ 10%]
+tests/datasource/test_bundle.py::TestSanitize::test_none_stays_none PASSED [ 11%]
+tests/datasource/test_bundle.py::TestSanitize::test_normal_text_unchanged PASSED [ 13%]
+tests/datasource/test_bundle.py::TestSanitize::test_phone_masked PASSED  [ 14%]
+tests/datasource/test_bundle.py::TestContentType::test_mixed PASSED      [ 16%]
+tests/datasource/test_bundle.py::TestContentType::test_poster PASSED     [ 17%]
+tests/datasource/test_bundle.py::TestContentType::test_text PASSED       [ 19%]
+tests/datasource/test_bundle.py::TestContentType::test_unknown PASSED    [ 20%]
+tests/datasource/test_bundle.py::TestAssetRefs::test_poster_refs PASSED  [ 22%]
+tests/datasource/test_bundle.py::TestWriteBundle::test_write_and_roundtrip PASSED [ 23%]
+tests/datasource/test_ledger.py::TestLedger::test_count_by_status PASSED [ 25%]
+tests/datasource/test_ledger.py::TestLedger::test_failed_within_retry_still_processed PASSED [ 26%]
+tests/datasource/test_ledger.py::TestLedger::test_json_serializable PASSED [ 27%]
+tests/datasource/test_ledger.py::TestLedger::test_ledger_fields_complete PASSED [ 29%]
+tests/datasource/test_ledger.py::TestLedger::test_mark_failed_saves_immediately PASSED [ 30%]
+tests/datasource/test_ledger.py::TestLedger::test_pending_or_retryable_filters PASSED [ 32%]
+tests/datasource/test_ledger.py::TestLedger::test_rerun_does_not_increase PASSED [ 33%]
+tests/datasource/test_ledger.py::TestLedger::test_upsert_idempotent PASSED [ 35%]
+tests/datasource/test_portal_client.py::TestRateLimit::test_adjacent_start_gap_in_range PASSED [ 36%]
+tests/datasource/test_portal_client.py::TestRateLimit::test_rate_min_must_not_exceed_max PASSED [ 38%]
+tests/datasource/test_portal_client.py::TestRetry::test_404_not_retried PASSED [ 39%]
+tests/datasource/test_portal_client.py::TestRetry::test_429_exhausts_after_four_attempts PASSED [ 41%]
+tests/datasource/test_portal_client.py::TestRetry::test_429_retries_then_succeeds PASSED [ 42%]
+tests/datasource/test_portal_client.py::TestRetry::test_backoff_increases PASSED [ 44%]
+tests/datasource/test_portal_client.py::TestRetry::test_timeout_retried PASSED [ 45%]
+tests/datasource/test_portal_client.py::TestPagination::test_duplicate_page_deduped PASSED [ 47%]
+tests/datasource/test_portal_client.py::TestPagination::test_empty_list_terminates PASSED [ 48%]
+tests/datasource/test_portal_client.py::TestPagination::test_missing_notice_id_raises PASSED [ 50%]
+tests/datasource/test_portal_client.py::TestPagination::test_multi_page_and_termination PASSED [ 51%]
+tests/datasource/test_portal_client.py::TestDetail::test_detail_404 PASSED [ 52%]
+tests/datasource/test_portal_client.py::TestDetail::test_detail_missing_content_fields PASSED [ 54%]
+tests/datasource/test_portal_client.py::TestSession::test_session_check_ok PASSED [ 55%]
+tests/datasource/test_portal_client.py::TestSession::test_session_expired_on_401 PASSED [ 57%]
+tests/datasource/test_real_portal.py::TestRealPortalShape::test_detail_from_list_row PASSED [ 58%]
+tests/datasource/test_real_portal.py::TestRealPortalShape::test_detail_images_extracted_from_html PASSED [ 60%]
+tests/datasource/test_real_portal.py::TestRealPortalShape::test_detail_not_found_raises PASSED [ 61%]
+tests/datasource/test_real_portal.py::TestRealPortalShape::test_list_uses_post_and_datas_tables PASSED [ 63%]
+tests/datasource/test_real_portal.py::TestRealPortalShape::test_pagination_terminates_on_short_page PASSED [ 64%]
+tests/datasource/test_real_portal.py::TestRealPortalShape::test_validate_session_posts_with_real_params PASSED [ 66%]
+tests/datasource/test_scheduler.py::TestSingleInstanceLock::test_second_instance_rejected PASSED [ 67%]
+tests/datasource/test_scheduler.py::TestSingleInstanceLock::test_stale_lock_reclaimed PASSED [ 69%]
+tests/datasource/test_scheduler.py::TestScheduler::test_no_concurrent_second_instance PASSED [ 70%]
+tests/datasource/test_scheduler.py::TestScheduler::test_normal_result_does_not_pause PASSED [ 72%]
+tests/datasource/test_scheduler.py::TestScheduler::test_periodic_trigger PASSED [ 73%]
+tests/datasource/test_scheduler.py::TestScheduler::test_reentrant_guard_inside_instance PASSED [ 75%]
+tests/datasource/test_scheduler.py::TestScheduler::test_session_expired_pauses PASSED [ 76%]
+tests/datasource/test_sync_service.py::TestSyncService::test_failed_detail_recorded PASSED [ 77%]
+tests/datasource/test_sync_service.py::TestSyncService::test_rerun_idempotent PASSED [ 79%]
+tests/datasource/test_sync_service.py::TestSyncService::test_resume_after_interrupt PASSED [ 80%]
+tests/datasource/test_sync_service.py::TestSyncService::test_session_expired_before_sync PASSED [ 82%]
+tests/datasource/test_sync_service.py::TestSyncService::test_session_expired_midway_keeps_processed PASSED [ 83%]
+tests/datasource/test_sync_service.py::TestSyncService::test_sync_counts_and_cursor PASSED [ 85%]
+tests/datasource/test_sync_service.py::TestSyncService::test_target_count_limit PASSED [ 86%]
+tests/datasource/test_sync_service.py::TestTopicFilter::test_no_keywords_disables_filter PASSED [ 88%]
+tests/datasource/test_sync_service.py::TestTopicFilter::test_off_topic_not_registered PASSED [ 89%]
+tests/datasource/test_sync_service.py::TestMatchesTopic::test_keyword_in_title_or_content PASSED [ 91%]
+tests/datasource/test_sync_service.py::TestExperienceRanking::test_content_head_counts PASSED [ 92%]
+tests/datasource/test_sync_service.py::TestExperienceRanking::test_experience_sharing_preferred PASSED [ 94%]
+tests/datasource/test_sync_service.py::TestHtmlToText::test_strips_tags_and_entities PASSED [ 95%]
+tests/datasource/test_sync_service.py::TestTwoStagePicking::test_admin_fills_when_experience_insufficient PASSED [ 97%]
+tests/datasource/test_sync_service.py::TestTwoStagePicking::test_experience_only_pool_preferred PASSED [ 98%]
+tests/datasource/test_sync_service.py::TestPromoExclusion::test_lecture_ads_excluded PASSED [100%]
+
+============================= 68 passed in 2.13s ==============================
+
+=== STDERR ===
+
+=== EXIT CODE ===
+0

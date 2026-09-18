@@ -1,0 +1,125 @@
+"""门户数据源配置。
+
+端点、栏目、分页大小和筛选关键词全部集中在此，代码中不得散落硬编码。
+真实值通过环境变量（.env，不入库）注入；测试使用显式构造的配置对象。
+"""
+from __future__ import annotations
+
+import os
+from dataclasses import dataclass, field
+
+
+def _load_dotenv(path: str = ".env") -> dict:
+    """读取仓库根目录 .env（若存在）。零依赖简易解析：KEY=VALUE，# 注释。
+
+    已存在的环境变量优先（不覆盖）。真实值不入库（.gitignore 已排除）。
+    """
+    values: dict[str, str] = {}
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, value = line.partition("=")
+                values[key.strip()] = value.strip()
+    except FileNotFoundError:
+        pass
+    return values
+
+
+@dataclass
+class PortalConfig:
+    """学校门户采集配置。"""
+
+    base_url: str = ""
+    list_endpoint: str = "getNoticeByPage"
+    detail_endpoint: str = "getNotice"
+    # 栏目 / 筛选参数（键值对会原样并入列表请求）
+    list_params: dict = field(default_factory=lambda: {"columnId": "", "keyword": ""})
+    page_size: int = 20
+    # 列表请求方式：真实门户为 POST 表单（comsys-portal-notice-web）
+    http_method: str = "GET"
+    # 分页参数名（真实门户：currentPage / pageSize）
+    page_param: str = "page"
+    page_size_param: str = "pageSize"
+    # 随机数参数名（真实门户要求 comsys_random_t；空 = 不附加）
+    random_param: str = ""
+    # 详情来源：endpoint = 独立详情接口（逻辑接口）；
+    #          list = 真实门户无独立详情 JSON 接口，详情取列表行（含 notice_content）
+    detail_source: str = "endpoint"
+    # 超时（秒）
+    timeout: float = 10.0
+    # 相邻门户请求开始时间差范围（秒）
+    rate_min: float = 0.8
+    rate_max: float = 1.5
+    # 初次尝试之外最多额外重试次数
+    max_retries: int = 3
+    # 重试退避基数（秒）：第 n 次重试等待 base * 2**(n-1)
+    backoff_base: float = 2.0
+    # 只读会话验证接口
+    session_check_endpoint: str = "getNoticeByPage"
+    # 主题过滤关键词（逗号分隔，命中标题或正文任一即视为相关；空 = 不过滤）
+    topic_keywords: tuple = ("选调",)
+    # 内容倾向关键词（经验分享类）：命中则优先入选，只作排序不作硬过滤
+    experience_keywords: tuple = ("经验", "分享", "心得", "体会", "感悟",
+                                  "上岸", "备考", "攻略", "笔经", "面经",
+                                  "选调生说", "成长记")
+
+    @classmethod
+    def from_env(cls, env: dict | None = None) -> "PortalConfig":
+        """从环境变量构造（生产路径：.env + os.environ）。
+
+        默认值对应真实门户（2026-09-18 探测确认，见 evidence/week1/A/endpoint-probe.json）：
+        POST https://my.muc.edu.cn/comsys-portal-notice-web/getNoticeByPage，
+        表单参数 currentPage/pageSize/type/searchValue/comsys_random_t；
+        就业信息栏目 type=10；详情取列表行（无独立详情 JSON 接口）。
+        """
+        e = dict(_load_dotenv())
+        e.update(dict(os.environ if env is None else env))
+        params = {"type": e.get("PORTAL_COLUMN_ID", "10"),
+                  "searchValue": e.get("PORTAL_KEYWORD", "")}
+        return cls(
+            base_url=e.get("PORTAL_BASE_URL", ""),
+            list_endpoint=e.get("PORTAL_LIST_ENDPOINT",
+                                "comsys-portal-notice-web/getNoticeByPage"),
+            session_check_endpoint=e.get(
+                "PORTAL_LIST_ENDPOINT",
+                "comsys-portal-notice-web/getNoticeByPage"),
+            list_params=params,
+            page_size=int(e.get("PORTAL_PAGE_SIZE", "20")),
+            timeout=float(e.get("PORTAL_TIMEOUT", "10")),
+            rate_min=float(e.get("PORTAL_RATE_MIN", "0.8")),
+            rate_max=float(e.get("PORTAL_RATE_MAX", "1.5")),
+            max_retries=int(e.get("PORTAL_MAX_RETRIES", "3")),
+            http_method=e.get("PORTAL_HTTP_METHOD", "POST"),
+            page_param=e.get("PORTAL_PAGE_PARAM", "currentPage"),
+            page_size_param=e.get("PORTAL_PAGE_SIZE_PARAM", "pageSize"),
+            random_param=e.get("PORTAL_RANDOM_PARAM", "comsys_random_t"),
+            detail_source=e.get("PORTAL_DETAIL_SOURCE", "list"),
+            topic_keywords=tuple(
+                kw.strip() for kw in e.get("PORTAL_TOPIC_KEYWORDS", "选调").split(",")
+                if kw.strip()
+            ),
+            experience_keywords=tuple(
+                kw.strip() for kw in e.get(
+                    "PORTAL_EXPERIENCE_KEYWORDS",
+                    "经验,分享,心得,体会,感悟,上岸,备考,攻略,笔经,面经,选调生说,成长记"
+                ).split(",") if kw.strip()
+            ),
+        )
+
+    def list_url(self) -> str:
+        if not self.base_url:
+            raise ValueError("PORTAL_BASE_URL 未配置（见 progress/week1/A/BLOCKED.md B-1）")
+        return f"{self.base_url.rstrip('/')}/{self.list_endpoint}"
+
+    def detail_url(self) -> str:
+        if not self.base_url:
+            raise ValueError("PORTAL_BASE_URL 未配置（见 progress/week1/A/BLOCKED.md B-1）")
+        return f"{self.base_url.rstrip('/')}/{self.detail_endpoint}"
+
+    def session_check_url(self) -> str:
+        if not self.base_url:
+            raise ValueError("PORTAL_BASE_URL 未配置")
+        return f"{self.base_url.rstrip('/')}/{self.session_check_endpoint}"
