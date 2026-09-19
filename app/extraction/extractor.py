@@ -125,18 +125,16 @@ class Extractor:
     def _extract_poster(self, article):
         if self.ocr_adapter is None:
             return [], "missing_ocr_adapter"
-        return self.ocr_adapter.extract_records(article), None
+        return self.ocr_adapter.extract_records(article)
 
     def _extract_mixed(self, article):
         records = self._extract_text(article)
         if self.ocr_adapter is None:
             # 混合帖正文已抽到即保留正文记录；海报路径缺失如实标记
-            if records:
-                return records, "missing_ocr_adapter"
-            return [], "missing_ocr_adapter"
+            return records, "missing_ocr_adapter"
         poster_records, failure = self.ocr_adapter.extract_records(article)
-        seen = {r["record_key"] for r in records}
-        for r in poster_records:
-            if r["record_key"] not in seen:
-                records.append(r)
+        records.extend(poster_records)
+        # 两条路径各自从 -01 编号会撞 record_key，合并后按顺序统一重编号
+        for i, r in enumerate(records):
+            r["record_key"] = _record_key(article["notice_id"], i)
         return records, failure
