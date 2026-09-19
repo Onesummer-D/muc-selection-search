@@ -91,7 +91,9 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
         per_sample.append({
             "sample_id": sid, "status": "judged",
             "judgments": judgments,
-            "complete": all(j == 1 for j in core_all if j is not None),
+            # 完整记录只在五字段全部可判定时有 0/1 值，否则 None（台账留空）
+            "complete": (all(j == 1 for j in core_all)
+                         if complete_decidable_inc else None),
         })
 
     def pct(num, den):

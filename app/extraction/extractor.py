@@ -122,17 +122,26 @@ class Extractor:
                               method="html_rule", asset_id=None, bbox=None)]
 
     # ---- poster / mixed：依赖 ocr_adapter ----
+    def _call_adapter(self, article):
+        """适配器异常（超时/引擎崩溃）转为 failed 状态，不让批处理中断。"""
+        try:
+            return self.ocr_adapter.extract_records(article)
+        except TimeoutError:
+            return [], "adapter_error:TimeoutError"
+        except Exception as exc:
+            return [], f"adapter_error:{type(exc).__name__}"
+
     def _extract_poster(self, article):
         if self.ocr_adapter is None:
             return [], "missing_ocr_adapter"
-        return self.ocr_adapter.extract_records(article)
+        return self._call_adapter(article)
 
     def _extract_mixed(self, article):
         records = self._extract_text(article)
         if self.ocr_adapter is None:
             # 混合帖正文已抽到即保留正文记录；海报路径缺失如实标记
             return records, "missing_ocr_adapter"
-        poster_records, failure = self.ocr_adapter.extract_records(article)
+        poster_records, failure = self._call_adapter(article)
         records.extend(poster_records)
         # 两条路径各自从 -01 编号会撞 record_key，合并后按顺序统一重编号
         for i, r in enumerate(records):
