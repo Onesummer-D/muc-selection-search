@@ -127,6 +127,43 @@
   P04/P01 城市"中共来宾"/"广西"为省级表述、P12/P19 城市"山西"为省名）
   交标注人裁决 → 回填 frozen_at → 台账 CSV 交付 C。
 
+### 2026-09-19 20:40（B4 完成：冻结金标准 + 两路线对照评测 + 交付物）
+
+- [x] **金标准冻结**（`859af48`）：40 人物 × 7 字段人工盲填 + 10 处笔误/截断
+  经标注人逐条确认修正（adjudication_log.json 可审计），frozen_at 回填，机器校验通过。
+- [x] 判定口径补全（`9db6159`，全部记录在案）：机构简称归一（纪检委=纪委监委）、
+  任职尾巴剥离（"发改局试用期公务员"→"发改局"）、省/市后缀归一、
+  城市前缀匹配（天津 ⊆ 天津市河北区…）、包含归一（短侧≥3字）。
+- [x] `8fef6de` **最终评测结果**（20/20 有效，原始结果可重算）：
+
+| 指标 | OCR 路线 | 多模态路线 |
+|---|---|---|
+| 届别 | 17/20 = 85% | 20/20 = 100% |
+| 学历 | 10/20 = 50% | 20/20 = 100% |
+| 专业 | 7/20 = 35% | 16/20 = 80% |
+| 城市 | 7/20 = 35% | 13/20 = 65% |
+| 岗位/单位 | 11/20 = 55% | 15/20 = 75% |
+| 完整记录 | 2/20 = 10% | 7/20 = 35% |
+| 平均耗时 | 88.0s（P95 96.5s） | 9.2s（P95 13.9s） |
+| 成功率 | 20/20 | 20/20 |
+
+- [x] **多模态启用结论：启用**（完整记录 +25pp ≥ 5pp 门槛，成本 0 元/张免费档，数据驱动）。
+  五字段均未达 90% → 各字段具体样本已入复核队列（evaluation_report.json review_queue）。
+- [x] 成本与边界登记（`reports/extraction/eval_meta.json`）：glm-4v-flash 免费档 0 元/张，
+  价格日期 2026-09-19，素材=门户 PDF 派生图，保留策略见文件（P1-08/B-16）。
+- [x] **固定 5 篇 bundle + evidence pack 全部产出**（B2/B3 交付物）：5/5 Schema 通过
+  （1 processed + 4 review_required，低置信度不静默），`reports/extraction/{bundles,packs}/`。
+- [x] 台账导入 CSV：`reports/extraction/tracker_import.csv`（列对齐 20样本评测!A14:AB14）。
+
+## 交付清单（交接 C）
+
+1. extraction bundle × 5 固定样本 + evidence pack × 7 记录：`reports/extraction/bundles|packs/`
+2. 金标准：`data/gold/gold_20.json`（冻结）+ 裁决日志 + 选样 v2 清单
+3. 评测报告：`reports/extraction/evaluation_report.json`（含 review_queue、gate、逐样本可重算）
+4. 台账导入：`reports/extraction/tracker_import.csv` + 成本边界 `eval_meta.json`
+5. 原始抽取（含姓名，PII）：`../controlled_assets/eval_workdir/`（仓库外）
+6. 验收台账映射：B-01=B-16 的实际值见本文件各条目；Commit 列填 PR #5。
+
 ## 风险登记（B3 前必须知晓）
 
 - 台账 AA 校验要求金标准五行（C-G）全非空才计"通过"，与任务书「原文未出现填 null」有张力；
