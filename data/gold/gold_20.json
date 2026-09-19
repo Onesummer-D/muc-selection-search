@@ -1,9 +1,9 @@
 {
   "sample_set": "week1-poster-gold-20-v2",
   "annotator": "annotator-B（人工盲填，工作簿原表存档于受控目录）",
-  "frozen_at": null,
+  "frozen_at": "2026-09-19T20:27:50.093371+08:00",
   "revision": "v2：20 张全部为经验分享类人物海报。初版清单中的校友就业帖(246444) 与 5 张公告类移出（无人物五字段），6 张台账外经验分享补充入场（manual-*，来源受控交接 PDF，手工建 bundle）。",
-  "notes": "字段值逐字转录自标注人工作簿；用户表 P 编号与本清单不一致，映射关系见 app/extraction/build_gold_v2.py ROW_MAP（按海报内容核对）。",
+  "notes": "字段值逐字转录自标注人工作簿；用户表 P 编号与本清单不一致，映射关系见 app/extraction/build_gold_v2.py ROW_MAP（按海报内容核对）。；2026-09-19 差异裁决：10 处笔误/截断经标注人确认修正后冻结（见 adjudication_log.json）。",
   "samples": [
     {
       "sample_id": "P01",
@@ -92,7 +92,7 @@
         "college": "经济学院",
         "major": "国际经济与贸易",
         "city": "昆明",
-        "position_or_unit": "昆明市市委组织"
+        "position_or_unit": "昆明市委组织部"
       },
       "persons": [
         {
@@ -102,7 +102,7 @@
           "college": "经济学院",
           "major": "国际经济与贸易",
           "city": "昆明",
-          "position_or_unit": "昆明市市委组织"
+          "position_or_unit": "昆明市委组织部"
         },
         {
           "cohort": "2024届",
@@ -128,7 +128,7 @@
         "education": "本科",
         "college": "历史文化学院",
         "major": "中国与周边国家关系史实验班",
-        "city": "中共来宾",
+        "city": "来宾",
         "position_or_unit": "合山市委组织部"
       },
       "persons": [
@@ -138,7 +138,7 @@
           "education": "本科",
           "college": "历史文化学院",
           "major": "中国与周边国家关系史实验班",
-          "city": "中共来宾",
+          "city": "来宾",
           "position_or_unit": "合山市委组织部"
         },
         {
@@ -147,7 +147,7 @@
           "education": "硕士研究生",
           "college": "理学院",
           "major": "应用统计专业",
-          "city": "广西",
+          "city": "南宁",
           "position_or_unit": "广西壮族自治区统计局"
         }
       ],
@@ -259,7 +259,7 @@
           "college": "文学院",
           "major": "当代文学",
           "city": "银川",
-          "position_or_unit": "金凤区人民政府"
+          "position_or_unit": "银川市金凤区人民法院"
         }
       ],
       "is_multi_person": true
@@ -471,7 +471,7 @@
           "education": "硕士",
           "college": "哲学与宗教学学院",
           "major": "宗教学",
-          "city": "山西",
+          "city": "太原",
           "position_or_unit": "山西省纪检委"
         }
       ],
@@ -490,7 +490,7 @@
         "college": "管理学院",
         "major": "行政管理",
         "city": "保定",
-        "position_or_unit": "徐水区财务局"
+        "position_or_unit": "保定市徐水区财政局"
       },
       "persons": [
         {
@@ -500,7 +500,7 @@
           "college": "管理学院",
           "major": "行政管理",
           "city": "保定",
-          "position_or_unit": "徐水区财务局"
+          "position_or_unit": "保定市徐水区财政局"
         },
         {
           "cohort": "2024届",
@@ -694,7 +694,7 @@
           "college": "生命与环境科学学院",
           "major": "生物科学",
           "city": "晋城",
-          "position_or_unit": "进程市教育局"
+          "position_or_unit": "晋城市教育局"
         },
         {
           "cohort": "2023届",
@@ -702,8 +702,8 @@
           "education": "硕士",
           "college": "新闻与传播学院",
           "major": "新闻与传播专业",
-          "city": "山西",
-          "position_or_unit": "中共陕西省委宣传部"
+          "city": "太原",
+          "position_or_unit": "中共山西省委宣传部"
         }
       ],
       "is_multi_person": true
