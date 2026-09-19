@@ -26,12 +26,15 @@ PROMPT_TEMPLATE = """你是选调经验海报信息抽取器。请从这张海�
 届别(cohort，格式如 2025届)、学历(education，本科/硕士/博士)、专业(major)、城市(city)、岗位或单位(position_or_unit)。
 要求：
 1. 只使用图片中明确出现的信息，缺失字段返回 null，不得猜测。
-2. 每个非空字段给出图片中的原文片段作为证据文本。
+2. 每个非空字段必须单独输出一条 evidence，且 field 与字段名完全一致；
+   例如 education 的证据不能合并进 cohort 的证据里。
 3. 一张海报有多位人物时，每人一条记录。
 4. 只输出 JSON，不要任何解释文字。结构如下：
 {"records": [{"cohort": "2025届", "grade": null, "education": "本科", "college": null,
 "major": "计算机科学与技术", "city": "成都", "position_or_unit": "某区基层岗位",
-"evidence": [{"field": "city", "text": "工作地点 成都"}]}]}"""
+"evidence": [{"field": "cohort", "text": "2025届"}, {"field": "education", "text": "本科"},
+{"field": "major", "text": "计算机科学与技术"}, {"field": "city", "text": "工作地点 成都"},
+{"field": "position_or_unit", "text": "某区基层岗位"}]}]}"""
 
 
 class MultimodalTimeout(RuntimeError):
