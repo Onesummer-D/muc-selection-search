@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "246164",
+  "title": "10月18日||“共美”沙龙——贵州定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/246164",
+  "published_at": "2024-10-16 10:05",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "246164-poster-01",
+      "kind": "poster",
+      "local_ref": "private://246164/poster-01",
+      "sha256": "f93817bda04356898b6c97a8bf7d805f6eb151df7b1df3b80e45f59df925490b"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T19:50:50+08:00"
+}

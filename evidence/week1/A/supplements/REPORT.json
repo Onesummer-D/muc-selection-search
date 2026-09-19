@@ -1,0 +1,64 @@
+{
+  "issue": 7,
+  "requested_by": "B",
+  "target_notice_ids": [
+    "246166",
+    "246164",
+    "240863",
+    "240809",
+    "239413",
+    "239151"
+  ],
+  "collected": [
+    {
+      "notice_id": "246166",
+      "title": "10月24日||“共美”沙龙——江西定向选调经验分享",
+      "content_type": "poster",
+      "bundle": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\supplements\\246166.json",
+      "assets_ok": 1,
+      "assets_failed": []
+    },
+    {
+      "notice_id": "246164",
+      "title": "10月18日||“共美”沙龙——贵州定向选调经验分享",
+      "content_type": "poster",
+      "bundle": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\supplements\\246164.json",
+      "assets_ok": 1,
+      "assets_failed": []
+    },
+    {
+      "notice_id": "240863",
+      "title": "3月14日||“共美”沙龙—新疆维吾尔自治区定向选调经验分享",
+      "content_type": "poster",
+      "bundle": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\supplements\\240863.json",
+      "assets_ok": 1,
+      "assets_failed": []
+    },
+    {
+      "notice_id": "240809",
+      "title": "3月12日||“共美”沙龙—河北定向选调经验分享",
+      "content_type": "poster",
+      "bundle": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\supplements\\240809.json",
+      "assets_ok": 1,
+      "assets_failed": []
+    },
+    {
+      "notice_id": "239413",
+      "title": "12月27日||“共美”沙龙——山西定向选调经验分享",
+      "content_type": "poster",
+      "bundle": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\supplements\\239413.json",
+      "assets_ok": 1,
+      "assets_failed": []
+    },
+    {
+      "notice_id": "239151",
+      "title": "12月19日||“共美”沙龙——湖北选调经验分享",
+      "content_type": "poster",
+      "bundle": "C:\\Users\\Administrator\\WorkBuddy\\2026-09-17-23-07-25\\repo\\evidence\\week1\\A\\supplements\\239151.json",
+      "assets_ok": 1,
+      "assets_failed": []
+    }
+  ],
+  "missing": [],
+  "generated_at": "2026-09-19T19:50:55+08:00"
+}

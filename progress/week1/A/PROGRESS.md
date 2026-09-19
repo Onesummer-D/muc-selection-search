@@ -68,6 +68,15 @@
 
 - Python 3.13（本地 venv）；依赖新增：requests、jsonschema（登记 PR 说明，由 C 处理根配置）。
 
+### 2026-09-19（晚，issue #7 补采完成）
+- [x] **按 B 需求补充采集 6 篇**（issue #7，B 指定 notice_id）：
+  246166/246164/240863/240809/239413/239151，全部为"共美"沙龙定向选调经验分享
+  （江西/贵州/新疆/河北/山西/湖北），poster 类型 6/6 成功，261s 完成。
+  - bundle（脱敏 + 海报真实 SHA-256）：`evidence/week1/A/supplements/*.json` + REPORT.json；
+  - 原图（6 张，仓库外受控渠道）：`../controlled_assets/<notice_id>/`；
+  - 台账追加 6 条 processed：`article_ledger.json`（105→111）+ `collection_ledger.csv` 重新导出；
+  - 重现方式：`python run_supplement.py`（人工登录 + 自动补采）。
+
 ### A4 运行证据（2026-09-18 22:53）
 
 - **7/7 场景通过**：`evidence/week1/A/a4/scenarios-summary.json`
