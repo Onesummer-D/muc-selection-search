@@ -16,7 +16,8 @@ import re
 from pathlib import Path
 
 VALID_IDS = [f"P{i:02d}" for i in range(1, 21)]
-EDUCATION_ENUM = {"本科", "硕士", "博士"}
+# 与验收台账 20样本评测!AA15 学历下拉枚举完全一致（C 回填时直接粘贴）
+EDUCATION_ENUM = {"本科", "硕士", "硕士研究生", "博士", "博士研究生", "其他"}
 CORE = ("cohort", "education", "major", "city", "position_or_unit")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 COHORT_RE = re.compile(r"^20\d{2}届$")
