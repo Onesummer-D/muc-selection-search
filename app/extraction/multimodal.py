@@ -57,8 +57,8 @@ def _validate_against_dictionaries(record: dict) -> list[str]:
     """字段词典校验：返回问题列表（不修改记录值）。"""
     issues = []
     edu = record.get("education")
-    if edu is not None and edu not in F.EDUCATION_TERMS:
-        issues.append(f"education 不在枚举 {list(F.EDUCATION_TERMS)}: {edu!r}")
+    if edu is not None and edu not in F.EDUCATION_ENUM:
+        issues.append(f"education 不在枚举 {list(F.EDUCATION_ENUM)}: {edu!r}")
     cohort = record.get("cohort")
     if cohort is not None and not F.COHORT_RE.fullmatch(F.normalize(cohort)):
         issues.append(f"cohort 不是 20XX届 格式: {cohort!r}")

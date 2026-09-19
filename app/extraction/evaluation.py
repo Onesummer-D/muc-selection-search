@@ -14,6 +14,8 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field
 
+from . import fields as F
+
 CORE = ("cohort", "education", "major", "city", "position_or_unit")
 GATE_PP = 5.0  # 启用门槛，百分点
 
@@ -31,7 +33,9 @@ class RouteRaw:
 def _norm(v: str | None) -> str | None:
     if v is None:
         return None
-    return str(v).strip().replace(" ", "")
+    s = str(v).strip().replace(" ", "")
+    # 学历等价归一：硕士研究生→硕士、博士研究生→博士（台账枚举含两种写法）
+    return F.EDUCATION_ALIAS.get(s, s)
 
 
 def judge_field(gold_value, extracted_value) -> int | None:

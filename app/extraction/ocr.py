@@ -69,8 +69,10 @@ class PaddleOcrAdapter:
             raise OcrUnavailable(f"paddleocr not importable: {exc}") from exc
         self.version = getattr(paddleocr, "__version__", "unknown")
         from paddleocr import PaddleOCR
-        try:  # 3.x 参数
-            self._engine = PaddleOCR(lang="ch", use_textline_orientation=True)
+        try:  # 3.x 参数；enable_mkldnn=False 规避 paddle 3.3 oneDNN 的
+              # ConvertPirAttribute2RuntimeAttribute NotImplementedError
+            self._engine = PaddleOCR(lang="ch", use_textline_orientation=True,
+                                     enable_mkldnn=False)
         except (TypeError, ValueError):  # 2.x 参数
             self._engine = PaddleOCR(use_angle_cls=True, lang="ch", show_log=False)
 
