@@ -6,7 +6,7 @@ from app.extraction import Extractor, validate_bundle
 from app.extraction.evidence import build_evidence_pack
 from app.extraction.ocr import OcrBox, OcrPage
 
-from test_poster_rules import StubOcrAdapter, _article, _box, _page
+from tests.extraction.test_poster_rules import StubOcrAdapter, _article, _box, _page
 
 
 def test_fuzzy_ocr_text_yields_failure_not_garbage():
