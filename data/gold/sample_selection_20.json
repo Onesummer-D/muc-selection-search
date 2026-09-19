@@ -148,7 +148,7 @@
       "in_fixed_samples": false,
       "is_announcement": false,
       "title_keyword_score": 8,
-      "image_sha256": null,
+      "image_sha256": "8743ed07a24277173501bf5774261eab9e535f5925b02898ba4de04bc68161cb",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -158,7 +158,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
+      "received_at": "2026-09-19-batch3"
     },
     {
       "sample_id": "P09",
@@ -167,7 +169,7 @@
       "in_fixed_samples": false,
       "is_announcement": false,
       "title_keyword_score": 8,
-      "image_sha256": null,
+      "image_sha256": "dc1fcb653276ab47fc8a280196607085d1500ca6fa3951b0ec2d2fac43ce34ac",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -177,7 +179,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
+      "received_at": "2026-09-19-batch3"
     },
     {
       "sample_id": "P10",
@@ -186,7 +190,7 @@
       "in_fixed_samples": false,
       "is_announcement": false,
       "title_keyword_score": 8,
-      "image_sha256": null,
+      "image_sha256": "1e74b1df36d2626c5664a478f9b0d59dcea8530be6b91d6983cd0104611ce1fb",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -196,7 +200,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
+      "received_at": "2026-09-19-batch3"
     },
     {
       "sample_id": "P11",
@@ -205,7 +211,7 @@
       "in_fixed_samples": false,
       "is_announcement": false,
       "title_keyword_score": 8,
-      "image_sha256": null,
+      "image_sha256": "192b05da923c43ad71276424ed48e778228a8d87f78a7ec29801b738c10526e8",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -215,7 +221,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
+      "received_at": "2026-09-19-batch3"
     },
     {
       "sample_id": "P12",
@@ -224,7 +232,7 @@
       "in_fixed_samples": false,
       "is_announcement": false,
       "title_keyword_score": 8,
-      "image_sha256": null,
+      "image_sha256": "ef1e062fa12da9d4d22e861dc38bc398da595bd42bb330ce65927378e378cc85",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -234,7 +242,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
+      "received_at": "2026-09-19-batch3"
     },
     {
       "sample_id": "P13",
@@ -243,7 +253,7 @@
       "in_fixed_samples": false,
       "is_announcement": false,
       "title_keyword_score": 10,
-      "image_sha256": null,
+      "image_sha256": "e48401634cdcfac6c2f92e4033253eb6cb711c5824fd8d3dff35e6c2cbbfa79f",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -253,7 +263,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
+      "received_at": "2026-09-19-batch3"
     },
     {
       "sample_id": "P14",
