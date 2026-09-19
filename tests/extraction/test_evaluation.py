@@ -127,6 +127,49 @@ def test_below_90_fields_flagged():
     assert "cohort" not in m["warnings"]["below_90_fields"]
 
 
+def test_multi_person_strict_judging():
+    """多人海报：人数一致且逐人物全对才记 1；幻觉人物判错。"""
+    gold = {"sample_set": "t", "samples": [{
+        "sample_id": "P01",
+        "persons": [
+            {"cohort": "2024届", "education": "本科", "major": "法学",
+             "city": "本溪", "position_or_unit": "本溪市检察院"},
+            {"cohort": "2024届", "education": "硕士", "major": "新闻与传播",
+             "city": "大连", "position_or_unit": "辛寨子街道办事处"},
+        ]}]}
+    def run(ext_persons):
+        return evaluate_route(gold, RouteRaw("ocr", [
+            {"sample_id": "P01", "valid": True, "elapsed_s": 1.0,
+             "cost": 0.0, "persons": ext_persons}]))
+
+    # 全对
+    m = run([{"cohort": "2024届", "education": "本科", "major": "法学",
+              "city": "本溪", "position_or_unit": "本溪市检察院"},
+             {"cohort": "2024届", "education": "硕士研究生", "major": "新闻与传播",
+              "city": "大连", "position_or_unit": "辛寨子街道办事处"}])
+    assert m["fields"]["major"]["accuracy"] == 100.0
+    assert m["complete_record"]["accuracy"] == 100.0
+
+    # 第二人城市错 → 各字段：city 0，其余 1
+    m = run([{"cohort": "2024届", "education": "本科", "major": "法学",
+              "city": "本溪", "position_or_unit": "本溪市检察院"},
+             {"cohort": "2024届", "education": "硕士", "major": "新闻与传播",
+              "city": "沈阳", "position_or_unit": "辛寨子街道办事处"}])
+    assert m["fields"]["city"]["correct"] == 0
+    assert m["fields"]["major"]["correct"] == 1
+
+    # 幻觉第三人 → 全字段判错
+    m = run([{"cohort": "2024届", "education": "本科", "major": "法学",
+              "city": "本溪", "position_or_unit": "本溪市检察院"},
+             {"cohort": "2024届", "education": "硕士", "major": "新闻与传播",
+              "city": "大连", "position_or_unit": "辛寨子街道办事处"},
+             {"cohort": "2024届", "education": "本科", "major": "法学",
+              "city": "本溪", "position_or_unit": "x"}])
+    assert all(m["fields"][f]["correct"] == 0 for f in
+               ("cohort", "education", "major", "city", "position_or_unit"))
+    assert m["per_sample"][0]["persons_extracted"] == 3
+
+
 def test_below_90_review_queue_lists_specific_samples():
     """任务3硬要求：低于90%字段必须列出具体样本进入复核队列。"""
     gold = _gold([_g(f"P{i:02d}", city="成都", cohort="2025届")
