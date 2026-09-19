@@ -53,6 +53,7 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
     elapsed: list[float] = []
     cost_total = 0.0
     gold_null_but_extracted: list[str] = []
+    field_failures: dict[str, list[str]] = {f: [] for f in CORE}
 
     seen_ids = []
     for item in raw.sample_results:
@@ -82,6 +83,8 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
             if j is not None:
                 field_decidable[f] += 1
                 field_correct[f] += j
+                if j == 0:
+                    field_failures[f].append(sid)
         core_all = [judgments[f] for f in CORE]
         complete_decidable_inc = all(j is not None for j in core_all)
         if complete_decidable_inc:
@@ -123,7 +126,17 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
             "gold_null_but_extracted": gold_null_but_extracted,
             "below_90_fields": [f for f in CORE
                                 if pct(field_correct[f], field_decidable[f]) is not None
-                                and pct(field_correct[f], field_decidable[f]) < 90.0]},
+                                and pct(field_correct[f], field_decidable[f]) < 90.0],
+            # 任务3硬要求：低于90%的字段列出具体样本，进入复核队列
+            "review_queue": {
+                f: {"wrong_samples": field_failures[f],
+                    "invalid_samples": [p["sample_id"] for p in per_sample
+                                        if p.get("status") == "invalid_result"]}
+                for f in CORE
+                if pct(field_correct[f], field_decidable[f]) is not None
+                and pct(field_correct[f], field_decidable[f]) < 90.0
+            },
+        },
         "per_sample": per_sample,
     }
     return metrics

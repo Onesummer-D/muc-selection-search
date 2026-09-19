@@ -127,6 +127,22 @@ def test_below_90_fields_flagged():
     assert "cohort" not in m["warnings"]["below_90_fields"]
 
 
+def test_below_90_review_queue_lists_specific_samples():
+    """任务3硬要求：低于90%字段必须列出具体样本进入复核队列。"""
+    gold = _gold([_g(f"P{i:02d}", city="成都", cohort="2025届")
+                  for i in range(1, 21)])
+    results = []
+    for i in range(1, 21):
+        results.append(_r(f"P{i:02d}", cohort="2025届",
+                          city="成都" if i <= 17 else "错值"))  # city 85%
+    results[3]["valid"] = False  # P04 无效结果也入队
+    m = evaluate_route(gold, RouteRaw("ocr", results))
+    rq = m["warnings"]["review_queue"]
+    assert set(rq["city"]["wrong_samples"]) == {"P18", "P19", "P20"}
+    assert rq["city"]["invalid_samples"] == ["P04"]
+    assert "cohort" not in rq  # cohort 100% 不入队
+
+
 def test_run_evaluation_end_to_end_recomputable(tmp_path):
     gold = _gold([_g(f"P{i:02d}", cohort="2025届", major="法学") for i in range(1, 21)])
     ocr_raw = {"sample_results": [

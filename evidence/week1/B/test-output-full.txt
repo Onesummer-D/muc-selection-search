@@ -1,3 +1,8 @@
-........................................................................ [ 75%]
-.......................                                                  [100%]
-95 passed in 1.04s
+...............................................                          [100%]
+============================== warnings summary ===============================
+tests/extraction/test_cli_and_gold.py::test_cli_runs_on_fixed_samples_and_all_bundles_pass_schema
+  C:\Users\LEGION\.zcode\workspace\default\muc-selection-search\.venv\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+    warnings.warn(warning_message)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+47 passed, 1 warning in 12.21s
