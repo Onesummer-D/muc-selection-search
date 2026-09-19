@@ -1,0 +1,10 @@
+{
+  "provider": "智谱 zhipu (bigmodel.cn)",
+  "model": "glm-4v-flash",
+  "material_type": "门户页面 PDF 导出的派生图（等比缩至 1600px 后上传）",
+  "authorization_basis": "软件工程课程内部评测；素材为公开发布的活动海报页面导出，无原始个人照片文件",
+  "price_date": "2026-09-19（glm-4v-flash 免费档，单张成本 0 元人民币）",
+  "cost_estimate": "0 CNY/张（免费档）；OCR 路线本机 CPU 无直接成本",
+  "retention_policy": "抽取原始结果（含姓名）存仓库外受控目录 eval_workdir/；仓库只保留字段值与指标；合成烟测图用后即弃",
+  "timing_boundary": "收到 article bundle 到产出 extraction bundle（两路线一致，同机同批）"
+}

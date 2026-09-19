@@ -1,0 +1,484 @@
+{
+  "sample_results": [
+    {
+      "sample_id": "P01",
+      "valid": true,
+      "elapsed_s": 8.43,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "应用统计",
+          "city": "滨州市阳信县",
+          "position_or_unit": "发改局试用期公务员"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "法律（法学）",
+          "city": "潍坊市寒亭区",
+          "position_or_unit": "司法局试用期公务员"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P02",
+      "valid": true,
+      "elapsed_s": 8.79,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "信息与计算科学",
+          "city": "青海省",
+          "position_or_unit": "青海省人力资源和社会保障厅（省社会保险服务局）试用期公务员"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "现代教育技术",
+          "city": "青海省",
+          "position_or_unit": "青海省教育厅试用期公务员"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P03",
+      "valid": true,
+      "elapsed_s": 8.78,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "国际经济与贸易",
+          "city": "昆明市",
+          "position_or_unit": "云南省昆明市委组织部试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "电子信息",
+          "city": "昆明市盘龙区",
+          "position_or_unit": "云南省昆明市盘龙区金辰街道办事处试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P04",
+      "valid": true,
+      "elapsed_s": 11.0,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "中国与周边国家关系史实验班",
+          "city": "来宾市合山市",
+          "position_or_unit": "中共来宾市合山市委组织部试用期干部（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "应用统计",
+          "city": "广西壮族自治区",
+          "position_or_unit": "广西壮族自治区统计局试用期干部（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P05",
+      "valid": true,
+      "elapsed_s": 7.44,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "外国语言学及应用语言学（英语）",
+          "city": "天津市河北区王串场街道",
+          "position_or_unit": "试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "新闻与传播",
+          "city": "天津市津南区农业农村委员会",
+          "position_or_unit": "试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P06",
+      "valid": true,
+      "elapsed_s": 8.18,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "硕士研究生",
+          "major": "法律（法学）",
+          "city": "郑州市",
+          "position_or_unit": "郑州市司法局试用期公务员(不定职级)"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士研究生",
+          "major": "应用统计",
+          "city": "焦作市沁阳市发展和改革委员会",
+          "position_or_unit": "焦作市沁阳市发展和改革委员会试用期公务员(不定职级)"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P07",
+      "valid": true,
+      "elapsed_s": 13.5,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "文物与博物馆学",
+          "city": "石嘴山市惠农区红果子镇",
+          "position_or_unit": "石嘴山市惠农区红果子镇人民政府试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士研究生",
+          "major": "中国现当代文学",
+          "city": "银川市金凤区",
+          "position_or_unit": "银川市金凤区人民法院试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P08",
+      "valid": true,
+      "elapsed_s": 13.88,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "硕士研究生",
+          "major": "文物与博物馆学",
+          "city": "湖南省株洲市炎陵县鹿原镇三口村",
+          "position_or_unit": "党总支书记助理（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士研究生",
+          "major": "中国少数民族语言文学",
+          "city": "湖南省邵阳市双清区高崇山镇马杨村",
+          "position_or_unit": "党总支书记助理（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P09",
+      "valid": true,
+      "elapsed_s": 9.48,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "汉语言文学",
+          "city": "福建省泉州市晋江市英林镇三欧村",
+          "position_or_unit": "村主任助理"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士研究生",
+          "major": "社会学",
+          "city": "福建省三明市宁化县",
+          "position_or_unit": "宁化县委社会工作部"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P10",
+      "valid": true,
+      "elapsed_s": 10.11,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "汉语言文学",
+          "city": "深圳市宝安区",
+          "position_or_unit": "深圳市宝安区新桥街道办事处试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "法律（法学）",
+          "city": "梅州市",
+          "position_or_unit": "梅州市中级人民法院试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P11",
+      "valid": true,
+      "elapsed_s": 8.37,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "法学",
+          "city": "本溪市",
+          "position_or_unit": "本溪市检察院"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "新闻与传播",
+          "city": "大连市甘井子区辛寨子街道办事处",
+          "position_or_unit": "大连市甘井子区辛寨子街道办事处"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P12",
+      "valid": true,
+      "elapsed_s": 5.12,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "经济学",
+          "city": "吐鲁番市高昌区",
+          "position_or_unit": "审计局试用期公务员"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P13",
+      "valid": true,
+      "elapsed_s": 8.47,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "环境科学（中外合作办学）",
+          "city": "山西省临汾市",
+          "position_or_unit": "山西省临汾市城联社试用期公务员"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "宗教学",
+          "city": "山西省",
+          "position_or_unit": "山西省纪委监委试用期公务员"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P14",
+      "valid": true,
+      "elapsed_s": 9.21,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "行政管理",
+          "city": "保定市徐水区",
+          "position_or_unit": "公务员（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士研究生",
+          "major": "汉语言文学",
+          "city": "唐山市纪委监委会",
+          "position_or_unit": "公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P15",
+      "valid": true,
+      "elapsed_s": 7.74,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "汉语言文学",
+          "city": "贵州省石阡县",
+          "position_or_unit": "县委办公室试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "行政管理",
+          "city": "贵州省织金县",
+          "position_or_unit": "文体广电旅游局试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P16",
+      "valid": true,
+      "elapsed_s": 9.3,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": "本科",
+          "major": "软件工程",
+          "city": "张家口市",
+          "position_or_unit": "张家口市卫生健康委员会试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2023届",
+          "education": "硕士研究生",
+          "major": "环境科学与工程专业",
+          "city": "石家庄市桥西区",
+          "position_or_unit": "石家庄市桥西区数据资源管理局试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P17",
+      "valid": true,
+      "elapsed_s": 7.92,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": "硕士研究生",
+          "major": "金融学",
+          "city": "武汉市",
+          "position_or_unit": "武汉市财政局试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2023届",
+          "education": "硕士研究生",
+          "major": "社会学",
+          "city": "荆州市",
+          "position_or_unit": "荆州市荆州区城南街道党政办试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P18",
+      "valid": true,
+      "elapsed_s": 8.21,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "法英专业",
+          "city": "南昌市新建区",
+          "position_or_unit": "南昌市新建区人民政府办公室试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "英语笔译",
+          "city": "江西省上饶市委政研室",
+          "position_or_unit": "江西省上饶市委政研室试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P19",
+      "valid": true,
+      "elapsed_s": 11.68,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": "本科",
+          "major": "汉语言文学",
+          "city": "山西省长治市",
+          "position_or_unit": "山西省长治市劳动人事争议仲裁院试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2023届",
+          "education": "本科",
+          "major": "生物科学",
+          "city": "山西省晋城市",
+          "position_or_unit": "山西省晋城市教育局试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2023届",
+          "education": "硕士",
+          "major": "新闻与传播",
+          "city": "山西",
+          "position_or_unit": "中共山西省委宣传部试用期公务员（不定职级）"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P20",
+      "valid": true,
+      "elapsed_s": 8.11,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": "本科",
+          "major": "哲学",
+          "city": "乌鲁木齐市",
+          "position_or_unit": "统战部试用期公务员（不定职级）"
+        },
+        {
+          "cohort": "2022届",
+          "education": "本科",
+          "major": "维吾尔语",
+          "city": "喀什地区疏附县",
+          "position_or_unit": "组织部一级科员"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    }
+  ]
+}

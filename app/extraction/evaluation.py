@@ -38,18 +38,29 @@ def _norm(v: str | None) -> str | None:
     s = F.EDUCATION_ALIAS.get(s, s)
     # 机构常用简称归一（判定口径，不改变抽取/gold 原值）
     s = s.replace("纪检委", "纪委监委")
-    # 城市口径归一：去「市/州/盟/地区」后缀（临汾市 == 临汾）。
+    # 去掉粘连的任职状态尾巴（"发改局试用期公务员"→"发改局"；
+    # gold 侧 "河北区王串场街道公务员"→"河北区王串场街道"）
+    for tail in ("试用期公务员（不定职级）", "试用期公务员(不定职级)",
+                 "试用期干部（不定职级）", "试用期干部(不定职级)",
+                 "试用期公务员", "试用期干部", "公务员", "干部"):
+        if s.endswith(tail) and len(s) > len(tail):
+            s = s[: -len(tail)]
+            break
+    # 城市口径归一：去「省/市/州/盟/地区」后缀（临汾市==临汾、青海省==青海）。
     # 仅当整体形如地名时生效；岗位单位名以机构后缀结尾，不受影响。
-    for suffix in ("地区", "盟", "州", "市"):
+    for suffix in ("地区", "盟", "州", "市", "省"):
         if s.endswith(suffix) and len(s) > len(suffix) + 1:
             return s[: -len(suffix)]
     return s
 
 
-def _match(gold_v, ext_v) -> bool:
-    """相等或包含：gold 常为简称（阳信县发改局 ⊆ 滨州市阳信县发改局）。
+def _match(gold_v, ext_v, field: str = "") -> bool:
+    """相等、包含或（仅城市）前缀。
 
-    包含关系要求较短一侧 ≥3 字，避免「法学 ⊆ 民商法学」这类误判。
+    - 包含：gold 常为简称（阳信县发改局 ⊆ 滨州市阳信县发改局），
+      较短一侧 ≥3 字，避免「法学 ⊆ 民商法学」这类误判；
+    - 城市前缀：城市常为 2 字名（天津 ⊆ 天津市河北区王串场街道），
+      前缀比任意子串更严格，不会误放行。
     """
     a, b = _norm(gold_v), _norm(ext_v)
     if a is None or b is None:
@@ -57,14 +68,18 @@ def _match(gold_v, ext_v) -> bool:
     if a == b:
         return True
     short, long = (a, b) if len(a) <= len(b) else (b, a)
-    return len(short) >= 3 and short in long
+    if len(short) >= 3 and short in long:
+        return True
+    if field == "city" and long.startswith(short):
+        return True
+    return False
 
 
-def judge_field(gold_value, extracted_value) -> int | None:
+def judge_field(gold_value, extracted_value, field: str = "") -> int | None:
     """返回 1=正确，0=错误，None=不可判定（gold 缺失，不计分母）。"""
     if gold_value is None:
         return None
-    return 1 if _match(gold_value, extracted_value) else 0
+    return 1 if _match(gold_value, extracted_value, field) else 0
 
 
 def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
@@ -111,7 +126,7 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
                     continue
                 field_decidable[f] += 1
                 ok = (len(ext_persons) == len(gold_persons) and all(
-                    judge_field(gv, ep.get(f)) == 1
+                    judge_field(gv, ep.get(f), f) == 1
                     for gv, ep in zip(gold_vals, ext_persons)))
                 if not ok:
                     field_failures[f].append(sid)
@@ -138,7 +153,7 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
         for f in CORE:
             gold_v = g["fields"].get(f)
             ext_v = fields.get(f)
-            j = judge_field(gold_v, ext_v)
+            j = judge_field(gold_v, ext_v, f)
             judgments[f] = j
             if j is None and ext_v is not None:
                 gold_null_but_extracted.append(f"{sid}.{f}")

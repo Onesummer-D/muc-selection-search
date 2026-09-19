@@ -1,0 +1,849 @@
+{
+  "gold_sample_set": "week1-poster-gold-20-v2",
+  "routes": {
+    "ocr": {
+      "route": "ocr",
+      "samples_input": 20,
+      "samples_gold": 20,
+      "gold_ids_missing_from_route": [],
+      "valid_results": 20,
+      "success_rate": 100.0,
+      "fields": {
+        "cohort": {
+          "correct": 17,
+          "decidable": 20,
+          "accuracy": 85.0
+        },
+        "education": {
+          "correct": 10,
+          "decidable": 20,
+          "accuracy": 50.0
+        },
+        "major": {
+          "correct": 7,
+          "decidable": 20,
+          "accuracy": 35.0
+        },
+        "city": {
+          "correct": 7,
+          "decidable": 20,
+          "accuracy": 35.0
+        },
+        "position_or_unit": {
+          "correct": 11,
+          "decidable": 20,
+          "accuracy": 55.0
+        }
+      },
+      "complete_record": {
+        "correct": 2,
+        "decidable": 20,
+        "accuracy": 10.0
+      },
+      "elapsed_s": {
+        "avg": 88.011,
+        "p95": 96.51,
+        "n": 20
+      },
+      "cost": {
+        "total": 0.0,
+        "per_success": 0.0
+      },
+      "warnings": {
+        "gold_null_but_extracted": [],
+        "below_90_fields": [
+          "cohort",
+          "education",
+          "major",
+          "city",
+          "position_or_unit"
+        ],
+        "review_queue": {
+          "cohort": {
+            "wrong_samples": [
+              "P05",
+              "P16",
+              "P20"
+            ],
+            "invalid_samples": []
+          },
+          "education": {
+            "wrong_samples": [
+              "P02",
+              "P03",
+              "P05",
+              "P06",
+              "P09",
+              "P10",
+              "P14",
+              "P15",
+              "P16",
+              "P20"
+            ],
+            "invalid_samples": []
+          },
+          "major": {
+            "wrong_samples": [
+              "P01",
+              "P03",
+              "P04",
+              "P05",
+              "P06",
+              "P09",
+              "P10",
+              "P11",
+              "P13",
+              "P14",
+              "P16",
+              "P17",
+              "P20"
+            ],
+            "invalid_samples": []
+          },
+          "city": {
+            "wrong_samples": [
+              "P02",
+              "P04",
+              "P05",
+              "P06",
+              "P08",
+              "P09",
+              "P13",
+              "P15",
+              "P16",
+              "P17",
+              "P18",
+              "P19",
+              "P20"
+            ],
+            "invalid_samples": []
+          },
+          "position_or_unit": {
+            "wrong_samples": [
+              "P02",
+              "P05",
+              "P08",
+              "P09",
+              "P15",
+              "P16",
+              "P17",
+              "P18",
+              "P20"
+            ],
+            "invalid_samples": []
+          }
+        }
+      },
+      "per_sample": [
+        {
+          "sample_id": "P01",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P02",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P03",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P04",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P05",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 3,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 0,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P06",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P07",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P08",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P09",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P10",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P11",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P12",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 1,
+          "persons_gold": 1,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P13",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P14",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P15",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P16",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 1,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 0,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P17",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P18",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P19",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 3,
+          "persons_gold": 3,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P20",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 1,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 0,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        }
+      ]
+    },
+    "multimodal": {
+      "route": "multimodal",
+      "samples_input": 20,
+      "samples_gold": 20,
+      "gold_ids_missing_from_route": [],
+      "valid_results": 20,
+      "success_rate": 100.0,
+      "fields": {
+        "cohort": {
+          "correct": 20,
+          "decidable": 20,
+          "accuracy": 100.0
+        },
+        "education": {
+          "correct": 20,
+          "decidable": 20,
+          "accuracy": 100.0
+        },
+        "major": {
+          "correct": 16,
+          "decidable": 20,
+          "accuracy": 80.0
+        },
+        "city": {
+          "correct": 13,
+          "decidable": 20,
+          "accuracy": 65.0
+        },
+        "position_or_unit": {
+          "correct": 15,
+          "decidable": 20,
+          "accuracy": 75.0
+        }
+      },
+      "complete_record": {
+        "correct": 7,
+        "decidable": 20,
+        "accuracy": 35.0
+      },
+      "elapsed_s": {
+        "avg": 9.186,
+        "p95": 13.88,
+        "n": 20
+      },
+      "cost": {
+        "total": 0.0,
+        "per_success": 0.0
+      },
+      "warnings": {
+        "gold_null_but_extracted": [],
+        "below_90_fields": [
+          "major",
+          "city",
+          "position_or_unit"
+        ],
+        "review_queue": {
+          "major": {
+            "wrong_samples": [
+              "P05",
+              "P06",
+              "P10",
+              "P18"
+            ],
+            "invalid_samples": []
+          },
+          "city": {
+            "wrong_samples": [
+              "P04",
+              "P08",
+              "P09",
+              "P13",
+              "P15",
+              "P18",
+              "P19"
+            ],
+            "invalid_samples": []
+          },
+          "position_or_unit": {
+            "wrong_samples": [
+              "P05",
+              "P08",
+              "P14",
+              "P17",
+              "P20"
+            ],
+            "invalid_samples": []
+          }
+        }
+      },
+      "per_sample": [
+        {
+          "sample_id": "P01",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P02",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P03",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P04",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P05",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P06",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P07",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P08",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P09",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P10",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P11",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P12",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 1,
+          "persons_gold": 1,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P13",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P14",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P15",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P16",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1
+          },
+          "complete": true
+        },
+        {
+          "sample_id": "P17",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 0
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P18",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P19",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 3,
+          "persons_gold": 3,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1
+          },
+          "complete": false
+        },
+        {
+          "sample_id": "P20",
+          "status": "judged",
+          "mode": "multi_person",
+          "persons_extracted": 2,
+          "persons_gold": 2,
+          "judgments": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 0
+          },
+          "complete": false
+        }
+      ]
+    }
+  },
+  "gate": {
+    "gate_basis": "complete_record",
+    "ocr_reference_accuracy": 10.0,
+    "multimodal_accuracy": 35.0,
+    "diff_percentage_points": 25.0,
+    "gate_pp": 5.0,
+    "gate_pass": true,
+    "fields_meeting_90": {
+      "ocr": false,
+      "multimodal": false
+    },
+    "multimodal_enablement": "启用",
+    "enablement_basis": "完整记录准确率差 25.0pp（门槛 ≥5.0pp）"
+  },
+  "timing_boundary": "收到 article bundle 到产出 extraction bundle（两路线一致）",
+  "recomputable": "所有指标均由 per_sample 0/1 判断汇总，可重算"
+}
