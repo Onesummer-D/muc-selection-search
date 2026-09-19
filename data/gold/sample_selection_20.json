@@ -1,0 +1,128 @@
+{
+  "sample_set": "week1-poster-gold-20-v2",
+  "frozen": true,
+  "frozen_basis": "选样 v2 由标注人裁定（见 gold revision）；ID 按 notice_id 确定性排序",
+  "selection_rule": "14 张台账经验分享（246193,246323,246590,246592,246674,246709,246757,246951,247035,247339,247509,247586,247746,247919）+ 6 张场外 manual-*；排除校友就业帖与公告类",
+  "samples": [
+    {
+      "sample_id": "P01",
+      "notice_id": "246193",
+      "image_sha256": "c33d4c220c92eb093ccc72a1a5c6db7a024d5c51b12123e0c708c27a1551a0f9",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P02",
+      "notice_id": "246323",
+      "image_sha256": "e24e643770f2a297edd3c6e045d25389f7db7bbceeaa663324834136e47b2e6b",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P03",
+      "notice_id": "246590",
+      "image_sha256": "cd9554f43f9653f691a580b5b95820a207d221539542992f0247e65085e46da5",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P04",
+      "notice_id": "246592",
+      "image_sha256": "677ce946aa3b2a3ab408f468814eec39ae0695c83407e055fd30c0f414903a22",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P05",
+      "notice_id": "246674",
+      "image_sha256": "8743ed07a24277173501bf5774261eab9e535f5925b02898ba4de04bc68161cb",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P06",
+      "notice_id": "246709",
+      "image_sha256": "dc1fcb653276ab47fc8a280196607085d1500ca6fa3951b0ec2d2fac43ce34ac",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P07",
+      "notice_id": "246757",
+      "image_sha256": "1e74b1df36d2626c5664a478f9b0d59dcea8530be6b91d6983cd0104611ce1fb",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P08",
+      "notice_id": "246951",
+      "image_sha256": "192b05da923c43ad71276424ed48e778228a8d87f78a7ec29801b738c10526e8",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P09",
+      "notice_id": "247035",
+      "image_sha256": "ef1e062fa12da9d4d22e861dc38bc398da595bd42bb330ce65927378e378cc85",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P10",
+      "notice_id": "247339",
+      "image_sha256": "e48401634cdcfac6c2f92e4033253eb6cb711c5824fd8d3dff35e6c2cbbfa79f",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P11",
+      "notice_id": "247509",
+      "image_sha256": "064246b707037fb65dfbf556ad0054926a86b5a1012a7a27c160400a7ae9d8c9",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P12",
+      "notice_id": "247586",
+      "image_sha256": "6130584ed81827c914e0c6910def99d752302b6accdb08209d5fa83363a9d71f",
+      "is_multi_person": false
+    },
+    {
+      "sample_id": "P13",
+      "notice_id": "247746",
+      "image_sha256": "9b3bb07375819fb630370894c667843e00bdb1dd65af83c9015f463d04b09df9",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P14",
+      "notice_id": "247919",
+      "image_sha256": "21aaf2403d71f165d810f95a1247335ba785ed4990cea052ac67ed9a2cefe69c",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P15",
+      "notice_id": "manual-guizhou-1018",
+      "image_sha256": "532e3aa1581d56410d295b460f7f650cbb36068d5b207980d9775d683a1ace44",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P16",
+      "notice_id": "manual-hebei-0312",
+      "image_sha256": "097bd1924b349df9f00767eb68dfd4b409ef04a3d0384d150e2446d537e0214f",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P17",
+      "notice_id": "manual-hubei-1219",
+      "image_sha256": "1810c0d14b31002ec9e56774e60bf7060e569444115185ab7bb55e84e80ca09d",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P18",
+      "notice_id": "manual-jiangxi-1024",
+      "image_sha256": "c7958b9505bd7aac9301b8171d7dc984d74d7f1bae1253cd9999a2acf3e7412c",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P19",
+      "notice_id": "manual-shanxi-1227",
+      "image_sha256": "130d6a57b214ff4446b5ac00623fe3e2f6b8ef112c29a6b0971b3f9a65236522",
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P20",
+      "notice_id": "manual-xinjiang-0314",
+      "image_sha256": "36494aaa525a903a7f3c72cdbaced3b777b790119453815575556c972ec9bb7b",
+      "is_multi_person": true
+    }
+  ]
+}

@@ -1,0 +1,477 @@
+{
+  "sample_results": [
+    {
+      "sample_id": "P01",
+      "valid": true,
+      "elapsed_s": 90.16,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "应用统计",
+          "city": "滨",
+          "position_or_unit": "滨州市阳信县发改局"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "法学",
+          "city": "潍坊",
+          "position_or_unit": "潍坊市寒亭区司法局"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P02",
+      "valid": true,
+      "elapsed_s": 84.48,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "信息与计算科学",
+          "city": null,
+          "position_or_unit": null
+        },
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "现代教育技术",
+          "city": null,
+          "position_or_unit": null
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P03",
+      "valid": true,
+      "elapsed_s": 82.31,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "经济学",
+          "city": "昆明",
+          "position_or_unit": "云南省昆明市委组织部"
+        },
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "经济学",
+          "city": "昆明",
+          "position_or_unit": "云南省昆明市盘龙区金辰街道办"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P04",
+      "valid": true,
+      "elapsed_s": 81.3,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "化学",
+          "city": null,
+          "position_or_unit": "中共来宾市合山市委组织部"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "应用统计",
+          "city": null,
+          "position_or_unit": "广西壮族自治区统计局"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P05",
+      "valid": true,
+      "elapsed_s": 95.34,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": null,
+          "education": null,
+          "major": null,
+          "city": "天津",
+          "position_or_unit": null
+        },
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "英语",
+          "city": "天津",
+          "position_or_unit": null
+        },
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "新闻与传播",
+          "city": "天津",
+          "position_or_unit": "天津市津南区农业农村委员会"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P06",
+      "valid": true,
+      "elapsed_s": 87.5,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "法学",
+          "city": "郑州",
+          "position_or_unit": "郑州市司法局"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "应用统计",
+          "city": null,
+          "position_or_unit": "焦作市沁阳市发展和改革委员会"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P07",
+      "valid": true,
+      "elapsed_s": 67.6,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "物馆学",
+          "city": "石嘴山",
+          "position_or_unit": "石嘴山市惠农区红果子镇人民政府"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "中国现当代文学",
+          "city": "银川",
+          "position_or_unit": "银川市金凤区人民法院"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P08",
+      "valid": true,
+      "elapsed_s": 88.54,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "与博物馆",
+          "city": null,
+          "position_or_unit": null
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "中国少数民族语言文学",
+          "city": null,
+          "position_or_unit": null
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P09",
+      "valid": true,
+      "elapsed_s": 95.21,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "汉语言文学",
+          "city": null,
+          "position_or_unit": null
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": null,
+          "city": null,
+          "position_or_unit": null
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P10",
+      "valid": true,
+      "elapsed_s": 91.05,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "汉语言文学",
+          "city": "深圳",
+          "position_or_unit": "深圳市宝安区新桥街道办"
+        },
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "法学",
+          "city": "梅",
+          "position_or_unit": "梅州市中级人民法院"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P11",
+      "valid": true,
+      "elapsed_s": 92.4,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "法学",
+          "city": "本溪",
+          "position_or_unit": "本溪市检察院"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": null,
+          "city": "大连",
+          "position_or_unit": "大连市甘井子区辛寨子街道办事处"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P12",
+      "valid": true,
+      "elapsed_s": 87.72,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "经济学",
+          "city": "吐鲁番",
+          "position_or_unit": "吐鲁番市高昌区审计局"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P13",
+      "valid": true,
+      "elapsed_s": 72.83,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": null,
+          "city": "临汾",
+          "position_or_unit": "山西省临汾市城联社"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "哲学",
+          "city": null,
+          "position_or_unit": "山西省纪委监委"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P14",
+      "valid": true,
+      "elapsed_s": 82.7,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "行政管理",
+          "city": "保定",
+          "position_or_unit": "保定市徐水区财政局"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "汉语言文字学",
+          "city": "唐山",
+          "position_or_unit": "唐山市纪委监委"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P15",
+      "valid": true,
+      "elapsed_s": 93.88,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "汉语言文学",
+          "city": null,
+          "position_or_unit": null
+        },
+        {
+          "cohort": "2024届",
+          "education": null,
+          "major": "行政管理",
+          "city": null,
+          "position_or_unit": null
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P16",
+      "valid": true,
+      "elapsed_s": 90.55,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": null,
+          "major": "科学与工程",
+          "city": "石家庄",
+          "position_or_unit": null
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P17",
+      "valid": true,
+      "elapsed_s": 92.88,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": "硕士",
+          "major": null,
+          "city": "武汉",
+          "position_or_unit": "武汉市财政局"
+        },
+        {
+          "cohort": "2023届",
+          "education": "硕士",
+          "major": "会学",
+          "city": null,
+          "position_or_unit": null
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P18",
+      "valid": true,
+      "elapsed_s": 93.33,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2024届",
+          "education": "本科",
+          "major": "法英",
+          "city": "南昌",
+          "position_or_unit": "南昌市新建区人民政府"
+        },
+        {
+          "cohort": "2024届",
+          "education": "硕士",
+          "major": "英语笔译",
+          "city": null,
+          "position_or_unit": null
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P19",
+      "valid": true,
+      "elapsed_s": 96.51,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": "本科",
+          "major": "汉语言文学",
+          "city": "长治",
+          "position_or_unit": "山西省长治市劳动人事争议仲裁院"
+        },
+        {
+          "cohort": "2023届",
+          "education": "本科",
+          "major": "生物科学",
+          "city": "晋城",
+          "position_or_unit": "山西省晋城市教育局"
+        },
+        {
+          "cohort": "2023届",
+          "education": "硕士",
+          "major": "新闻与传播",
+          "city": null,
+          "position_or_unit": "中共山西省委宣传部"
+        }
+      ],
+      "status": "review_required",
+      "failure_reason": null
+    },
+    {
+      "sample_id": "P20",
+      "valid": true,
+      "elapsed_s": 93.93,
+      "cost": 0.0,
+      "persons": [
+        {
+          "cohort": "2023届",
+          "education": "本科",
+          "major": "维吾尔语",
+          "city": "乌鲁木齐",
+          "position_or_unit": "喀什地区疏附县委组织部"
+        }
+      ],
+      "status": "processed",
+      "failure_reason": null
+    }
+  ]
+}
