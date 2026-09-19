@@ -6,6 +6,8 @@
 
 当前版本为 `v0.1.0-dev`，状态为静态 Demo。
 
+正式版本已确定采用 Flask API + React/TypeScript/Vite。当前三个静态文件只作为交互和视觉迁移基线，技术、视觉、认证、功能和部署决定见 [`docs/APPENDIX_G_DECISIONS.md`](docs/APPENDIX_G_DECISIONS.md)。
+
 ## 你可以用它做什么
 
 - 用自然语言或关键词查找案例
@@ -113,13 +115,13 @@ AI 搜索在当前版本里是交互和文案层面的演示。摘要由前端�
 3. 用 `Repository` 隔离 SQLite，先保证已发布数据可以独立检索，再考虑数据库迁移。
 4. 接入门户适配器、OCR 或文本抽取、增量同步和人工复核流程。
 5. 将角色策略、详情字段、海报资源 URL 和导出范围放到服务端校验。
-6. 在传统检索稳定后，再增加可插拔的语义检索和基于 Evidence Pack 的 RAG。
+6. 接入基于 Evidence Pack 的带引用回答；第一周不启用 Embedding，当前项目也不排期语义检索。
 
 后续接入必须保留传统检索、详情、统计和对比能力。AI 或外部服务不可用时，已发布数据仍应可访问。
 
 ## 第一周协作入口
 
-第一周执行周期为 2026 年 9 月 16 日至 9 月 20 日，角色 A、B、C 分别负责采集更新、识别评测和数据库检索整合。三人先使用同一份接口契约和固定 5 篇样本，再增量处理 100 篇状态台账和 20 张海报评测；本周同时验收 Scheduler/SyncService、Evidence-RAG、三角色服务端权限、公共 HTTPS 与局域网灾备。
+第一周执行周期为 2026 年 9 月 16 日至 9 月 20 日，角色 A、B、C 分别负责采集更新、识别评测和数据库检索整合。三人先使用同一份接口契约和固定 5 篇样本，再增量处理 100 篇状态台账和 20 张海报评测；本周同时验收 Scheduler/SyncService、带引用回答、三角色服务端权限、本机与局域网访问，并完成云服务器和 HTTPS 部署清单。公网地址不是第一周硬门槛。
 
 - [总体目标与协作执行手册](docs/week1/00_本周总体目标与协作执行手册.docx)
 - [角色 A 采集与更新任务书](docs/week1/01_角色A_采集与更新任务书.docx)
@@ -128,6 +130,8 @@ AI 搜索在当前版本里是交互和文案层面的演示。摘要由前端�
 - [接口与数据字典](docs/week1/04_接口与数据字典.md)
 - [本周验收台账](docs/week1/05_本周验收台账.xlsx)
 - [独立审查报告](docs/week1/06_独立审查报告.md)
+- [附录 G 产品与技术决策](docs/APPENDIX_G_DECISIONS.md)
+- [部署与 HTTPS 执行清单](docs/DEPLOYMENT.md)
 - [可直接交给 AI 的角色任务书](docs/week1/prompts/)
 
 共享数据必须通过 `article_bundle.v1` 和 `extraction_bundle.v1` 交接，对应机器校验文件位于 [`schemas`](schemas/) 目录。A、B先把实际指标、证据链接、Commit、PR 和接收确认登记到各自的 [`progress/week1`](progress/week1/) 目录或 PR 清单；C 是主验收 Excel 的唯一提交者，按固定时点统一回填，避免二进制冲突。
@@ -160,5 +164,6 @@ node --check app.js
 ## 文档导航
 
 - [系统架构](docs/ARCHITECTURE.md)
+- [附录 G 产品与技术决策记录](docs/APPENDIX_G_DECISIONS.md)
 - [团队开发规则](docs/TEAM_RULES.md)
 - [第一周协作入口](docs/week1/00_本周总体目标与协作执行手册.docx)

@@ -12,7 +12,7 @@ import sys
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent  # 仓库根（脚本位于 scripts/）
 sys.path.insert(0, str(ROOT))
 
 # 关键：A3 任务书要求 100 篇「采集状态台账」，不强制主题过滤；

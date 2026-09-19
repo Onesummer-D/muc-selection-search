@@ -14,7 +14,7 @@ import traceback
 from pathlib import Path
 from unittest.mock import MagicMock
 
-REPO_DIR = Path(__file__).resolve().parent / "repo"
+REPO_DIR = Path(__file__).resolve().parent.parent  # 仓库根（脚本位于 scripts/）
 sys.path.insert(0, str(REPO_DIR))
 
 from app.sync.ledger import ArticleLedger
