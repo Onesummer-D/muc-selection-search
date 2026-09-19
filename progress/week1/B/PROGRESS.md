@@ -73,6 +73,30 @@
   价格日期待正式对照评测时按定价页登记。
 - 测试 118 项全绿（新增真实客户端配置校验 3 项）。
 
+### 2026-09-19 15:30–16:30（切片 11：真实海报两路线实跑，B2 OCR 路径闭环）
+
+- [x] `99ec207` fix(extraction): paddle 3.3 oneDNN 崩溃修复（enable_mkldnn=False，
+  PP-OCRv6 模型在 CPU 上触发 ConvertPirAttribute2RuntimeAttribute NotImplementedError）；
+  学历词典对齐台账枚举（硕士研究生/博士研究生）；评测判定学历与城市口径归一。
+- [x] 用户转交 5 份海报 PDF → 提取内嵌图 4 张匹配冻结样本（P14-P17），
+  哈希差异（PDF 重编码）如实登记，见 BLOCKED.md BLK-1。
+- [x] `feat(extraction)`（本轮后续 commit）：海报规则通用化补强——城市「XX市」模式
+  （剥省/自治区前缀与后缀）、专业「XX专业」模式（剥年级前缀）、机构后缀单位行识别，
+  均为词典未命中时的兜底，非针对特定样本硬编码（4 项版式测试）。
+- [x] **B2 实跑结果**（4 张真实海报、7 条人物记录、两路线全跑通；
+  原始结果含姓名，存仓库外 `../controlled_assets/eval_workdir/`，仓库只留聚合）：
+
+| 样本 | OCR路线 | 多模态路线 |
+|---|---|---|
+| 247586 新疆(1人) | processed 全字段 | processed 全字段 |
+| 247746 山西(2人) | review_required（major 1/2, city 1/2） | review_required（city 1/2） |
+| 247919 河北(2人) | review_required（education 1/2） | processed 全字段 |
+| 247509 辽宁(2人) | review_required（major 1/2） | processed 全字段 |
+
+- [x] 一帖多人拆分全部正确（3 张双人海报各出 2 条 record_key，互不混淆）。
+- [x] OCR 耗时抽样：单张 CPU 约 10–90s（P95 明日 20 张全量时统计）；多模态 glm-4v-flash 约 4–11s/张。
+- 测试 122 项全绿。
+
 ## 风险登记（B3 前必须知晓）
 
 - 台账 AA 校验要求金标准五行（C-G）全非空才计"通过"，与任务书「原文未出现填 null」有张力；

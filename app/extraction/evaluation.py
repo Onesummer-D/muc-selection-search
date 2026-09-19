@@ -35,7 +35,13 @@ def _norm(v: str | None) -> str | None:
         return None
     s = str(v).strip().replace(" ", "")
     # 学历等价归一：硕士研究生→硕士、博士研究生→博士（台账枚举含两种写法）
-    return F.EDUCATION_ALIAS.get(s, s)
+    s = F.EDUCATION_ALIAS.get(s, s)
+    # 城市口径归一：去「市/州/盟/地区」后缀（临汾市 == 临汾）。
+    # 仅当整体形如地名时生效；岗位单位名以机构后缀结尾，不受影响。
+    for suffix in ("地区", "盟", "州", "市"):
+        if s.endswith(suffix) and len(s) > len(suffix) + 1:
+            return s[: -len(suffix)]
+    return s
 
 
 def judge_field(gold_value, extracted_value) -> int | None:

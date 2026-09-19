@@ -80,8 +80,54 @@ def _resolve_position(hits) -> FieldResult:
     return FieldResult(value=None, confidence=0.0, evidence=evidence, conflict=True)
 
 
+def _pattern_hits(pattern, boxes, value_group=1):
+    """按正则模式在文本框上取候选；返回 [(value, box)]。"""
+    hits = []
+    for b in boxes:
+        m = pattern.search(F.normalize(b.text))
+        if m and m.group(value_group).strip():
+            hits.append((m.group(value_group).strip(), b))
+    return hits
+
+
+def _geo_value(raw: str) -> str:
+    """城市值归一：剥省/自治区前缀，再去「市/州/盟/地区」后缀。
+
+    山西省临汾市 → 临汾；新疆维吾尔自治区吐鲁番市 → 吐鲁番。
+    """
+    raw = raw.split("省")[-1].split("自治区")[-1]
+    for suffix in ("地区", "盟", "州", "市"):
+        if raw.endswith(suffix) and len(raw) > len(suffix):
+            return raw[: -len(suffix)]
+    return raw
+
+
+_GRADE_PREFIX_RE = re.compile(r"^\d{0,4}级")
+
+
+def _resolve_hits_with_bbox(hits, strip_grade_prefix: bool = False) -> FieldResult:
+    """同值合并；唯一值给置信度，多值冲突保留候选证据。"""
+    if not hits:
+        return FieldResult()
+    if strip_grade_prefix:  # 「2021级汉语言文字学」→「汉语言文字学」
+        hits = [(_GRADE_PREFIX_RE.sub("", v), b) for v, b in hits]
+    values = sorted({v for v, _ in hits})
+    evidence = [{"text": b.text, "bbox": b.bbox, "ocr_conf": b.confidence}
+                for v, b in hits]
+    if len(values) == 1:
+        ocr_conf = min(b.confidence for _, b in hits)
+        return FieldResult(value=values[0],
+                           confidence=round(0.85 * min(1.0, ocr_conf / 0.9), 2),
+                           evidence=evidence)
+    return FieldResult(value=None, confidence=0.0, evidence=evidence, conflict=True)
+
+
 def box_field_results(boxes) -> dict[str, FieldResult]:
-    """在一组文本框上抽七个字段（grade 本周规则不抽取，恒 null）。"""
+    """在一组文本框上抽七个字段（grade 本周规则不抽取，恒 null）。
+
+    词典优先，未命中时用通用模式补（城市「XX市」、专业「XX专业」、
+    机构后缀单位行），模式是海报领域的通用版式规则，非针对特定样本。
+    """
     out: dict[str, FieldResult] = {
         "cohort": FieldResult(), "education": FieldResult(),
         "college": FieldResult(), "major": FieldResult(),
@@ -100,13 +146,36 @@ def box_field_results(boxes) -> dict[str, FieldResult]:
     out["college"] = _resolve_box(F.COLLEGE_TERMS, boxes)
     out["major"] = _resolve_box(F.MAJOR_TERMS, boxes)
     out["city"] = _resolve_box(F.CITY_TERMS, boxes, prefer_context="工作地点|任职|录用|去向")
+
+    # 专业模式兜底：词典未命中时取「XX专业」（剥掉「2021级」等年级前缀）
+    if out["major"].value is None and not out["major"].conflict:
+        out["major"] = _resolve_hits_with_bbox(
+            _pattern_hits(F.MAJOR_SUFFIX_RE, boxes), strip_grade_prefix=True)
+
+    # 城市模式兜底：词典未命中时，带机构/工作地点上下文的「XX市」行
+    if out["city"].value is None and not out["city"].conflict:
+        ctx_hits = []
+        for b in boxes:
+            if not (F.UNIT_SUFFIX_RE.search(F.normalize(b.text))
+                    or re.search(r"工作地点|任职|录用|去向", F.normalize(b.text))):
+                continue
+            for m in F.CITY_SUFFIX_RE.finditer(F.normalize(b.text)):
+                ctx_hits.append((_geo_value(m.group(1)), b))
+        out["city"] = _resolve_hits_with_bbox(ctx_hits)
+
+    # 岗位或单位：录用类句式优先；未命中时取机构后缀单位行
     pos_hits = []
     for pat in F.POSITION_PATTERNS:
         for b in boxes:
             m = pat.search(F.normalize(b.text))
             if m and m.group(1).strip():
                 pos_hits.append((m.group(1).strip(), b))
-    out["position_or_unit"] = _resolve_position(pos_hits)
+    if pos_hits:
+        out["position_or_unit"] = _resolve_position(pos_hits)
+    else:
+        out["position_or_unit"] = _resolve_hits_with_bbox(
+            _pattern_hits(F.UNIT_SUFFIX_RE, boxes))
+    out["grade"] = FieldResult()  # Schema 必填，规则本周不抽取，恒 null
     return out
 
 

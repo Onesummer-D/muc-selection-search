@@ -258,7 +258,7 @@
       "in_fixed_samples": false,
       "is_announcement": false,
       "title_keyword_score": 10,
-      "image_sha256": null,
+      "image_sha256": "064246b707037fb65dfbf556ad0054926a86b5a1012a7a27c160400a7ae9d8c9",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -268,7 +268,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
+      "received_at": "2026-09-19"
     },
     {
       "sample_id": "P15",
@@ -277,7 +279,7 @@
       "in_fixed_samples": true,
       "is_announcement": false,
       "title_keyword_score": 10,
-      "image_sha256": "bb4a70729b6743a91aeb41889cf476e447e9e6196d86309f9973f6e5b987f62e",
+      "image_sha256": "6130584ed81827c914e0c6910def99d752302b6accdb08209d5fa83363a9d71f",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -287,7 +289,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
+      "received_at": "2026-09-19"
     },
     {
       "sample_id": "P16",
@@ -296,7 +300,7 @@
       "in_fixed_samples": true,
       "is_announcement": false,
       "title_keyword_score": 10,
-      "image_sha256": "33d01be2a8364d6c4b465389bf1c979d755dcb00a26ca877bb85b0a89603d63f",
+      "image_sha256": "9b3bb07375819fb630370894c667843e00bdb1dd65af83c9015f463d04b09df9",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -306,7 +310,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
+      "received_at": "2026-09-19"
     },
     {
       "sample_id": "P17",
@@ -315,7 +321,7 @@
       "in_fixed_samples": true,
       "is_announcement": false,
       "title_keyword_score": 10,
-      "image_sha256": "c73ea41d4539709949b79fb75a9f63029fb8d27a8147c0a31bf42cf44b892544",
+      "image_sha256": "21aaf2403d71f165d810f95a1247335ba785ed4990cea052ac67ed9a2cefe69c",
       "annotated_by": null,
       "evidence_summary": null,
       "fields": {
@@ -325,7 +331,9 @@
         "city": null,
         "position_or_unit": null
       },
-      "is_multi_person": null
+      "is_multi_person": null,
+      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
+      "received_at": "2026-09-19"
     },
     {
       "sample_id": "P18",
