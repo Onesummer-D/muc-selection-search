@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "240809",
+  "title": "3月12日||“共美”沙龙—河北定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/240809",
+  "published_at": "2024-03-05 16:09",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "240809-poster-01",
+      "kind": "poster",
+      "local_ref": "private://240809/poster-01",
+      "sha256": "92771f467d4a40b21027da602a2a4769688c7a0c1621e7486eec36b28db4d319"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T19:50:52+08:00"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "246166",
+  "title": "10月24日||“共美”沙龙——江西定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/246166",
+  "published_at": "2024-10-16 10:16",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "246166-poster-01",
+      "kind": "poster",
+      "local_ref": "private://246166/poster-01",
+      "sha256": "f91b8b099d95e1946c67cc56ce91dcfb9ee20645b4c8703eb9c19c9634a26574"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T19:50:48+08:00"
+}

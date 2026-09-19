@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "239413",
+  "title": "12月27日||“共美”沙龙——山西定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/239413",
+  "published_at": "2023-12-22 19:23",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "239413-poster-01",
+      "kind": "poster",
+      "local_ref": "private://239413/poster-01",
+      "sha256": "9ffa3a28daf04df4ed68af74fdb3d3d26efc3ca4f2e0ee9bf77b957e8f89c5ee"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T19:50:53+08:00"
+}

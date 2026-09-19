@@ -1,78 +1,4 @@
 {
-  "schema": "article_ledger.v1+demo",
-  "generated_at": "2026-09-18T22:31:57.855471+08:00",
-  "branch": "feat/week1-portal-sync",
-  "task_spec": "docs/week1/01_角色A_采集与更新任务书.docx (A3: 100篇状态台账)",
-  "real_collection": {
-    "source": "real",
-    "count": 100,
-    "completed_in_seconds": 49.7,
-    "first_seen_at": "2026-09-18T22:19:10+08:00",
-    "last_attempt_at": "2026-09-18T22:19:17+08:00"
-  },
-  "demo_collection": {
-    "source": "demo",
-    "count": 5,
-    "purpose": "覆盖任务书'验收看真实状态、恢复能力和幂等结果'",
-    "scenarios": [
-      {
-        "notice_id": "D001",
-        "scenario": "429_retried_to_ok"
-      },
-      {
-        "notice_id": "D002",
-        "scenario": "5xx_exhausted"
-      },
-      {
-        "notice_id": "D003",
-        "scenario": "parse_error"
-      },
-      {
-        "notice_id": "D004",
-        "scenario": "review_required"
-      },
-      {
-        "notice_id": "D005",
-        "scenario": "interrupted_resumable"
-      }
-    ]
-  },
-  "totals": {
-    "rows_total": 105,
-    "rows_by_source": {
-      "real": 100,
-      "demo": 5
-    },
-    "rows_by_final_status": {
-      "processed": 101,
-      "failed": 2,
-      "review_required": 1,
-      "pending": 1
-    },
-    "rows_by_list_status": {
-      "ok": 105
-    },
-    "rows_by_detail_status": {
-      "ok": 102,
-      "failed": 2,
-      "pending": 1
-    },
-    "rows_by_asset_status": {
-      "none": 32,
-      "ok": 70,
-      "skipped": 2,
-      "pending": 1
-    },
-    "rows_by_content_type": {
-      "unknown": 27,
-      "poster": 67,
-      "text": 7,
-      "mixed": 4
-    },
-    "unique_notice_ids": 105,
-    "attempt_count_max": 3,
-    "articles_with_retry": 2
-  },
   "entries": [
     {
       "notice_id": "358715",
@@ -1648,6 +1574,84 @@
       "last_attempt_at": "2026-09-18T22:25:00+08:00",
       "_source": "demo",
       "_scenario": "interrupted_resumable"
+    },
+    {
+      "notice_id": "246166",
+      "title": "10月24日||“共美”沙龙——江西定向选调经验分享",
+      "content_type": "poster",
+      "list_status": "ok",
+      "detail_status": "fetched",
+      "asset_status": "ok",
+      "final_status": "processed",
+      "failure_reason": null,
+      "first_seen_at": "2026-09-19T19:50:48+08:00",
+      "last_attempt_at": null,
+      "attempt_count": 0
+    },
+    {
+      "notice_id": "246164",
+      "title": "10月18日||“共美”沙龙——贵州定向选调经验分享",
+      "content_type": "poster",
+      "list_status": "ok",
+      "detail_status": "fetched",
+      "asset_status": "ok",
+      "final_status": "processed",
+      "failure_reason": null,
+      "first_seen_at": "2026-09-19T19:50:50+08:00",
+      "last_attempt_at": null,
+      "attempt_count": 0
+    },
+    {
+      "notice_id": "240863",
+      "title": "3月14日||“共美”沙龙—新疆维吾尔自治区定向选调经验分享",
+      "content_type": "poster",
+      "list_status": "ok",
+      "detail_status": "fetched",
+      "asset_status": "ok",
+      "final_status": "processed",
+      "failure_reason": null,
+      "first_seen_at": "2026-09-19T19:50:51+08:00",
+      "last_attempt_at": null,
+      "attempt_count": 0
+    },
+    {
+      "notice_id": "240809",
+      "title": "3月12日||“共美”沙龙—河北定向选调经验分享",
+      "content_type": "poster",
+      "list_status": "ok",
+      "detail_status": "fetched",
+      "asset_status": "ok",
+      "final_status": "processed",
+      "failure_reason": null,
+      "first_seen_at": "2026-09-19T19:50:52+08:00",
+      "last_attempt_at": null,
+      "attempt_count": 0
+    },
+    {
+      "notice_id": "239413",
+      "title": "12月27日||“共美”沙龙——山西定向选调经验分享",
+      "content_type": "poster",
+      "list_status": "ok",
+      "detail_status": "fetched",
+      "asset_status": "ok",
+      "final_status": "processed",
+      "failure_reason": null,
+      "first_seen_at": "2026-09-19T19:50:54+08:00",
+      "last_attempt_at": null,
+      "attempt_count": 0
+    },
+    {
+      "notice_id": "239151",
+      "title": "12月19日||“共美”沙龙——湖北选调经验分享",
+      "content_type": "poster",
+      "list_status": "ok",
+      "detail_status": "fetched",
+      "asset_status": "ok",
+      "final_status": "processed",
+      "failure_reason": null,
+      "first_seen_at": "2026-09-19T19:50:55+08:00",
+      "last_attempt_at": null,
+      "attempt_count": 0
     }
   ]
 }
