@@ -3,10 +3,13 @@
 1. 读 reports/extraction/eval_inputs/ 的 20 个 article bundle；
 2. 每张跑 OCR 与多模态两条路线（计时、计失败状态）；
 3. 原始抽取（含证据文本，可能含姓名）写仓库外受控目录；
-4. 评测用原始结果（仅字段值，无 PII）写 reports/extraction/eval_raw/；
+4. 评测用原始结果（仅字段值，无 PII）写 reports/extraction/eval_raw/，
+   sample_id 已翻译为金标准的 P 编号；
 5. gold_20.json + 两路线原始 -> 评测报告 + 台账导入 CSV。
 
-用法：python -m app.extraction.run_eval_full
+用法：
+    python -m app.extraction.run_eval_full              # 两路线全量
+    python -m app.extraction.run_eval_full --routes ocr # 只跑指定路线
 前置：EXTRACTION_ASSET_DIR 指向受控图片根目录；.env 配好 LLM_*。
 """
 
@@ -14,6 +17,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import time
 from pathlib import Path
 
@@ -43,6 +47,8 @@ def records_to_persons(bundle: dict) -> list[dict]:
 
 def main() -> int:
     load_env()
+    routes_arg = sys.argv[sys.argv.index('--routes') + 1].split(',') \
+        if '--routes' in sys.argv else ['ocr', 'multimodal']
     asset_dir = Path(os.environ["EXTRACTION_ASSET_DIR"])
     workdir = Path(os.environ.get(
         "EXTRACTION_WORKDIR", str(ROOT.parent / "controlled_assets" / "eval_workdir")))
@@ -52,19 +58,32 @@ def main() -> int:
     inputs = sorted((ROOT / "reports" / "extraction" / "eval_inputs").glob("*.json"))
     assert len(inputs) == 20, f"期望 20 个输入 bundle，实际 {len(inputs)}"
 
+    # notice_id -> 金标准 P 编号（评测键统一用 P-ID）
+    gold = json.loads((ROOT / "data" / "gold" / "gold_20.json").read_text(encoding="utf-8"))
+    nid2pid = {s["notice_id"]: s["sample_id"] for s in gold["samples"]}
+
     from .ocr import PaddleOcrAdapter
     from .multimodal import MultimodalAdapter
     from .extractor import Extractor
     from .bundle import validate_bundle
 
-    routes = {"ocr": PaddleOcrAdapter(), "multimodal": MultimodalAdapter()}
-    sample_results = {name: [] for name in routes}
-    progress = []
-
-    for path in inputs:
-        article = bundle_to_article(path)
-        nid = article["notice_id"]
-        for name, adapter in routes.items():
+    adapters = {"ocr": PaddleOcrAdapter, "multimodal": MultimodalAdapter}
+    # 复用已有原始结果，跳过已完成的路线（--fresh 强制重跑）
+    fresh = '--fresh' in sys.argv
+    sample_results = {}
+    for name in routes_arg:
+        existing = raw_dir / f"{name}.json"
+        if existing.exists() and not fresh:
+            data = json.loads(existing.read_text(encoding="utf-8"))
+            if len(data.get("sample_results", [])) == 20:
+                sample_results[name] = data["sample_results"]
+                print(f"[skip] {name} 已有 20 条原始结果", flush=True)
+                continue
+        adapter = adapters[name]()
+        results = []
+        for path in inputs:
+            article = bundle_to_article(path)
+            nid = article["notice_id"]
             start = time.perf_counter()
             bundle = Extractor(ocr_adapter=adapter).extract(article)
             elapsed = round(time.perf_counter() - start, 2)
@@ -75,26 +94,23 @@ def main() -> int:
             (workdir / name / f"{nid}.extraction.json").write_text(
                 json.dumps(bundle, ensure_ascii=False, indent=2), encoding="utf-8")
 
-            # 无 PII 评测原始（字段值）-> 仓库
             valid = not errors and bundle["processing_status"] != "failed"
-            sample_results[name].append({
-                "sample_id": nid,
+            results.append({
+                "sample_id": nid2pid.get(nid, nid),
                 "valid": valid,
                 "elapsed_s": elapsed,
-                "cost": 0.0 if name == "ocr" else round(elapsed * 0.0, 6),  # 成本另行登记
+                "cost": 0.0,
                 "persons": records_to_persons(bundle) if valid else [],
                 "status": bundle["processing_status"],
                 "failure_reason": bundle["failure_reason"],
             })
-            progress.append(f"{nid} {name}: {bundle['processing_status']} "
-                            f"({len(bundle['records'])}人 {elapsed}s)")
-            print(progress[-1], flush=True)
-
-    for name in routes:
+            print(f"{nid} {name}: {bundle['processing_status']} "
+                  f"({len(bundle['records'])}人 {elapsed}s)", flush=True)
+        sample_results[name] = results
         (raw_dir / f"{name}.json").write_text(
-            json.dumps({"sample_results": sample_results[name]},
+            json.dumps({"sample_results": results},
                        ensure_ascii=False, indent=2), encoding="utf-8")
-    print("RAW WRITTEN", flush=True)
+    print("RAW READY", flush=True)
 
     # 评测 + 台账导出
     from .evaluation import run_evaluation

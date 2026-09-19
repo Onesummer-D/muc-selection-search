@@ -102,7 +102,7 @@ def _geo_value(raw: str) -> str:
     return raw
 
 
-_GRADE_PREFIX_RE = re.compile(r"^\d{0,4}级")
+_GRADE_PREFIX_RE = re.compile(r"^\d{0,4}级?")
 
 
 def _resolve_hits_with_bbox(hits, strip_grade_prefix: bool = False) -> FieldResult:
@@ -144,13 +144,13 @@ def box_field_results(boxes) -> dict[str, FieldResult]:
             break
     out["education"] = _resolve_box(F.EDUCATION_TERMS, boxes)
     out["college"] = _resolve_box(F.COLLEGE_TERMS, boxes)
-    out["major"] = _resolve_box(F.MAJOR_TERMS, boxes)
-    out["city"] = _resolve_box(F.CITY_TERMS, boxes, prefer_context="工作地点|任职|录用|去向")
-
-    # 专业模式兜底：词典未命中时取「XX专业」（剥掉「2021级」等年级前缀）
+    # 专业：「XX专业」模式优先（比词典精确，避免学院名中的词典词误命中，
+    # 如「哲学与宗教学学院」中的「哲学」），模式未命中再查词典
+    out["major"] = _resolve_hits_with_bbox(
+        _pattern_hits(F.MAJOR_SUFFIX_RE, boxes), strip_grade_prefix=True)
     if out["major"].value is None and not out["major"].conflict:
-        out["major"] = _resolve_hits_with_bbox(
-            _pattern_hits(F.MAJOR_SUFFIX_RE, boxes), strip_grade_prefix=True)
+        out["major"] = _resolve_box(F.MAJOR_TERMS, boxes)
+    out["city"] = _resolve_box(F.CITY_TERMS, boxes, prefer_context="工作地点|任职|录用|去向")
 
     # 城市模式兜底：词典未命中时，带机构/工作地点上下文的「XX市」行
     if out["city"].value is None and not out["city"].conflict:

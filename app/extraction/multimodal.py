@@ -90,6 +90,7 @@ class MultimodalAdapter:
         Key 不落代码、不进日志；素材由调用方保证脱敏（烟测用合成海报）。
         """
         import base64
+        import io
 
         import requests
 
@@ -104,8 +105,16 @@ class MultimodalAdapter:
             raise RuntimeError("LLM_MODEL 未配置（如 glm-4v-flash / qwen-vl-plus）")
 
         def client(prompt: str, image_path: str) -> str:
-            with open(image_path, "rb") as fh:
-                b64 = base64.b64encode(fh.read()).decode("ascii")
+            # 大图直传会触发网络路径的 SSL EOF（实测 >800KB body 不稳定），
+            # 发送前等比缩到最长边 1600px、JPEG q85——VLM 识别不需要原始分辨率
+            from PIL import Image
+            img = Image.open(image_path).convert("RGB")
+            scale = min(1.0, 1600.0 / max(img.size))
+            if scale < 1.0:
+                img = img.resize((round(img.width * scale), round(img.height * scale)))
+            buf = io.BytesIO()
+            img.save(buf, "JPEG", quality=85)
+            b64 = base64.b64encode(buf.getvalue()).decode("ascii")
             payload = {
                 "model": model,
                 "messages": [{
@@ -113,7 +122,7 @@ class MultimodalAdapter:
                     "content": [
                         {"type": "text", "text": prompt},
                         {"type": "image_url",
-                         "image_url": {"url": f"data:image/png;base64,{b64}"}},
+                         "image_url": {"url": f"data:image/jpeg;base64,{b64}"}},
                     ],
                 }],
                 "temperature": 0,

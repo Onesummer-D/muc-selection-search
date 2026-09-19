@@ -36,6 +36,8 @@ def _norm(v: str | None) -> str | None:
     s = str(v).strip().replace(" ", "")
     # 学历等价归一：硕士研究生→硕士、博士研究生→博士（台账枚举含两种写法）
     s = F.EDUCATION_ALIAS.get(s, s)
+    # 机构常用简称归一（判定口径，不改变抽取/gold 原值）
+    s = s.replace("纪检委", "纪委监委")
     # 城市口径归一：去「市/州/盟/地区」后缀（临汾市 == 临汾）。
     # 仅当整体形如地名时生效；岗位单位名以机构后缀结尾，不受影响。
     for suffix in ("地区", "盟", "州", "市"):
@@ -44,11 +46,25 @@ def _norm(v: str | None) -> str | None:
     return s
 
 
+def _match(gold_v, ext_v) -> bool:
+    """相等或包含：gold 常为简称（阳信县发改局 ⊆ 滨州市阳信县发改局）。
+
+    包含关系要求较短一侧 ≥3 字，避免「法学 ⊆ 民商法学」这类误判。
+    """
+    a, b = _norm(gold_v), _norm(ext_v)
+    if a is None or b is None:
+        return False
+    if a == b:
+        return True
+    short, long = (a, b) if len(a) <= len(b) else (b, a)
+    return len(short) >= 3 and short in long
+
+
 def judge_field(gold_value, extracted_value) -> int | None:
     """返回 1=正确，0=错误，None=不可判定（gold 缺失，不计分母）。"""
     if gold_value is None:
         return None
-    return 1 if _norm(extracted_value) == _norm(gold_value) else 0
+    return 1 if _match(gold_value, extracted_value) else 0
 
 
 def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
