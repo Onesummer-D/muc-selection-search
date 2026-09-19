@@ -36,8 +36,22 @@
 - 已装：pytest、jsonschema。PaddleOCR/PaddlePaddle 待装（安装较重，原图到达后按需安装并在此登记版本）。
 - 多模态 API：待用户提供 Key（只放本地 .env），烟测未做。
 
-## 待办（原图/Key 到达后）
+### 2026-09-19 15:00–16:00（切片 6–8：多模态、评测、OCR 引擎）
 
-1. 装 paddlepaddle+paddleocr，登记版本，跑 3 张固定海报 OCR 烟测（补 B2 OCR 路径）。
-2. 选 20 张评测集、冻结哈希、人工标注 gold_20.json（B3，今晚 22:00）。
-3. OCR vs 多模态对照评测与报告（B4，明天 18:00）。
+- [x] `21f6790` feat(extraction): 多模态适配器——固定提示词要求输出 bundle 兼容 JSON + 逐字段证据；输出先过 JSON 解析（含 ``` 围栏剥离）再过字段词典；超时/坏 JSON/引擎异常如实 failed；关键字段缺失或无证据 → review_required。补齐任务书场景 5 的「模型超时」缺口（8 项测试）。
+- [x] `d19c6f1` feat(extraction): 20 样本评测模块——逐样本 0/1 判定汇总，分子/分母可重算；金标准 null 不计分但报告分母并告警（gold_null_but_extracted）；成功率失败样本不从分母删除；平均/P95 耗时、成本（总成本/成功数）；5pp 启用门槛由数据判定（完整记录优先，不可判定时回退字段宏平均并标注 gate_basis）。低于 90% 字段自动列入 below_90_fields（8 项测试）。
+- [x] `a1143aa` feat(extraction): PaddleOCR 3.x 兼容（3.7.0 的 predict() 字典结构 rec_texts/rec_scores/rec_polys，保留 2.x 回退）+ 台账桥接导出 `tracker_export.py`（对齐 20样本评测!A14:AB14 列布局，0/1 判定、耗时、成本、标注人、路线 ID 直接粘贴，C 回填 Excel）（3 项测试）。
+- [x] `f87c847` fix(extraction): 适配器异常转 failed 不中断批处理；完整记录 0/1 仅在五字段全部可判定时输出（与台账分母语义一致）。
+- [x] **B1 环境验证完成**：Python 3.11.9；paddlepaddle 3.3.1 + paddleocr 3.7.0（paddlex 3.7.2）；
+  引擎实跑初始化成功（PP-OCRv6_medium_det/rec 模型缓存），证据 `evidence/week1/B/paddle-engine-init.txt`、`env-versions.txt`。
+- [x] 台账核对发现（重要，交接 C 时说明）：`20样本评测!AA15` 金标准校验要求 C–G 五字段全部非空，
+  与任务书「原文未出现填 null」存在张力——**选 20 样本时应优先选五字段齐全的海报**；
+  确有缺失的样本会在 AA 列显示"缺金标准"，如实保留并在评测报告说明。
+- 测试全量 114 项通过。
+
+## 待办（原图/Key 到达后，更新于 16:00）
+
+1. ~~装 paddlepaddle+paddleocr~~ ✅ 已完成（3.3.1 / 3.7.0，引擎初始化验证通过）。
+2. 原图到达 → 3 张固定海报 OCR 烟测（补 B2 OCR 路径）+ 选 20 张评测集、冻结哈希、
+   **人工标注** gold_20.json（B3，今晚 22:00；标注只能由 B 本人做）。
+3. 多模态 Key 放 .env → 脱敏烟测 → `run_evaluation` + `tracker_export` 产出对照报告与台账导入 CSV（B4，明天 18:00）。
