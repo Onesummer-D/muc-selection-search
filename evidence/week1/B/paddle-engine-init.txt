@@ -1,0 +1,16 @@
+ÐÅÏ¢: ÓÃÌá¹©µÄÄ£Ê½ÎÞ·¨ÕÒµ½ÎÄ¼þ¡£
+C:\Users\LEGION\.zcode\workspace\default\muc-selection-search\.venv\Lib\site-packages\paddle\utils\cpp_extension\extension_utils.py:712: UserWarning: No ccache found. Please be aware that recompiling all source files may be required. You can download and install ccache from: https://github.com/ccache/ccache/blob/master/doc/INSTALL.md
+  warnings.warn(warning_message)
+[32mCreating model: ('PP-LCNet_x1_0_doc_ori', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\LEGION\.paddlex\official_models\PP-LCNet_x1_0_doc_ori`.[0m
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I0919 14:33:38.953816 55256 onednn_context.cc:81] oneDNN v3.6.2
+[32mCreating model: ('UVDoc', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\LEGION\.paddlex\official_models\UVDoc`.[0m
+[32mCreating model: ('PP-LCNet_x1_0_textline_ori', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\LEGION\.paddlex\official_models\PP-LCNet_x1_0_textline_ori`.[0m
+[32mCreating model: ('PP-OCRv6_medium_det', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\LEGION\.paddlex\official_models\PP-OCRv6_medium_det`.[0m
+[32mCreating model: ('PP-OCRv6_medium_rec', None, None)[0m
+[32mModel files already exist. Using cached files. To redownload, please delete the directory manually: `C:\Users\LEGION\.paddlex\official_models\PP-OCRv6_medium_rec`.[0m
+PADDLE_ENGINE_INIT_OK version= 3.7.0
