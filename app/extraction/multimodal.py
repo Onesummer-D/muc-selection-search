@@ -75,16 +75,63 @@ class MultimodalAdapter:
         self.last_elapsed_s = 0.0
         self.provider = provider or os.environ.get("LLM_PROVIDER", "")
         self.model = model or os.environ.get("LLM_MODEL", "")
+        # 供评测报告登记（不含 Key）
+        self.base_url = os.environ.get("LLM_BASE_URL", "")
         self._client = client or self._make_real_client()
 
     @staticmethod
     def _make_real_client():
+        """OpenAI 兼容多模态客户端（智谱/通义/Kimi/OpenAI 均适用）。
+
+        配置只来自本地 .env：LLM_API_KEY / LLM_MODEL / LLM_BASE_URL / LLM_TIMEOUT_S。
+        Key 不落代码、不进日志；素材由调用方保证脱敏（烟测用合成海报）。
+        """
+        import base64
+
+        import requests
+
+        api_key = os.environ.get("LLM_API_KEY")
+        model = os.environ.get("LLM_MODEL")
+        base_url = (os.environ.get("LLM_BASE_URL")
+                    or "https://open.bigmodel.cn/api/paas/v4").rstrip("/")
+        timeout = float(os.environ.get("LLM_TIMEOUT_S", "60"))
+        if not api_key:
+            raise RuntimeError("LLM_API_KEY 未配置（写入本地 .env，勿提交仓库）")
+        if not model:
+            raise RuntimeError("LLM_MODEL 未配置（如 glm-4v-flash / qwen-vl-plus）")
+
         def client(prompt: str, image_path: str) -> str:
-            api_key = os.environ.get("LLM_API_KEY")
-            if not api_key:
-                raise RuntimeError("LLM_API_KEY 未配置（只放本地 .env）")
-            raise RuntimeError(
-                "真实多模态客户端未接入：请先确认服务商、授权与脱敏边界（任务书多模态对照节）")
+            with open(image_path, "rb") as fh:
+                b64 = base64.b64encode(fh.read()).decode("ascii")
+            payload = {
+                "model": model,
+                "messages": [{
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": prompt},
+                        {"type": "image_url",
+                         "image_url": {"url": f"data:image/png;base64,{b64}"}},
+                    ],
+                }],
+                "temperature": 0,
+            }
+            try:
+                resp = requests.post(
+                    f"{base_url}/chat/completions",
+                    json=payload,
+                    headers={"Authorization": f"Bearer {api_key}"},
+                    timeout=timeout,
+                )
+            except requests.exceptions.Timeout as exc:
+                raise MultimodalTimeout(f"LLM 请求超时 {timeout}s") from exc
+            if resp.status_code != 200:
+                raise RuntimeError(f"LLM HTTP {resp.status_code}")
+            data = resp.json()
+            try:
+                return data["choices"][0]["message"]["content"]
+            except (KeyError, IndexError, TypeError) as exc:
+                raise RuntimeError(f"LLM 响应格式异常: {list(data)}") from exc
+
         return client
 
     def extract_records(self, article: dict):

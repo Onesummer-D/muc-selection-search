@@ -143,3 +143,29 @@ def test_missing_fields_stay_null_and_bundle_valid(asset_env):
     rec = bundle["records"][0]
     assert rec["cohort"] is None and rec["education"] is None
     assert rec["review_status"] == "review_required"
+
+
+# ---- 真实客户端配置校验（不发网络请求）----
+
+def test_real_client_requires_api_key(asset_env, monkeypatch):
+    monkeypatch.delenv("LLM_API_KEY", raising=False)
+    with pytest.raises(RuntimeError, match="LLM_API_KEY"):
+        MultimodalAdapter()
+
+
+def test_real_client_requires_model(asset_env, monkeypatch):
+    monkeypatch.setenv("LLM_API_KEY", "test-key")
+    monkeypatch.delenv("LLM_MODEL", raising=False)
+    with pytest.raises(RuntimeError, match="LLM_MODEL"):
+        MultimodalAdapter()
+
+
+def test_real_client_constructs_with_config(asset_env, monkeypatch):
+    monkeypatch.setenv("LLM_API_KEY", "test-key")
+    monkeypatch.setenv("LLM_MODEL", "test-vlm")
+    monkeypatch.setenv("LLM_BASE_URL", "https://example.invalid/v1")
+    adapter = MultimodalAdapter()
+    assert callable(adapter._client)
+    assert adapter.model == "test-vlm"
+    assert adapter.base_url == "https://example.invalid/v1"
+    assert "test-key" not in str(adapter.__dict__)  # Key 不落对象属性
