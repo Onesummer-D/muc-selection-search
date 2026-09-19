@@ -81,6 +81,42 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
         valid_count += 1
         elapsed.append(float(item.get("elapsed_s", 0.0)))
 
+        # 多人海报：人物数一致且逐人物逐字段全对，该字段才记正确；
+        # 抽取人数多于金标准（幻觉人物）同样判错——一帖多人拆分本身是被评能力
+        if "persons" in g:
+            gold_persons = g["persons"]
+            ext_persons = item.get("persons") or []
+            judgments = {}
+            for f in CORE:
+                gold_vals = [p.get(f) for p in gold_persons]
+                decidable = any(v is not None for v in gold_vals)
+                if not decidable:
+                    judgments[f] = None
+                    continue
+                field_decidable[f] += 1
+                ok = (len(ext_persons) == len(gold_persons) and all(
+                    judge_field(gv, ep.get(f)) == 1
+                    for gv, ep in zip(gold_vals, ext_persons)))
+                if not ok:
+                    field_failures[f].append(sid)
+                judgments[f] = 1 if ok else 0
+                field_correct[f] += judgments[f]
+            complete_decidable_inc = all(judgments[f] is not None for f in CORE)
+            if complete_decidable_inc:
+                complete_decidable += 1
+                if all(judgments[f] == 1 for f in CORE):
+                    complete_correct += 1
+            per_sample.append({
+                "sample_id": sid, "status": "judged",
+                "mode": "multi_person",
+                "persons_extracted": len(ext_persons),
+                "persons_gold": len(gold_persons),
+                "judgments": judgments,
+                "complete": (all(judgments[f] == 1 for f in CORE)
+                             if complete_decidable_inc else None),
+            })
+            continue
+
         judgments = {}
         fields = item.get("fields", {})
         for f in CORE:

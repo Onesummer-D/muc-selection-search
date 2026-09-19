@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "246590",
+  "title": "11月8日||MUC“共美”沙龙——云南定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/246590",
+  "published_at": "2026-09-18T22:19:13+08:00",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "246590-poster-01",
+      "kind": "poster",
+      "local_ref": "private://246590/poster-01",
+      "sha256": "cd9554f43f9653f691a580b5b95820a207d221539542992f0247e65085e46da5"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T18:00:00+08:00"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "247746",
+  "title": "1月2日||\"闪耀基层\"——山西定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/247746",
+  "published_at": "2026-09-18T22:19:12+08:00",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "247746-poster-01",
+      "kind": "poster",
+      "local_ref": "private://247746/poster-01",
+      "sha256": "9b3bb07375819fb630370894c667843e00bdb1dd65af83c9015f463d04b09df9"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T18:00:00+08:00"
+}

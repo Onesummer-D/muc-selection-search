@@ -1,422 +1,128 @@
 {
-  "sample_set": "week1-poster-gold-20",
+  "sample_set": "week1-poster-gold-20-v2",
   "frozen": true,
-  "frozen_basis": "选样仅使用台账标题与固定样本清单（模型运行前冻结）；image_sha256 由受控交接图片核对后回填",
-  "selection_rule": "固定5篇海报素材必选 + 剩余按标题关键词得分降序、notice_id 升序；is_announcement 仅标记公告类风险（稀疏金标准难例），不影响排序",
+  "frozen_basis": "选样 v2 由标注人裁定（见 gold revision）；ID 按 notice_id 确定性排序",
+  "selection_rule": "14 张台账经验分享（246193,246323,246590,246592,246674,246709,246757,246951,247035,247339,247509,247586,247746,247919）+ 6 张场外 manual-*；排除校友就业帖与公告类",
   "samples": [
     {
       "sample_id": "P01",
       "notice_id": "246193",
-      "title": "10月31日||MUC“共美”沙龙——山东定向选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
       "image_sha256": "c33d4c220c92eb093ccc72a1a5c6db7a024d5c51b12123e0c708c27a1551a0f9",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第四批",
-      "received_at": "2026-09-19-batch4"
+      "is_multi_person": true
     },
     {
       "sample_id": "P02",
       "notice_id": "246323",
-      "title": "10月28日||MUC“共美”沙龙—青海定向选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
       "image_sha256": "e24e643770f2a297edd3c6e045d25389f7db7bbceeaa663324834136e47b2e6b",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第二批",
-      "received_at": "2026-09-19-batch2"
+      "is_multi_person": true
     },
     {
       "sample_id": "P03",
-      "notice_id": "246444",
-      "title": "10月31日||MUC“共美”沙龙—校友就业经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 5,
-      "image_sha256": "fea0b8509f546b5452e8e32d296b1c0660cfb2752e4397e91b0eba92491b616f",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第四批",
-      "received_at": "2026-09-19-batch4"
+      "notice_id": "246590",
+      "image_sha256": "cd9554f43f9653f691a580b5b95820a207d221539542992f0247e65085e46da5",
+      "is_multi_person": true
     },
     {
       "sample_id": "P04",
-      "notice_id": "246536",
-      "title": "11月7日||MUC“共美”沙龙—北京定向选调一对一模拟面试测评",
-      "in_fixed_samples": false,
-      "is_announcement": true,
-      "title_keyword_score": 3,
-      "image_sha256": null,
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null
+      "notice_id": "246592",
+      "image_sha256": "677ce946aa3b2a3ab408f468814eec39ae0695c83407e055fd30c0f414903a22",
+      "is_multi_person": true
     },
     {
       "sample_id": "P05",
-      "notice_id": "246556",
-      "title": "11月14日||MUC“共美”沙龙——北京公务员选岗和备考专项讲座",
-      "in_fixed_samples": false,
-      "is_announcement": true,
-      "title_keyword_score": 2,
-      "image_sha256": null,
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null
+      "notice_id": "246674",
+      "image_sha256": "8743ed07a24277173501bf5774261eab9e535f5925b02898ba4de04bc68161cb",
+      "is_multi_person": true
     },
     {
       "sample_id": "P06",
-      "notice_id": "246590",
-      "title": "11月8日||MUC“共美”沙龙——云南定向选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
-      "image_sha256": "cd9554f43f9653f691a580b5b95820a207d221539542992f0247e65085e46da5",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第四批",
-      "received_at": "2026-09-19-batch4"
+      "notice_id": "246709",
+      "image_sha256": "dc1fcb653276ab47fc8a280196607085d1500ca6fa3951b0ec2d2fac43ce34ac",
+      "is_multi_person": true
     },
     {
       "sample_id": "P07",
-      "notice_id": "246592",
-      "title": "11月16日||MUC“共美”沙龙——广西定向选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
-      "image_sha256": "677ce946aa3b2a3ab408f468814eec39ae0695c83407e055fd30c0f414903a22",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第二批",
-      "received_at": "2026-09-19-batch2"
+      "notice_id": "246757",
+      "image_sha256": "1e74b1df36d2626c5664a478f9b0d59dcea8530be6b91d6983cd0104611ce1fb",
+      "is_multi_person": true
     },
     {
       "sample_id": "P08",
-      "notice_id": "246674",
-      "title": "11月18日||MUC“共美”沙龙——天津定向选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
-      "image_sha256": "8743ed07a24277173501bf5774261eab9e535f5925b02898ba4de04bc68161cb",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
-      "received_at": "2026-09-19-batch3"
+      "notice_id": "246951",
+      "image_sha256": "192b05da923c43ad71276424ed48e778228a8d87f78a7ec29801b738c10526e8",
+      "is_multi_person": true
     },
     {
       "sample_id": "P09",
-      "notice_id": "246709",
-      "title": "11月19日||MUC“共美”沙龙——河南选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
-      "image_sha256": "dc1fcb653276ab47fc8a280196607085d1500ca6fa3951b0ec2d2fac43ce34ac",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
-      "received_at": "2026-09-19-batch3"
+      "notice_id": "247035",
+      "image_sha256": "ef1e062fa12da9d4d22e861dc38bc398da595bd42bb330ce65927378e378cc85",
+      "is_multi_person": true
     },
     {
       "sample_id": "P10",
-      "notice_id": "246757",
-      "title": "11月26日||MUC“共美”沙龙—宁夏选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
-      "image_sha256": "1e74b1df36d2626c5664a478f9b0d59dcea8530be6b91d6983cd0104611ce1fb",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
-      "received_at": "2026-09-19-batch3"
+      "notice_id": "247339",
+      "image_sha256": "e48401634cdcfac6c2f92e4033253eb6cb711c5824fd8d3dff35e6c2cbbfa79f",
+      "is_multi_person": true
     },
     {
       "sample_id": "P11",
-      "notice_id": "246951",
-      "title": "11月27日|| MUC“共美”沙龙——湖南选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
-      "image_sha256": "192b05da923c43ad71276424ed48e778228a8d87f78a7ec29801b738c10526e8",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
-      "received_at": "2026-09-19-batch3"
+      "notice_id": "247509",
+      "image_sha256": "064246b707037fb65dfbf556ad0054926a86b5a1012a7a27c160400a7ae9d8c9",
+      "is_multi_person": true
     },
     {
       "sample_id": "P12",
-      "notice_id": "247035",
-      "title": "12月4日||MUC“共美”沙龙——福建选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 8,
-      "image_sha256": "ef1e062fa12da9d4d22e861dc38bc398da595bd42bb330ce65927378e378cc85",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
-      "received_at": "2026-09-19-batch3"
+      "notice_id": "247586",
+      "image_sha256": "6130584ed81827c914e0c6910def99d752302b6accdb08209d5fa83363a9d71f",
+      "is_multi_person": false
     },
     {
       "sample_id": "P13",
-      "notice_id": "247339",
-      "title": "12月12日||“闪耀基层”——广东定向选调经验分享",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 10,
-      "image_sha256": "e48401634cdcfac6c2f92e4033253eb6cb711c5824fd8d3dff35e6c2cbbfa79f",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第三批",
-      "received_at": "2026-09-19-batch3"
+      "notice_id": "247746",
+      "image_sha256": "9b3bb07375819fb630370894c667843e00bdb1dd65af83c9015f463d04b09df9",
+      "is_multi_person": true
     },
     {
       "sample_id": "P14",
-      "notice_id": "247509",
-      "title": "12月26日||闪耀基层——辽宁选调校友经验分享活动",
-      "in_fixed_samples": false,
-      "is_announcement": false,
-      "title_keyword_score": 10,
-      "image_sha256": "064246b707037fb65dfbf556ad0054926a86b5a1012a7a27c160400a7ae9d8c9",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
-      "received_at": "2026-09-19"
+      "notice_id": "247919",
+      "image_sha256": "21aaf2403d71f165d810f95a1247335ba785ed4990cea052ac67ed9a2cefe69c",
+      "is_multi_person": true
     },
     {
       "sample_id": "P15",
-      "notice_id": "247586",
-      "title": "12月23日||\"闪耀基层\"——新疆维吾尔自治区定向选调经验分享",
-      "in_fixed_samples": true,
-      "is_announcement": false,
-      "title_keyword_score": 10,
-      "image_sha256": "6130584ed81827c914e0c6910def99d752302b6accdb08209d5fa83363a9d71f",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
-      "received_at": "2026-09-19"
+      "notice_id": "manual-guizhou-1018",
+      "image_sha256": "532e3aa1581d56410d295b460f7f650cbb36068d5b207980d9775d683a1ace44",
+      "is_multi_person": true
     },
     {
       "sample_id": "P16",
-      "notice_id": "247746",
-      "title": "1月2日||\"闪耀基层\"——山西定向选调经验分享",
-      "in_fixed_samples": true,
-      "is_announcement": false,
-      "title_keyword_score": 10,
-      "image_sha256": "9b3bb07375819fb630370894c667843e00bdb1dd65af83c9015f463d04b09df9",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
-      "received_at": "2026-09-19"
+      "notice_id": "manual-hebei-0312",
+      "image_sha256": "097bd1924b349df9f00767eb68dfd4b409ef04a3d0384d150e2446d537e0214f",
+      "is_multi_person": true
     },
     {
       "sample_id": "P17",
-      "notice_id": "247919",
-      "title": "1月13日||闪耀基层——河北定向选调经验分享",
-      "in_fixed_samples": true,
-      "is_announcement": false,
-      "title_keyword_score": 10,
-      "image_sha256": "21aaf2403d71f165d810f95a1247335ba785ed4990cea052ac67ed9a2cefe69c",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户页面PDF导出，提取内嵌海报图（PDF重编码派生图，与A bundle原始资产哈希不一致，见 controlled_assets/extraction_report.json）",
-      "received_at": "2026-09-19"
+      "notice_id": "manual-hubei-1219",
+      "image_sha256": "1810c0d14b31002ec9e56774e60bf7060e569444115185ab7bb55e84e80ca09d",
+      "is_multi_person": true
     },
     {
       "sample_id": "P18",
-      "notice_id": "352152",
-      "title": "活动预告丨9月19日 北京定向选调选岗答疑活动",
-      "in_fixed_samples": false,
-      "is_announcement": true,
-      "title_keyword_score": 3,
-      "image_sha256": "e5a1b5058e4a544cd18b2a4920dbbca1cbb71df789c496719bd6be2ec28caef7",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第四批",
-      "received_at": "2026-09-19-batch4"
+      "notice_id": "manual-jiangxi-1024",
+      "image_sha256": "c7958b9505bd7aac9301b8171d7dc984d74d7f1bae1253cd9999a2acf3e7412c",
+      "is_multi_person": true
     },
     {
       "sample_id": "P19",
-      "notice_id": "352183",
-      "title": "讲座预告| 9月23日 考公系列讲座3——《解密选调生，从报考到发展》",
-      "in_fixed_samples": false,
-      "is_announcement": true,
-      "title_keyword_score": 3,
-      "image_sha256": null,
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null
+      "notice_id": "manual-shanxi-1227",
+      "image_sha256": "130d6a57b214ff4446b5ac00623fe3e2f6b8ef112c29a6b0971b3f9a65236522",
+      "is_multi_person": true
     },
     {
       "sample_id": "P20",
-      "notice_id": "352557",
-      "title": "活动预告| 10月12日 北京选调笔试模拟考试",
-      "in_fixed_samples": false,
-      "is_announcement": true,
-      "title_keyword_score": 3,
-      "image_sha256": "7669d21a646dd28c26c4f0ddce405d721b3e9a10ce2704a61f30d365040bae8d",
-      "annotated_by": null,
-      "evidence_summary": null,
-      "fields": {
-        "cohort": null,
-        "education": null,
-        "major": null,
-        "city": null,
-        "position_or_unit": null
-      },
-      "is_multi_person": null,
-      "image_provenance": "用户提供的门户PDF导出（派生图），2026-09-19 第四批",
-      "received_at": "2026-09-19-batch4"
+      "notice_id": "manual-xinjiang-0314",
+      "image_sha256": "36494aaa525a903a7f3c72cdbaced3b777b790119453815575556c972ec9bb7b",
+      "is_multi_person": true
     }
   ]
 }
