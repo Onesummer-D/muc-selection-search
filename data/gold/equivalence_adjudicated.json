@@ -1,0 +1,920 @@
+{
+  "human_confirmed": true,
+  "confirmed_by": "annotator-B（2026-09-20 抽查 12 条代表性预标全部确认，判卷正确；其余批量确认）",
+  "rules": "PR 终版验收·第三部分统一裁决口径",
+  "entries": [
+    {
+      "route": "ocr",
+      "sample_id": "P01",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "滨州市阳信县发改局",
+        "潍坊市寒亭区司法局"
+      ],
+      "gold": [
+        "阳信县发改局",
+        "寒亭区司法局"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P03",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "云南省昆明市委组织部",
+        "云南省昆明市盘龙区金辰街道办"
+      ],
+      "gold": [
+        "昆明市委组织部",
+        "盘龙区金辰街道办"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P04",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P04",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "中共来宾市合山市委组织部",
+        "广西壮族自治区统计局"
+      ],
+      "gold": [
+        "合山市委组织部",
+        "广西壮族自治区统计局"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P05",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "天津",
+        "米天津"
+      ],
+      "gold": [
+        "天津",
+        "天津"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P05",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "天津市河北区王串场街道",
+        "米天津市津南区农业农村委员会"
+      ],
+      "gold": [
+        "河北区王串场街道公务员",
+        "津南区农业农村委员会"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P06",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "硕士",
+        "硕士"
+      ],
+      "gold": [
+        "硕士研究生",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P06",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "郑州市司法局",
+        "米焦作市沁阳市发展和改革委员会"
+      ],
+      "gold": [
+        "郑州市司法局",
+        "沁阳市发展和改革委员会"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P07",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P07",
+      "field": "major",
+      "adjudication": "等价",
+      "extracted": [
+        "文物与博物馆学",
+        "中国现当代文学"
+      ],
+      "gold": [
+        "文物与博物馆学",
+        "当代文学"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P07",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "石嘴山",
+        "米银川"
+      ],
+      "gold": [
+        "石嘴山",
+        "银川"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P07",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "石嘴山市惠农区红果子镇人民政府",
+        "米银川市金凤区人民法院"
+      ],
+      "gold": [
+        "惠农区红果子镇人民政府",
+        "银川市金凤区人民法院"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P08",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "硕士",
+        "硕士"
+      ],
+      "gold": [
+        "硕士研究生",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P09",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P10",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "深圳",
+        "米梅州"
+      ],
+      "gold": [
+        "深圳",
+        "梅州"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P10",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "深圳市宝安区新桥街道办",
+        "米梅州市中级人民法院"
+      ],
+      "gold": [
+        "宝安区新桥街道办",
+        "梅州市中级人民法院"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P11",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "本溪",
+        "米大连"
+      ],
+      "gold": [
+        "本溪",
+        "大连"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P11",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "本溪市检察院",
+        "米大连市甘井子区辛寨子街道办事处"
+      ],
+      "gold": [
+        "本溪市检察院",
+        "甘井子区辛寨子街道办事处"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P12",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "吐鲁番市高昌区审计局"
+      ],
+      "gold": [
+        "高昌区审计局"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P13",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "山西省临汾市城联社",
+        "山西省纪委监委"
+      ],
+      "gold": [
+        "临汾市城联社",
+        "山西省纪委监委"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P14",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P14",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "保定市徐水区财政局",
+        "唐山市纪委监委"
+      ],
+      "gold": [
+        "保定市徐水区财政局",
+        "唐山市纪检委"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P15",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "贵州省石阡县县委办公室",
+        "贵州省织金县文体广电旅游局"
+      ],
+      "gold": [
+        "石阡县县委办公室",
+        "织金县文体广电旅游局"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P16",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P16",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "张家口市卫生健康委员会",
+        "石家庄市桥西区数据资源管理局"
+      ],
+      "gold": [
+        "张家口市卫生健康委员会",
+        "桥西区数据资源管理局"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P17",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "硕士",
+        "硕士"
+      ],
+      "gold": [
+        "硕士研究生",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P17",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "武汉市财政局",
+        "荆州市荆州区城南街道党政办"
+      ],
+      "gold": [
+        "武汉市财政局",
+        "荆州区城南街道党政办试用期公务员"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P18",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "南昌市新建区人民政府",
+        "江西省上饶市委政研室"
+      ],
+      "gold": [
+        "新建区人民政府",
+        "上饶市委政研室"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P19",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "山西省长治市劳动人事争议仲裁院",
+        "山西省晋城市教育局",
+        "中共山西省委宣传部"
+      ],
+      "gold": [
+        "长治市劳动人事争议仲裁院",
+        "晋城市教育局",
+        "中共山西省委宣传部"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "ocr",
+      "sample_id": "P20",
+      "field": "major",
+      "adjudication": "等价",
+      "extracted": [
+        "哲学",
+        "米级维吾尔语"
+      ],
+      "gold": [
+        "哲学",
+        "维吾尔语"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P01",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "滨州市阳信县",
+        "潍坊市寒亭区"
+      ],
+      "gold": [
+        "滨州",
+        "潍坊"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P02",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P03",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P03",
+      "field": "major",
+      "adjudication": "等价",
+      "extracted": [
+        "国际经济与贸易",
+        "电子信息工程"
+      ],
+      "gold": [
+        "国际经济与贸易",
+        "电子信息"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P03",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "昆明市",
+        "昆明市盘龙区"
+      ],
+      "gold": [
+        "昆明",
+        "昆明"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P05",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "硕士",
+        "硕士"
+      ],
+      "gold": [
+        "硕士研究生",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P05",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "天津市河北区王串场街道",
+        "天津市津南区农业农村委员会"
+      ],
+      "gold": [
+        "天津",
+        "天津"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P05",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "天津市河北区王串场街道",
+        "天津市津南区农业农村委员会"
+      ],
+      "gold": [
+        "河北区王串场街道公务员",
+        "津南区农业农村委员会"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P06",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "硕士",
+        "硕士"
+      ],
+      "gold": [
+        "硕士研究生",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P06",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "郑州市",
+        "焦作市沁阳市"
+      ],
+      "gold": [
+        "郑州",
+        "焦作"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P07",
+      "field": "major",
+      "adjudication": "等价",
+      "extracted": [
+        "文物与博物馆学专业",
+        "中国现当代文学专业"
+      ],
+      "gold": [
+        "文物与博物馆学",
+        "当代文学"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P07",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "石嘴山市惠农区红果子镇",
+        "银川市金凤区"
+      ],
+      "gold": [
+        "石嘴山",
+        "银川"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P08",
+      "field": "major",
+      "adjudication": "等价",
+      "extracted": [
+        "文物与博物馆学专业",
+        "中国少数民族语言文学专业"
+      ],
+      "gold": [
+        "文物与博物馆学",
+        "中国少数民族语言文学"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P08",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "湖南省株洲市炎陵县鹿原镇三口村",
+        "湖南省邵阳市双清区高崇山镇马杨村"
+      ],
+      "gold": [
+        "株洲",
+        "邵阳"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P09",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "福建省泉州市晋江市英林镇三欧村",
+        "福建省三明市宁化县"
+      ],
+      "gold": [
+        "晋江",
+        "三明"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P10",
+      "field": "education",
+      "adjudication": "等价",
+      "extracted": [
+        "本科",
+        "硕士"
+      ],
+      "gold": [
+        "本科",
+        "硕士研究生"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P10",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "深圳市宝安区",
+        "梅州市"
+      ],
+      "gold": [
+        "深圳",
+        "梅州"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P12",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "吐鲁番市高昌区"
+      ],
+      "gold": [
+        "吐鲁番"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P13",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "山西省临汾市城联社",
+        "山西省纪委监委"
+      ],
+      "gold": [
+        "临汾市城联社",
+        "山西省纪委监委"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P14",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "保定市徐水区",
+        "唐山市纪委监委会"
+      ],
+      "gold": [
+        "保定",
+        "唐山"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P15",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "贵州省石阡县",
+        "贵州省织金县"
+      ],
+      "gold": [
+        "石阡",
+        "织金"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P16",
+      "field": "major",
+      "adjudication": "等价",
+      "extracted": [
+        "软件工程专业",
+        "环境科学与工程"
+      ],
+      "gold": [
+        "软件工程",
+        "环境科学"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P16",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "张家口市",
+        "石家庄市"
+      ],
+      "gold": [
+        "张家口",
+        "石家庄"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P17",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "武汉市",
+        "荆州市"
+      ],
+      "gold": [
+        "武汉",
+        "荆州"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P18",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "南昌市新建区",
+        "江西省上饶市"
+      ],
+      "gold": [
+        "南昌",
+        "上饶"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P19",
+      "field": "position_or_unit",
+      "adjudication": "等价",
+      "extracted": [
+        "山西省长治市劳动人事争议仲裁院",
+        "山西省晋城市教育局",
+        "中共山西省委宣传部"
+      ],
+      "gold": [
+        "长治市劳动人事争议仲裁院",
+        "晋城市教育局",
+        "中共山西省委宣传部"
+      ],
+      "reason": "金标准⊆输出（简称/全称细化）",
+      "human_confirmed": null
+    },
+    {
+      "route": "multimodal",
+      "sample_id": "P20",
+      "field": "city",
+      "adjudication": "等价",
+      "extracted": [
+        "乌鲁木齐",
+        "喀什地区疏附县"
+      ],
+      "gold": [
+        "乌鲁木齐",
+        "喀什"
+      ],
+      "reason": "唯一识别同一城市（±市后缀/更细地址）",
+      "human_confirmed": null
+    }
+  ],
+  "spot_check": "多模态城市/岗位/学历 12 条覆盖四种判定情形，见 PR #5 评论区"
+}
