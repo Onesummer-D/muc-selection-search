@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from . import fields as F
 
@@ -65,17 +66,31 @@ def _norm(v) -> str | None:
 
 
 def _match_norm(gold_v, ext_v, field: str = "") -> bool:
-    """归一口径：相等、包含（短侧≥3字）或（仅城市）前缀。"""
+    """归一/裁决口径（PR 终版验收·第三部分统一规则）：
+
+    - education："硕士"≡"硕士研究生"、"博士"≡"博士研究生" ✅等价；
+    - city：输出唯一正确识别金标准城市即 ✅——允许±市后缀与更细下级地址
+      （双向包含/前缀，"株洲"⊆"湖南省株洲市炎陵县…"）；另一行政实体自然 ❌；
+    - major/position_or_unit：逐字要求高，只认「金标准 ⊆ 输出」的细化
+      （金标准原文完整出现在输出中，如"临汾市城联社"⊆"山西省临汾市城联社"）；
+      丢字/错字/丢括号内容（输出 ⊊ 金标准）一律 ❌；
+    - grade：允许"2020级"≡"2020"。
+    """
     a, b = _norm(gold_v), _norm(ext_v)
     if a is None or b is None:
         return False
+    if field == "grade":
+        a, b = a.removesuffix("级"), b.removesuffix("级")
     if a == b:
         return True
-    short, long = (a, b) if len(a) <= len(b) else (b, a)
-    if len(short) >= 3 and short in long:
-        return True
-    if field == "city" and long.startswith(short):
-        return True
+    if field == "education":
+        return False  # 同义已由 _norm 别名覆盖，其余差异不算等价
+    if field in ("major", "position_or_unit"):
+        # 只认金标准⊆输出的细化；丢字（输出⊊金标准）❌
+        return len(a) >= 3 and a in b
+    if field == "city":
+        short, long = (a, b) if len(a) <= len(b) else (b, a)
+        return short in long or long.startswith(short)
     return False
 
 
@@ -114,12 +129,20 @@ def _p95(values: list[float]) -> float | None:
     return round(s[idx], 3)
 
 
-def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
-    """逐样本逐字段打分并汇总；任何缺失如实进入对应状态。"""
+def evaluate_route(gold: dict, raw: RouteRaw,
+                   adjudicated: set | None = None) -> dict:
+    """逐样本逐字段打分并汇总；任何缺失如实进入对应状态。
+
+    adjudicated：{(sample_id, field)} 集合——人工裁决表中确认"等价✅"的
+    strict-fail 项，重算时翻为正确（adjudicated 口径）。
+    """
+    adjudicated = adjudicated or set()
     gold_by_id = {s["sample_id"]: s for s in gold["samples"]}
     per_sample = []
     stats = {f: {"strict": 0, "norm": 0, "decidable": 0} for f in ALL7}
+    stats_adj = {f: {"correct": 0, "decidable": 0} for f in ALL7}
     complete = {"strict": 0, "norm": 0, "decidable": 0}
+    complete_adj = {"correct": 0, "decidable": 0}
     valid_count = 0
     elapsed: list[float] = []
     cost_total = 0.0
@@ -165,6 +188,10 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
                     strict_failures[f].append(sid)
                 if judgments[f] == 0 and judgments_norm[f] == 1:
                     equivalence[f].append(sid)
+                # adjudicated 口径：strict-fail 且人工确认等价 → 翻正确
+                stats_adj[f]["decidable"] += 1
+                adj_ok = judgments[f] == 1 or (sid, f) in adjudicated
+                stats_adj[f]["correct"] += 1 if adj_ok else 0
             comp_dec = all(judgments[f] is not None for f in CORE)
             if comp_dec:
                 complete["decidable"] += 1
@@ -172,6 +199,10 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
                     complete["strict"] += 1
                 if all(judgments_norm[f] == 1 for f in CORE):
                     complete["norm"] += 1
+                if all(judgments[f] == 1 or (sid, f) in adjudicated
+                       for f in CORE):
+                    complete_adj["correct"] += 1
+                complete_adj["decidable"] += 1
             per_sample.append({
                 "sample_id": sid, "status": "judged", "mode": "multi_person",
                 "persons_extracted": len(ext_persons),
@@ -201,12 +232,18 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
                     strict_failures[f].append(sid)
                     if n_v == 1:
                         equivalence[f].append(sid)
+                stats_adj[f]["decidable"] += 1
+                stats_adj[f]["correct"] += 1 if (
+                    s_v == 1 or (sid, f) in adjudicated) else 0
         core_j = [judgments[f] for f in CORE]
         comp_dec = all(j is not None for j in core_j)
         if comp_dec:
             complete["decidable"] += 1
             if all(j == 1 for j in core_j):
                 complete["strict"] += 1
+            if all(j == 1 or (sid, f) in adjudicated for j, f in zip(core_j, CORE)):
+                complete_adj["correct"] += 1
+            complete_adj["decidable"] += 1
         core_jn = [judgments_norm[f] for f in CORE]
         if all(j is not None for j in core_jn) and all(j == 1 for j in core_jn):
             complete["norm"] += 1
@@ -247,6 +284,20 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
         "complete_record_norm": {
             "correct": complete["norm"], "decidable": complete["decidable"],
             "accuracy": pct(complete["norm"], complete["decidable"])},
+        "fields_adjudicated": {
+            f: {"correct": stats_adj[f]["correct"],
+                "decidable": stats_adj[f]["decidable"],
+                "accuracy": pct(stats_adj[f]["correct"], stats_adj[f]["decidable"])}
+            for f in CORE},
+        "fields_extra_adjudicated": {
+            f: {"correct": stats_adj[f]["correct"],
+                "decidable": stats_adj[f]["decidable"],
+                "accuracy": pct(stats_adj[f]["correct"], stats_adj[f]["decidable"])}
+            for f in EXTRA},
+        "complete_record_adjudicated": {
+            "correct": complete_adj["correct"],
+            "decidable": complete_adj["decidable"],
+            "accuracy": pct(complete_adj["correct"], complete_adj["decidable"])},
         "elapsed_s": {
             "avg": round(sum(elapsed) / len(elapsed), 3) if elapsed else None,
             "p95": _p95(elapsed), "n": len(elapsed)},
@@ -295,37 +346,92 @@ def compare_and_gate(ocr_metrics: dict, mm_metrics: dict) -> dict:
     }
     gate_pass = diff_pp is not None and diff_pp >= GATE_PP
 
+    # 裁决后 gate（PR 终版验收 A：strict_gate / adjudicated_gate 并列，
+    # 最终采纳 adjudicated_gate——严格口径把"简称 vs 全称"的等价
+    # 表述判为错误属于匹配伪影，人工裁决表已逐条确认）
+    def acc_adj(m):
+        return m["complete_record_adjudicated"]["accuracy"]
+
+    ocr_adj, mm_adj = acc_adj(ocr_metrics), acc_adj(mm_metrics)
+    if ocr_adj is None or mm_adj is None:
+        adj_diff = diff_pp
+    else:
+        adj_diff = round(mm_adj - ocr_adj, 2)
+    adj_pass = adj_diff is not None and adj_diff >= GATE_PP
+
     return {
         "gate_basis": basis,
+        "strict_gate": {
+            "ocr_complete_accuracy": ocr_a,
+            "multimodal_complete_accuracy": mm_a,
+            "diff_percentage_points": diff_pp,
+            "gate_pass": gate_pass,
+            "multimodal_enablement": "启用" if gate_pass else "不启用",
+            "enablement_basis": (
+                f"完整记录准确率差 {diff_pp}pp（门槛 ≥{GATE_PP}pp）"
+                if diff_pp is not None else "准确率缺失，无法判定"),
+        },
+        "adjudicated_gate": {
+            "ocr_complete_accuracy": ocr_adj,
+            "multimodal_complete_accuracy": mm_adj,
+            "diff_percentage_points": adj_diff,
+            "gate_pass": adj_pass,
+            "multimodal_enablement": "启用" if adj_pass else "不启用",
+            "enablement_basis": (
+                f"裁决后完整记录准确率差 {adj_diff}pp（门槛 ≥{GATE_PP}pp；"
+                "等价通过样本见 equivalence_adjudicated.json）"
+                if adj_diff is not None else "准确率缺失，无法判定"),
+        },
         "ocr_reference_accuracy": ocr_a,
         "multimodal_accuracy": mm_a,
         "diff_percentage_points": diff_pp,
         "gate_pp": GATE_PP,
-        "gate_pass": gate_pass,
+        "gate_pass": adj_pass,
         "fields_meeting_90": fields_meet_90,
-        "multimodal_enablement": "启用" if gate_pass else "不启用",
+        "multimodal_enablement": "启用" if adj_pass else "不启用",
         "enablement_basis": (
-            f"完整记录准确率差 {diff_pp}pp（门槛 ≥{GATE_PP}pp）"
-            if basis == "complete_record" and diff_pp is not None
-            else f"字段宏平均差 {diff_pp}pp（门槛 ≥{GATE_PP}pp；完整记录不可判定，回退字段口径）"
-            if diff_pp is not None else "准确率缺失，无法判定"),
+            f"最终采纳裁决后口径：完整记录准确率差 {adj_diff}pp（门槛 ≥{GATE_PP}pp）；"
+            f"严格口径差 {diff_pp}pp 并列保留"
+            if adj_diff is not None and diff_pp is not None
+            else "准确率缺失，无法判定"),
     }
 
 
-def run_evaluation(gold_path, ocr_raw_path, mm_raw_path, out_path) -> dict:
-    """从 gold + 两条路线原始文件产出对照报告。"""
+def load_adjudicated(path) -> set:
+    """equivalence_adjudicated.json -> {(sample_id, field)}（仅人工确认项）。"""
+    p = Path(path)
+    if not p.exists():
+        return set()
+    data = json.loads(p.read_text(encoding="utf-8"))
+    confirmed = data.get("human_confirmed", False)
+    if not confirmed:
+        return set()
+    return {(e["sample_id"], e["field"])
+            for e in data.get("entries", []) if e.get("adjudication") == "等价"}
+
+
+def run_evaluation(gold_path, ocr_raw_path, mm_raw_path, out_path,
+                   adjudicated_path=None) -> dict:
+    """从 gold + 两条路线原始文件产出对照报告（双 gate）。"""
     gold = json.loads(open(gold_path, encoding="utf-8").read())
+    adj_path = adjudicated_path or (
+        Path(gold_path).parent / "equivalence_adjudicated.json")
+    adjudicated = load_adjudicated(adj_path)
     routes = {}
     for name, path in (("ocr", ocr_raw_path), ("multimodal", mm_raw_path)):
         data = json.loads(open(path, encoding="utf-8").read())
         routes[name] = evaluate_route(
-            gold, RouteRaw(route_name=name, sample_results=data["sample_results"]))
+            gold, RouteRaw(route_name=name, sample_results=data["sample_results"]),
+            adjudicated=adjudicated)
 
     report = {
         "gold_sample_set": gold.get("sample_set"),
         "gold_revision": gold.get("revision"),
         "judging": "主指标=严格0/1（仅空白归一）；fields_norm=归一化等价口径；"
+                   "fields_adjudicated=人工裁决后口径（最终采纳）；"
                    "等价通过样本见 warnings.review_queue[].equivalence_pending",
+        "adjudicated_source": (str(adj_path) if adjudicated
+                               else "equivalence_adjudicated.json 未确认/不存在"),
         "routes": routes,
         "gate": compare_and_gate(routes["ocr"], routes["multimodal"]),
         "timing_boundary": "收到 article bundle 到产出 extraction bundle（两路线一致）",

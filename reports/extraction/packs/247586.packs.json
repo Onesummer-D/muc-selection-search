@@ -1,0 +1,105 @@
+[
+  {
+    "record_key": "247586-01",
+    "notice_id": "247586",
+    "fields": {
+      "cohort": "2024届",
+      "grade": null,
+      "education": "本科",
+      "college": "经济学院",
+      "major": "经济学",
+      "city": "吐鲁番",
+      "position_or_unit": "吐鲁番市高昌区审计局"
+    },
+    "core_fields": [
+      "cohort",
+      "education",
+      "major",
+      "city",
+      "position_or_unit"
+    ],
+    "field_evidence": {
+      "cohort": [
+        {
+          "text": "2024届新疆定向选调生",
+          "method": "ocr_rule",
+          "asset_id": "247586-poster-01",
+          "bbox": [
+            486.0,
+            1274.0,
+            1204.0,
+            1341.0
+          ]
+        }
+      ],
+      "education": [
+        {
+          "text": "专业本科生",
+          "method": "ocr_rule",
+          "asset_id": "247586-poster-01",
+          "bbox": [
+            488.0,
+            1447.0,
+            834.0,
+            1512.0
+          ]
+        }
+      ],
+      "college": [
+        {
+          "text": "经济学院2020级经济学",
+          "method": "ocr_rule",
+          "asset_id": "247586-poster-01",
+          "bbox": [
+            487.0,
+            1362.0,
+            1202.0,
+            1426.0
+          ]
+        }
+      ],
+      "major": [
+        {
+          "text": "经济学院2020级经济学",
+          "method": "ocr_rule",
+          "asset_id": "247586-poster-01",
+          "bbox": [
+            487.0,
+            1362.0,
+            1202.0,
+            1426.0
+          ]
+        }
+      ],
+      "city": [
+        {
+          "text": "吐鲁番市高昌区审计局",
+          "method": "ocr_rule",
+          "asset_id": "247586-poster-01",
+          "bbox": [
+            488.0,
+            1532.0,
+            1171.0,
+            1597.0
+          ]
+        }
+      ],
+      "position_or_unit": [
+        {
+          "text": "吐鲁番市高昌区审计局",
+          "method": "ocr_rule",
+          "asset_id": "247586-poster-01",
+          "bbox": [
+            488.0,
+            1532.0,
+            1171.0,
+            1597.0
+          ]
+        }
+      ]
+    },
+    "source_url": "https://my.muc.edu.cn/notice/247586",
+    "review_status": "processed",
+    "confidence": 0.85
+  }
+]

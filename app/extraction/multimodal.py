@@ -29,8 +29,10 @@ PROMPT_TEMPLATE = """你是选调经验海报信息抽取器。请从这张海�
 1. 只使用图片中明确出现的信息，缺失字段返回 null，不得猜测。
 2. 每个非空字段必须单独输出一条 evidence，且 field 与字段名完全一致；
    例如 education 的证据不能合并进 cohort 的证据里。
-3. 一张海报有多位人物时，每人一条记录。
-4. 只输出 JSON，不要任何解释文字。结构如下：
+3. position_or_unit 只输出单位或职务本体（如"山西省临汾市城联社"），
+   不要附加"试用期公务员（不定职级）"等任职状态修饰。
+4. 一张海报有多位人物时，每人一条记录。
+5. 只输出 JSON，不要任何解释文字。结构如下：
 {"records": [{"cohort": "2025届", "grade": "2020", "education": "本科", "college": "信息学院",
 "major": "计算机科学与技术", "city": "成都", "position_or_unit": "某区基层岗位",
 "evidence": [{"field": "cohort", "text": "2025届"}, {"field": "grade", "text": "2020级"},
@@ -40,6 +42,25 @@ PROMPT_TEMPLATE = """你是选调经验海报信息抽取器。请从这张海�
 
 class MultimodalTimeout(RuntimeError):
     pass
+
+
+_TRIAL_TAILS = ("试用期公务员（不定职级）", "试用期公务员(不定职级)",
+                "试用期干部（不定职级）", "试用期干部(不定职级)",
+                "试用期公务员", "试用期干部")
+
+
+def _strip_trial_tail(value: str) -> str:
+    """剥离岗位/单位值尾部的任职状态修饰（确定性后处理）。"""
+    s = value.strip()
+    changed = True
+    while changed:
+        changed = False
+        for tail in _TRIAL_TAILS:
+            if s.endswith(tail) and len(s) > len(tail):
+                s = s[: -len(tail)].rstrip("，,、 ")
+                changed = True
+    return s
+
 
 
 def _parse_json_text(raw: str) -> dict:
@@ -175,6 +196,12 @@ class MultimodalAdapter:
             except (ValueError, json.JSONDecodeError):
                 failure = "model_invalid_json"
                 continue
+
+            # 确定性后处理：position_or_unit 剥离任职状态尾巴（B 项要求）
+            for rec in (data.get("records") or []):
+                v = rec.get("position_or_unit")
+                if isinstance(v, str):
+                    rec["position_or_unit"] = _strip_trial_tail(v)
 
             asset_records = data.get("records")
             if not isinstance(asset_records, list):
