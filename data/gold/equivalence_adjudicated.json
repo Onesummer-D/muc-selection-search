@@ -1,6 +1,6 @@
 {
   "human_confirmed": true,
-  "confirmed_by": "annotator-B（2026-09-20 抽查 12 条代表性预标：城市细化✅、丢字岗位❌、gold=null 幻觉❌、金标⊆输出✅ 全部确认，其余批量确认）",
+  "confirmed_by": "annotator-B（抽查 12 条代表性预标全部确认，2026-09-20；其余按 AI 预标批量确认）",
   "rules": "PR 终版验收·第三部分统一裁决口径",
   "entries": [
     {
@@ -17,7 +17,7 @@
         "寒亭区司法局"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -33,7 +33,7 @@
         "盘龙区金辰街道办"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -49,7 +49,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -65,7 +65,7 @@
         "广西壮族自治区统计局"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -81,7 +81,7 @@
         "天津"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -97,7 +97,7 @@
         "津南区农业农村委员会"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -113,7 +113,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -129,7 +129,7 @@
         "沁阳市发展和改革委员会"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -145,7 +145,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -161,7 +161,7 @@
         "当代文学"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -177,7 +177,7 @@
         "银川"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -193,7 +193,7 @@
         "银川市金凤区人民法院"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -209,7 +209,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -225,7 +225,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -241,7 +241,7 @@
         "梅州"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -257,7 +257,7 @@
         "梅州市中级人民法院"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -273,7 +273,7 @@
         "大连"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -289,7 +289,7 @@
         "甘井子区辛寨子街道办事处"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -303,7 +303,7 @@
         "高昌区审计局"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -319,7 +319,7 @@
         "山西省纪委监委"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -335,7 +335,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -351,7 +351,7 @@
         "唐山市纪检委"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -367,7 +367,7 @@
         "织金县文体广电旅游局"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -383,7 +383,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -399,7 +399,7 @@
         "桥西区数据资源管理局"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -415,7 +415,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -431,7 +431,7 @@
         "荆州区城南街道党政办试用期公务员"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -447,7 +447,7 @@
         "上饶市委政研室"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -465,7 +465,7 @@
         "中共山西省委宣传部"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "ocr",
@@ -481,7 +481,7 @@
         "维吾尔语"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -497,7 +497,7 @@
         "潍坊"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -513,7 +513,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -529,7 +529,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -545,7 +545,7 @@
         "电子信息"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -561,7 +561,7 @@
         "昆明"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -577,7 +577,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -593,7 +593,7 @@
         "天津"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -609,7 +609,7 @@
         "津南区农业农村委员会"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -625,7 +625,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -641,7 +641,7 @@
         "焦作"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -657,7 +657,7 @@
         "当代文学"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -673,7 +673,7 @@
         "银川"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -689,7 +689,7 @@
         "中国少数民族语言文学"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -705,7 +705,7 @@
         "邵阳"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -721,7 +721,7 @@
         "三明"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -737,7 +737,7 @@
         "硕士研究生"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -753,7 +753,7 @@
         "梅州"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -767,7 +767,7 @@
         "吐鲁番"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -783,7 +783,7 @@
         "山西省纪委监委"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -799,7 +799,7 @@
         "唐山"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -815,7 +815,7 @@
         "织金"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -831,7 +831,7 @@
         "环境科学"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -847,7 +847,7 @@
         "石家庄"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -863,7 +863,7 @@
         "荆州"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -879,7 +879,7 @@
         "上饶"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -897,7 +897,7 @@
         "中共山西省委宣传部"
       ],
       "reason": "金标准⊆输出（简称/全称细化）",
-      "human_confirmed": null
+      "human_confirmed": true
     },
     {
       "route": "multimodal",
@@ -913,7 +913,7 @@
         "喀什"
       ],
       "reason": "唯一识别同一城市（±市后缀/更细地址）",
-      "human_confirmed": null
+      "human_confirmed": true
     }
   ],
   "spot_check": {
@@ -934,5 +934,5 @@
     ],
     "result": "全部确认 AI 预标正确"
   },
-  "confirmed_at": "2026-09-20T21:13:13.809311+08:00"
+  "confirmed_at": "2026-09-20T21:16:21.844266+08:00"
 }
