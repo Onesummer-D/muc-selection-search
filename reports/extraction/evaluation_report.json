@@ -1,5 +1,7 @@
 {
   "gold_sample_set": "week1-poster-gold-20-v2",
+  "gold_revision": "v2：20 张全部为经验分享类人物海报。初版清单中的校友就业帖(246444) 与 5 张公告类移出（无人物五字段），6 张台账外经验分享补充入场（manual-*，来源受控交接 PDF，手工建 bundle）。 | v2.1：城市口径改严格按原文（未写市→null），",
+  "judging": "主指标=严格0/1（仅空白归一）；fields_norm=归一化等价口径；等价通过样本见 warnings.review_queue[].equivalence_pending",
   "routes": {
     "ocr": {
       "route": "ocr",
@@ -10,39 +12,95 @@
       "success_rate": 100.0,
       "fields": {
         "cohort": {
+          "correct": 20,
+          "decidable": 20,
+          "accuracy": 100.0
+        },
+        "education": {
+          "correct": 7,
+          "decidable": 20,
+          "accuracy": 35.0
+        },
+        "major": {
+          "correct": 8,
+          "decidable": 20,
+          "accuracy": 40.0
+        },
+        "city": {
+          "correct": 11,
+          "decidable": 19,
+          "accuracy": 57.89
+        },
+        "position_or_unit": {
+          "correct": 1,
+          "decidable": 20,
+          "accuracy": 5.0
+        }
+      },
+      "fields_norm": {
+        "cohort": {
+          "correct": 20,
+          "decidable": 20,
+          "accuracy": 100.0
+        },
+        "education": {
+          "correct": 15,
+          "decidable": 20,
+          "accuracy": 75.0
+        },
+        "major": {
+          "correct": 14,
+          "decidable": 20,
+          "accuracy": 70.0
+        },
+        "city": {
+          "correct": 11,
+          "decidable": 19,
+          "accuracy": 57.89
+        },
+        "position_or_unit": {
           "correct": 17,
           "decidable": 20,
           "accuracy": 85.0
-        },
-        "education": {
-          "correct": 10,
+        }
+      },
+      "fields_extra": {
+        "grade": {
+          "correct": 19,
           "decidable": 20,
-          "accuracy": 50.0
+          "accuracy": 95.0
         },
-        "major": {
-          "correct": 7,
+        "college": {
+          "correct": 11,
           "decidable": 20,
-          "accuracy": 35.0
-        },
-        "city": {
-          "correct": 7,
+          "accuracy": 55.0
+        }
+      },
+      "fields_extra_norm": {
+        "grade": {
+          "correct": 19,
           "decidable": 20,
-          "accuracy": 35.0
+          "accuracy": 95.0
         },
-        "position_or_unit": {
+        "college": {
           "correct": 11,
           "decidable": 20,
           "accuracy": 55.0
         }
       },
       "complete_record": {
-        "correct": 2,
-        "decidable": 20,
-        "accuracy": 10.0
+        "correct": 0,
+        "decidable": 19,
+        "accuracy": 0.0
+      },
+      "complete_record_norm": {
+        "correct": 5,
+        "decidable": 19,
+        "accuracy": 26.32
       },
       "elapsed_s": {
-        "avg": 88.011,
-        "p95": 96.51,
+        "avg": 100.781,
+        "p95": 471.68,
         "n": 20
       },
       "cost": {
@@ -52,33 +110,37 @@
       "warnings": {
         "gold_null_but_extracted": [],
         "below_90_fields": [
-          "cohort",
           "education",
           "major",
           "city",
           "position_or_unit"
         ],
         "review_queue": {
-          "cohort": {
-            "wrong_samples": [
-              "P05",
-              "P16",
-              "P20"
-            ],
-            "invalid_samples": []
-          },
           "education": {
             "wrong_samples": [
               "P02",
               "P03",
+              "P04",
               "P05",
               "P06",
+              "P07",
+              "P08",
               "P09",
               "P10",
               "P14",
               "P15",
               "P16",
-              "P20"
+              "P17"
+            ],
+            "equivalence_pending": [
+              "P04",
+              "P06",
+              "P07",
+              "P08",
+              "P09",
+              "P14",
+              "P16",
+              "P17"
             ],
             "invalid_samples": []
           },
@@ -88,47 +150,78 @@
               "P03",
               "P04",
               "P05",
-              "P06",
-              "P09",
-              "P10",
+              "P07",
+              "P08",
               "P11",
               "P13",
               "P14",
               "P16",
-              "P17",
+              "P19",
+              "P20"
+            ],
+            "equivalence_pending": [
+              "P05",
+              "P07",
+              "P08",
+              "P11",
+              "P19",
               "P20"
             ],
             "invalid_samples": []
           },
           "city": {
             "wrong_samples": [
-              "P02",
               "P04",
               "P05",
               "P06",
-              "P08",
+              "P07",
               "P09",
-              "P13",
-              "P15",
-              "P16",
-              "P17",
-              "P18",
-              "P19",
-              "P20"
+              "P10",
+              "P11",
+              "P15"
             ],
+            "equivalence_pending": [],
             "invalid_samples": []
           },
           "position_or_unit": {
             "wrong_samples": [
+              "P01",
               "P02",
+              "P03",
+              "P04",
               "P05",
+              "P06",
+              "P07",
               "P08",
               "P09",
+              "P10",
+              "P11",
+              "P12",
+              "P13",
+              "P14",
               "P15",
               "P16",
               "P17",
               "P18",
-              "P20"
+              "P19"
+            ],
+            "equivalence_pending": [
+              "P01",
+              "P03",
+              "P04",
+              "P05",
+              "P06",
+              "P07",
+              "P10",
+              "P11",
+              "P12",
+              "P13",
+              "P14",
+              "P15",
+              "P16",
+              "P17",
+              "P18",
+              "P19"
             ],
             "invalid_samples": []
           }
@@ -146,7 +239,18 @@
             "education": 1,
             "major": 0,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -160,10 +264,21 @@
             "cohort": 1,
             "education": 0,
             "major": 1,
-            "city": 0,
-            "position_or_unit": 0
+            "city": null,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
           },
-          "complete": false
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": null,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "complete": null
         },
         {
           "sample_id": "P03",
@@ -176,7 +291,18 @@
             "education": 0,
             "major": 0,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 0
           },
           "complete": false
         },
@@ -188,10 +314,21 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
             "major": 0,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 0
           },
           "complete": false
         },
@@ -199,14 +336,25 @@
           "sample_id": "P05",
           "status": "judged",
           "mode": "multi_person",
-          "persons_extracted": 3,
+          "persons_extracted": 2,
           "persons_gold": 2,
           "judgments": {
-            "cohort": 0,
+            "cohort": 1,
             "education": 0,
             "major": 0,
             "city": 0,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -219,9 +367,20 @@
           "judgments": {
             "cohort": 1,
             "education": 0,
-            "major": 0,
+            "major": 1,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -233,12 +392,23 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
             "major": 1,
-            "city": 1,
-            "position_or_unit": 1
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "complete": false
         },
         {
           "sample_id": "P08",
@@ -248,10 +418,21 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
             "major": 1,
-            "city": 0,
-            "position_or_unit": 0
+            "city": 1,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
           },
           "complete": false
         },
@@ -264,9 +445,20 @@
           "judgments": {
             "cohort": 1,
             "education": 0,
-            "major": 0,
+            "major": 1,
             "city": 0,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
           },
           "complete": false
         },
@@ -279,9 +471,20 @@
           "judgments": {
             "cohort": 1,
             "education": 0,
-            "major": 0,
-            "city": 1,
-            "position_or_unit": 1
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -295,8 +498,19 @@
             "cohort": 1,
             "education": 1,
             "major": 0,
-            "city": 1,
-            "position_or_unit": 1
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -311,9 +525,20 @@
             "education": 1,
             "major": 1,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
+          },
+          "complete": false
         },
         {
           "sample_id": "P13",
@@ -325,8 +550,19 @@
             "cohort": 1,
             "education": 1,
             "major": 0,
-            "city": 0,
-            "position_or_unit": 1
+            "city": 1,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -341,7 +577,18 @@
             "education": 0,
             "major": 0,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 0
           },
           "complete": false
         },
@@ -356,7 +603,18 @@
             "education": 0,
             "major": 1,
             "city": 0,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 0
           },
           "complete": false
         },
@@ -364,14 +622,25 @@
           "sample_id": "P16",
           "status": "judged",
           "mode": "multi_person",
-          "persons_extracted": 1,
+          "persons_extracted": 2,
           "persons_gold": 2,
           "judgments": {
-            "cohort": 0,
+            "cohort": 1,
             "education": 0,
             "major": 0,
-            "city": 0,
-            "position_or_unit": 0
+            "city": 1,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 0
           },
           "complete": false
         },
@@ -383,10 +652,21 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
-            "major": 0,
-            "city": 0,
-            "position_or_unit": 0
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -400,8 +680,19 @@
             "cohort": 1,
             "education": 1,
             "major": 1,
-            "city": 0,
-            "position_or_unit": 0
+            "city": 1,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -414,9 +705,20 @@
           "judgments": {
             "cohort": 1,
             "education": 1,
+            "major": 0,
+            "city": 1,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
             "major": 1,
-            "city": 0,
-            "position_or_unit": 1
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -424,14 +726,25 @@
           "sample_id": "P20",
           "status": "judged",
           "mode": "multi_person",
-          "persons_extracted": 1,
+          "persons_extracted": 2,
           "persons_gold": 2,
           "judgments": {
-            "cohort": 0,
-            "education": 0,
+            "cohort": 1,
+            "education": 1,
             "major": 0,
-            "city": 0,
-            "position_or_unit": 0
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 0,
+            "college": 0
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 0,
+            "college": 0
           },
           "complete": false
         }
@@ -451,34 +764,90 @@
           "accuracy": 100.0
         },
         "education": {
+          "correct": 14,
+          "decidable": 20,
+          "accuracy": 70.0
+        },
+        "major": {
+          "correct": 11,
+          "decidable": 20,
+          "accuracy": 55.0
+        },
+        "city": {
+          "correct": 0,
+          "decidable": 19,
+          "accuracy": 0.0
+        },
+        "position_or_unit": {
+          "correct": 0,
+          "decidable": 20,
+          "accuracy": 0.0
+        }
+      },
+      "fields_norm": {
+        "cohort": {
           "correct": 20,
           "decidable": 20,
           "accuracy": 100.0
         },
-        "major": {
-          "correct": 16,
+        "education": {
+          "correct": 19,
           "decidable": 20,
-          "accuracy": 80.0
+          "accuracy": 95.0
+        },
+        "major": {
+          "correct": 17,
+          "decidable": 20,
+          "accuracy": 85.0
         },
         "city": {
-          "correct": 13,
-          "decidable": 20,
-          "accuracy": 65.0
+          "correct": 12,
+          "decidable": 19,
+          "accuracy": 63.16
         },
         "position_or_unit": {
-          "correct": 15,
+          "correct": 9,
           "decidable": 20,
-          "accuracy": 75.0
+          "accuracy": 45.0
+        }
+      },
+      "fields_extra": {
+        "grade": {
+          "correct": 14,
+          "decidable": 20,
+          "accuracy": 70.0
+        },
+        "college": {
+          "correct": 20,
+          "decidable": 20,
+          "accuracy": 100.0
+        }
+      },
+      "fields_extra_norm": {
+        "grade": {
+          "correct": 19,
+          "decidable": 20,
+          "accuracy": 95.0
+        },
+        "college": {
+          "correct": 20,
+          "decidable": 20,
+          "accuracy": 100.0
         }
       },
       "complete_record": {
-        "correct": 7,
-        "decidable": 20,
-        "accuracy": 35.0
+        "correct": 0,
+        "decidable": 19,
+        "accuracy": 0.0
+      },
+      "complete_record_norm": {
+        "correct": 4,
+        "decidable": 19,
+        "accuracy": 21.05
       },
       "elapsed_s": {
-        "avg": 9.186,
-        "p95": 13.88,
+        "avg": 9.703,
+        "p95": 12.63,
         "n": 20
       },
       "cost": {
@@ -488,39 +857,123 @@
       "warnings": {
         "gold_null_but_extracted": [],
         "below_90_fields": [
+          "education",
           "major",
           "city",
           "position_or_unit"
         ],
         "review_queue": {
-          "major": {
+          "education": {
             "wrong_samples": [
+              "P02",
+              "P03",
               "P05",
               "P06",
               "P10",
-              "P18"
+              "P15"
+            ],
+            "equivalence_pending": [
+              "P02",
+              "P03",
+              "P05",
+              "P06",
+              "P15"
+            ],
+            "invalid_samples": []
+          },
+          "major": {
+            "wrong_samples": [
+              "P03",
+              "P05",
+              "P07",
+              "P08",
+              "P10",
+              "P11",
+              "P16",
+              "P18",
+              "P19"
+            ],
+            "equivalence_pending": [
+              "P03",
+              "P05",
+              "P07",
+              "P11",
+              "P16",
+              "P19"
             ],
             "invalid_samples": []
           },
           "city": {
             "wrong_samples": [
+              "P01",
+              "P03",
               "P04",
+              "P05",
+              "P06",
+              "P07",
               "P08",
               "P09",
+              "P10",
+              "P11",
+              "P12",
               "P13",
+              "P14",
               "P15",
+              "P16",
+              "P17",
               "P18",
-              "P19"
+              "P19",
+              "P20"
+            ],
+            "equivalence_pending": [
+              "P01",
+              "P03",
+              "P05",
+              "P06",
+              "P07",
+              "P10",
+              "P11",
+              "P12",
+              "P14",
+              "P16",
+              "P17",
+              "P20"
             ],
             "invalid_samples": []
           },
           "position_or_unit": {
             "wrong_samples": [
+              "P01",
+              "P02",
+              "P03",
+              "P04",
               "P05",
+              "P06",
+              "P07",
               "P08",
+              "P09",
+              "P10",
+              "P11",
+              "P12",
+              "P13",
               "P14",
+              "P15",
+              "P16",
               "P17",
+              "P18",
+              "P19",
               "P20"
+            ],
+            "equivalence_pending": [
+              "P01",
+              "P02",
+              "P04",
+              "P11",
+              "P12",
+              "P15",
+              "P16",
+              "P18",
+              "P19"
             ],
             "invalid_samples": []
           }
@@ -537,10 +990,21 @@
             "cohort": 1,
             "education": 1,
             "major": 1,
-            "city": 1,
-            "position_or_unit": 1
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 0,
+            "college": 1
           },
-          "complete": true
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
+          },
+          "complete": false
         },
         {
           "sample_id": "P02",
@@ -550,12 +1014,23 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": null,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
             "major": 1,
-            "city": 1,
-            "position_or_unit": 1
+            "city": null,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "complete": null
         },
         {
           "sample_id": "P03",
@@ -565,12 +1040,23 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
             "major": 1,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "complete": false
         },
         {
           "sample_id": "P04",
@@ -583,7 +1069,18 @@
             "education": 1,
             "major": 1,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -595,10 +1092,21 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 1,
+            "education": 0,
             "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
             "city": 1,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -610,10 +1118,21 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -626,11 +1145,22 @@
           "judgments": {
             "cohort": 1,
             "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 0,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
             "major": 1,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "complete": false
         },
         {
           "sample_id": "P08",
@@ -641,9 +1171,20 @@
           "judgments": {
             "cohort": 1,
             "education": 1,
-            "major": 1,
+            "major": 0,
             "city": 0,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -658,7 +1199,18 @@
             "education": 1,
             "major": 1,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -670,10 +1222,21 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 1,
+            "education": 0,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 0,
             "major": 0,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -686,11 +1249,22 @@
           "judgments": {
             "cohort": 1,
             "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
             "major": 1,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "complete": false
         },
         {
           "sample_id": "P12",
@@ -702,10 +1276,21 @@
             "cohort": 1,
             "education": 1,
             "major": 1,
-            "city": 1,
-            "position_or_unit": 1
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 1,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
+          },
+          "complete": false
         },
         {
           "sample_id": "P13",
@@ -718,7 +1303,18 @@
             "education": 1,
             "major": 1,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -732,8 +1328,19 @@
             "cohort": 1,
             "education": 1,
             "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 0,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
             "city": 1,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 0,
+            "college": 1
           },
           "complete": false
         },
@@ -745,10 +1352,21 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
+            "education": 0,
+            "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
             "education": 1,
             "major": 1,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -761,11 +1379,22 @@
           "judgments": {
             "cohort": 1,
             "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 0,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
             "major": 1,
             "city": 1,
-            "position_or_unit": 1
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
-          "complete": true
+          "complete": false
         },
         {
           "sample_id": "P17",
@@ -777,8 +1406,19 @@
             "cohort": 1,
             "education": 1,
             "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
             "city": 1,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -793,7 +1433,18 @@
             "education": 1,
             "major": 0,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -806,9 +1457,20 @@
           "judgments": {
             "cohort": 1,
             "education": 1,
+            "major": 0,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 0,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
             "major": 1,
             "city": 0,
-            "position_or_unit": 1
+            "position_or_unit": 1,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         },
@@ -822,8 +1484,19 @@
             "cohort": 1,
             "education": 1,
             "major": 1,
+            "city": 0,
+            "position_or_unit": 0,
+            "grade": 0,
+            "college": 1
+          },
+          "judgments_norm": {
+            "cohort": 1,
+            "education": 1,
+            "major": 1,
             "city": 1,
-            "position_or_unit": 0
+            "position_or_unit": 0,
+            "grade": 1,
+            "college": 1
           },
           "complete": false
         }
@@ -832,17 +1505,17 @@
   },
   "gate": {
     "gate_basis": "complete_record",
-    "ocr_reference_accuracy": 10.0,
-    "multimodal_accuracy": 35.0,
-    "diff_percentage_points": 25.0,
+    "ocr_reference_accuracy": 0.0,
+    "multimodal_accuracy": 0.0,
+    "diff_percentage_points": 0.0,
     "gate_pp": 5.0,
-    "gate_pass": true,
+    "gate_pass": false,
     "fields_meeting_90": {
       "ocr": false,
       "multimodal": false
     },
-    "multimodal_enablement": "启用",
-    "enablement_basis": "完整记录准确率差 25.0pp（门槛 ≥5.0pp）"
+    "multimodal_enablement": "不启用",
+    "enablement_basis": "完整记录准确率差 0.0pp（门槛 ≥5.0pp）"
   },
   "timing_boundary": "收到 article bundle 到产出 extraction bundle（两路线一致）",
   "recomputable": "所有指标均由 per_sample 0/1 判断汇总，可重算"
