@@ -88,7 +88,8 @@ def test_undecidable_fields_stay_blank_in_tracker(tmp_path):
         rows = list(csv.DictReader(fh))
 
     r11 = rows[10]  # P11：major 金标准 null → 不可判定
-    assert r11["金标准专业"] == "" and r11["OCR专业"] == ""
+    # 金标准单元格写 "null" 字符串（台账 AA 校验查非空），判定列留空（不进分母）
+    assert r11["金标准专业"] == "null" and r11["OCR专业"] == ""
     # 完整判定：P11 金标准缺 major → 整条不可判定 → 留空
     assert r11["OCR完整"] == ""
     # 可判定样本 P01-P08 major 全对 → 1
