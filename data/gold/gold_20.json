@@ -2,8 +2,8 @@
   "sample_set": "week1-poster-gold-20-v2",
   "annotator": "annotator-B（人工盲填，工作簿原表存档于受控目录）",
   "frozen_at": "2026-09-19T20:27:50.093371+08:00",
-  "revision": "v2：20 张全部为经验分享类人物海报。初版清单中的校友就业帖(246444) 与 5 张公告类移出（无人物五字段），6 张台账外经验分享补充入场（manual-*，来源受控交接 PDF，手工建 bundle）。",
-  "notes": "字段值逐字转录自标注人工作簿；用户表 P 编号与本清单不一致，映射关系见 app/extraction/build_gold_v2.py ROW_MAP（按海报内容核对）。；2026-09-19 差异裁决：10 处笔误/截断经标注人确认修正后冻结（见 adjudication_log.json）。",
+  "revision": "v2：20 张全部为经验分享类人物海报。初版清单中的校友就业帖(246444) 与 5 张公告类移出（无人物五字段），6 张台账外经验分享补充入场（manual-*，来源受控交接 PDF，手工建 bundle）。 | v2.1：城市口径改严格按原文（未写市→null），",
+  "notes": "字段值逐字转录自标注人工作簿；用户表 P 编号与本清单不一致，映射关系见 app/extraction/build_gold_v2.py ROW_MAP（按海报内容核对）。；2026-09-19 差异裁决：10 处笔误/截断经标注人确认修正后冻结（见 adjudication_log.json）。；v2.1（2026-09-19）：11 处经标注人看图确认修正，见 adjudication_log.json v2_1。",
   "samples": [
     {
       "sample_id": "P01",
@@ -54,7 +54,7 @@
         "education": "本科",
         "college": "理学院",
         "major": "信息与计算科学",
-        "city": "青海",
+        "city": null,
         "position_or_unit": "青海省人力资源和社会保障厅"
       },
       "persons": [
@@ -64,7 +64,7 @@
           "education": "本科",
           "college": "理学院",
           "major": "信息与计算科学",
-          "city": "青海",
+          "city": null,
           "position_or_unit": "青海省人力资源和社会保障厅"
         },
         {
@@ -73,7 +73,7 @@
           "education": "硕士研究生",
           "college": "信息工程学院",
           "major": "现代教育技术",
-          "city": "青海",
+          "city": null,
           "position_or_unit": "青海省教育厅"
         }
       ],
@@ -147,7 +147,7 @@
           "education": "硕士研究生",
           "college": "理学院",
           "major": "应用统计专业",
-          "city": "南宁",
+          "city": null,
           "position_or_unit": "广西壮族自治区统计局"
         }
       ],
@@ -164,7 +164,7 @@
         "grade": "2022",
         "education": "硕士研究生",
         "college": "外国语学院",
-        "major": "学科教学（英语)",
+        "major": "学科教学（英语）",
         "city": "天津",
         "position_or_unit": "河北区王串场街道公务员"
       },
@@ -174,7 +174,7 @@
           "grade": "2022",
           "education": "硕士研究生",
           "college": "外国语学院",
-          "major": "学科教学（英语)",
+          "major": "学科教学（英语）",
           "city": "天津",
           "position_or_unit": "河北区王串场街道公务员"
         },
@@ -201,7 +201,7 @@
         "grade": "2022",
         "education": "硕士研究生",
         "college": "法学院",
-        "major": "法律法学",
+        "major": "法律（法学）",
         "city": "郑州",
         "position_or_unit": "郑州市司法局"
       },
@@ -211,7 +211,7 @@
           "grade": "2022",
           "education": "硕士研究生",
           "college": "法学院",
-          "major": "法律法学",
+          "major": "法律（法学）",
           "city": "郑州",
           "position_or_unit": "郑州市司法局"
         },
@@ -368,7 +368,7 @@
           "grade": "2022",
           "education": "硕士研究生",
           "college": "法学院",
-          "major": "法律法学",
+          "major": "法律（法学）",
           "city": "梅州",
           "position_or_unit": "梅州市中级人民法院"
         }
@@ -451,7 +451,7 @@
         "grade": "2020",
         "education": "本科",
         "college": "生命与环境科学学院",
-        "major": "环境科学",
+        "major": "环境科学（中外合作办学）",
         "city": "临汾",
         "position_or_unit": "临汾市城联社"
       },
@@ -461,7 +461,7 @@
           "grade": "2020",
           "education": "本科",
           "college": "生命与环境科学学院",
-          "major": "环境科学",
+          "major": "环境科学（中外合作办学）",
           "city": "临汾",
           "position_or_unit": "临汾市城联社"
         },
@@ -471,8 +471,8 @@
           "education": "硕士",
           "college": "哲学与宗教学学院",
           "major": "宗教学",
-          "city": "太原",
-          "position_or_unit": "山西省纪检委"
+          "city": null,
+          "position_or_unit": "山西省纪委监委"
         }
       ],
       "is_multi_person": true
@@ -620,7 +620,7 @@
           "college": "民族学与社会学学院",
           "major": "社会学",
           "city": "荆州",
-          "position_or_unit": "荆州区城南街道党政委办事处"
+          "position_or_unit": "荆州区城南街道党政办试用期公务员"
         }
       ],
       "is_multi_person": true
@@ -702,7 +702,7 @@
           "education": "硕士",
           "college": "新闻与传播学院",
           "major": "新闻与传播专业",
-          "city": "太原",
+          "city": null,
           "position_or_unit": "中共山西省委宣传部"
         }
       ],

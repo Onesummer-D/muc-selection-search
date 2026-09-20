@@ -23,6 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CORE = ("cohort", "education", "major", "city", "position_or_unit")
+ALL7 = CORE + ("grade", "college")
 
 
 def load_env() -> None:
@@ -40,8 +41,8 @@ def bundle_to_article(path: Path) -> dict:
 
 
 def records_to_persons(bundle: dict) -> list[dict]:
-    """抽取记录 -> 评测人物列表（record_key 顺序 = 版面自上而下）。"""
-    return [{f: r[f] for f in CORE}
+    """抽取记录 -> 评测人物列表（record_key 顺序 = 版面自上而下，七字段）。"""
+    return [{f: r[f] for f in ALL7}
             for r in sorted(bundle["records"], key=lambda x: x["record_key"])]
 
 

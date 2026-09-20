@@ -26,6 +26,7 @@ COLUMNS = [
     "多模态届别", "多模态学历", "多模态专业", "多模态城市", "多模态岗位",
     "多模态完整", "多模态秒",
     "单张成本", "备注", "标注人", "OCR样本ID", "多模态样本ID",
+    "OCR年级", "OCR学院", "多模态年级", "多模态学院",
 ]
 
 CORE = ("cohort", "education", "major", "city", "position_or_unit")
@@ -48,10 +49,16 @@ def export_rows(gold: dict, report: dict) -> list[dict]:
         o, m = ocr_ps.get(sid, {}), mm_ps.get(sid, {})
         o_j, m_j = o.get("judgments", {}), m.get("judgments", {})
         fields = g["fields"]
+
+        def gold_cell(f):
+            """金标准单元格：null 写字符串 "null"（台账 AA 校验查非空）。"""
+            v = fields.get(f)
+            return "null" if v is None else v
+
         rows.append({
             "样本ID": sid,
             "图像SHA-256": g.get("image_sha256") or "",
-            **{f"金标准{label}": fields.get(f) if fields.get(f) is not None else ""
+            **{f"金标准{label}": gold_cell(f)
                for label, f in zip(("届别", "学历", "专业", "城市", "岗位"), CORE)},
             **{f"OCR{label}": _j1(o_j, f)
                for label, f in zip(("届别", "学历", "专业", "城市", "岗位"), CORE)},
@@ -66,6 +73,9 @@ def export_rows(gold: dict, report: dict) -> list[dict]:
             "标注人": g.get("annotated_by") or "",
             "OCR样本ID": sid if o else "",
             "多模态样本ID": sid if m else "",
+            # 七字段升格：年级/学院判定（不参与台账 90% 门槛，供附录 G 指标）
+            "OCR年级": _j1(o_j, "grade"), "OCR学院": _j1(o_j, "college"),
+            "多模态年级": _j1(m_j, "grade"), "多模态学院": _j1(m_j, "college"),
         })
     return rows
 

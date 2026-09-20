@@ -142,10 +142,10 @@ def test_multi_person_strict_judging():
             {"sample_id": "P01", "valid": True, "elapsed_s": 1.0,
              "cost": 0.0, "persons": ext_persons}]))
 
-    # 全对
+    # 全对（严格口径：学历用与金标准一致的「硕士」）
     m = run([{"cohort": "2024届", "education": "本科", "major": "法学",
               "city": "本溪", "position_or_unit": "本溪市检察院"},
-             {"cohort": "2024届", "education": "硕士研究生", "major": "新闻与传播",
+             {"cohort": "2024届", "education": "硕士", "major": "新闻与传播",
               "city": "大连", "position_or_unit": "辛寨子街道办事处"}])
     assert m["fields"]["major"]["accuracy"] == 100.0
     assert m["complete_record"]["accuracy"] == 100.0

@@ -1,12 +1,18 @@
 """20 样本对照评测：从逐样本原始结果重算全部指标。
 
-设计约束（B 任务书「多模态对照」）：
-- 汇总必须能从逐样本 0/1 判断重新计算，不接受手填百分比；
-- 字段准确率 = 该字段正确数 / 该字段可判定金标准数（gold 为 null 不计分，但报告分母）；
-- 完整记录 = 五个核心字段全部正确；
+设计约束（B 任务书 + PR #5 复核意见）：
+- 汇总必须能从逐样本 0/1 判断重新计算，不接受手填汇总；
+- 主指标为严格 0/1（仅空白归一），不静默放宽；归一化等价
+  （简称包含、硕士≡硕士研究生等）单独一套数字，等价通过样本
+  进入 equivalence_pending 供人工裁决，两套数字都报；
+- 多人海报：人数一致且逐人物逐字段全对，该字段才记正确；
+  抽取人数多于金标准（幻觉人物）同样判错；
+  单人物 gold=null 时抽取也须为 null（有值=幻觉，判错）；
+- 五核心字段（届别/学历/专业/城市/岗位）参与 90% 门槛与完整记录；
+  年级/学院照实判定报告（fields_extra），不参与门槛；
+- 金标准 null 不计分母，但必须报告分母；
 - 成功率 = 产生结构合法结果的样本数 / 20（失败样本不从分母删除）；
-- 耗时取每样本原始记录，两路线同一计时边界（收到 article 到产出 bundle）；
-- 多模态启用门槛 = 多模态完整记录准确率 − OCR 完整记录准确率 ≥ 5 个百分点。
+- 多模态启用门槛 = 多模态完整记录准确率 − OCR 完整记录准确率 ≥ 5pp。
 """
 
 from __future__ import annotations
@@ -17,6 +23,8 @@ from dataclasses import dataclass, field
 from . import fields as F
 
 CORE = ("cohort", "education", "major", "city", "position_or_unit")
+EXTRA = ("grade", "college")
+ALL7 = CORE + EXTRA
 GATE_PP = 5.0  # 启用门槛，百分点
 
 
@@ -27,41 +35,37 @@ class RouteRaw:
     route_name: str
     sample_results: list[dict] = field(default_factory=list)
     # 每项：{"sample_id": "P01", "valid": bool, "elapsed_s": float, "cost": float,
-    #        "fields": {"cohort": "2025届"|null, ...}}
+    #        "persons": [{"cohort": ..., "grade": ..., ... 7 字段}, ...]}
 
 
-def _norm(v: str | None) -> str | None:
+def _norm_strict(v) -> str | None:
+    """严格口径归一：仅去空白（其余差异都算不同）。"""
+    if v is None:
+        return None
+    return str(v).strip().replace(" ", "") or None
+
+
+def _norm(v) -> str | None:
+    """归一口径：空白、学历同义、机构简称、省市后缀、任职尾巴。"""
     if v is None:
         return None
     s = str(v).strip().replace(" ", "")
-    # 学历等价归一：硕士研究生→硕士、博士研究生→博士（台账枚举含两种写法）
     s = F.EDUCATION_ALIAS.get(s, s)
-    # 机构常用简称归一（判定口径，不改变抽取/gold 原值）
     s = s.replace("纪检委", "纪委监委")
-    # 去掉粘连的任职状态尾巴（"发改局试用期公务员"→"发改局"；
-    # gold 侧 "河北区王串场街道公务员"→"河北区王串场街道"）
     for tail in ("试用期公务员（不定职级）", "试用期公务员(不定职级)",
                  "试用期干部（不定职级）", "试用期干部(不定职级)",
                  "试用期公务员", "试用期干部", "公务员", "干部"):
         if s.endswith(tail) and len(s) > len(tail):
             s = s[: -len(tail)]
             break
-    # 城市口径归一：去「省/市/州/盟/地区」后缀（临汾市==临汾、青海省==青海）。
-    # 仅当整体形如地名时生效；岗位单位名以机构后缀结尾，不受影响。
-    for suffix in ("地区", "盟", "州", "市", "省"):
+    for suffix in ("地区", "盟", "市", "省"):
         if s.endswith(suffix) and len(s) > len(suffix) + 1:
             return s[: -len(suffix)]
-    return s
+    return s or None
 
 
-def _match(gold_v, ext_v, field: str = "") -> bool:
-    """相等、包含或（仅城市）前缀。
-
-    - 包含：gold 常为简称（阳信县发改局 ⊆ 滨州市阳信县发改局），
-      较短一侧 ≥3 字，避免「法学 ⊆ 民商法学」这类误判；
-    - 城市前缀：城市常为 2 字名（天津 ⊆ 天津市河北区王串场街道），
-      前缀比任意子串更严格，不会误放行。
-    """
+def _match_norm(gold_v, ext_v, field: str = "") -> bool:
+    """归一口径：相等、包含（短侧≥3字）或（仅城市）前缀。"""
     a, b = _norm(gold_v), _norm(ext_v)
     if a is None or b is None:
         return False
@@ -75,32 +79,58 @@ def _match(gold_v, ext_v, field: str = "") -> bool:
     return False
 
 
-def judge_field(gold_value, extracted_value, field: str = "") -> int | None:
-    """返回 1=正确，0=错误，None=不可判定（gold 缺失，不计分母）。"""
+def judge_pair(gold_value, ext_value, field: str = "") -> tuple[int | None, int | None]:
+    """返回 (strict, normalized) 两个 0/1 判定；gold 缺失时返回 (None, None)。"""
     if gold_value is None:
+        return None, None
+    strict = 1 if _norm_strict(ext_value) == _norm_strict(gold_value) else 0
+    norm = 1 if _match_norm(gold_value, ext_value, field) else 0
+    return strict, norm
+
+
+def judge_field(gold_value, ext_value, field: str = "") -> int | None:
+    """兼容旧调用：返回归一口径判定。"""
+    return judge_pair(gold_value, ext_value, field)[1]
+
+
+def _judge_person(gold_p: dict, ext_p: dict) -> dict[str, tuple[int | None, int | None]]:
+    """单人物逐字段判定；gold=null 时抽取须为 null（有值=幻觉判错）。"""
+    out = {}
+    for f in ALL7:
+        gv = gold_p.get(f)
+        if gv is None:
+            ok = ext_p.get(f) is None
+            out[f] = (1 if ok else 0, 1 if ok else 0)
+        else:
+            out[f] = judge_pair(gv, ext_p.get(f), f)
+    return out
+
+
+def _p95(values: list[float]) -> float | None:
+    if not values:
         return None
-    return 1 if _match(gold_value, extracted_value, field) else 0
+    s = sorted(values)
+    idx = min(len(s) - 1, max(0, round(0.95 * (len(s) + 1)) - 1))
+    return round(s[idx], 3)
 
 
 def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
     """逐样本逐字段打分并汇总；任何缺失如实进入对应状态。"""
     gold_by_id = {s["sample_id"]: s for s in gold["samples"]}
     per_sample = []
-    field_correct = {f: 0 for f in CORE}
-    field_decidable = {f: 0 for f in CORE}
-    complete_correct = 0
-    complete_decidable = 0
+    stats = {f: {"strict": 0, "norm": 0, "decidable": 0} for f in ALL7}
+    complete = {"strict": 0, "norm": 0, "decidable": 0}
     valid_count = 0
     elapsed: list[float] = []
     cost_total = 0.0
     gold_null_but_extracted: list[str] = []
-    field_failures: dict[str, list[str]] = {f: [] for f in CORE}
+    strict_failures: dict[str, list[str]] = {f: [] for f in ALL7}
+    equivalence: dict[str, list[str]] = {f: [] for f in ALL7}
 
     seen_ids = []
     for item in raw.sample_results:
         sid = item["sample_id"]
         seen_ids.append(sid)
-        # 成本按全部调用累计（失败调用也计费），成功数单独做分母
         cost_total += float(item.get("cost", 0.0))
         g = gold_by_id.get(sid)
         if g is None:
@@ -112,72 +142,93 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
         valid_count += 1
         elapsed.append(float(item.get("elapsed_s", 0.0)))
 
-        # 多人海报：人物数一致且逐人物逐字段全对，该字段才记正确；
-        # 抽取人数多于金标准（幻觉人物）同样判错——一帖多人拆分本身是被评能力
         if "persons" in g:
             gold_persons = g["persons"]
             ext_persons = item.get("persons") or []
-            judgments = {}
-            for f in CORE:
+            judgments, judgments_norm = {}, {}
+            for f in ALL7:
                 gold_vals = [p.get(f) for p in gold_persons]
-                decidable = any(v is not None for v in gold_vals)
-                if not decidable:
-                    judgments[f] = None
+                if all(v is None for v in gold_vals):
+                    judgments[f] = judgments_norm[f] = None
                     continue
-                field_decidable[f] += 1
-                ok = (len(ext_persons) == len(gold_persons) and all(
-                    judge_field(gv, ep.get(f), f) == 1
-                    for gv, ep in zip(gold_vals, ext_persons)))
-                if not ok:
-                    field_failures[f].append(sid)
-                judgments[f] = 1 if ok else 0
-                field_correct[f] += judgments[f]
-            complete_decidable_inc = all(judgments[f] is not None for f in CORE)
-            if complete_decidable_inc:
-                complete_decidable += 1
+                stats[f]["decidable"] += 1
+                pairs = [_judge_person(gp, ep)[f]
+                         for gp, ep in zip(gold_persons, ext_persons)] \
+                    if len(ext_persons) == len(gold_persons) else []
+                ok_s = bool(pairs) and all(p[0] == 1 for p in pairs)
+                ok_n = bool(pairs) and all(p[1] == 1 for p in pairs)
+                judgments[f] = 1 if ok_s else 0
+                judgments_norm[f] = 1 if ok_n else 0
+                stats[f]["strict"] += judgments[f]
+                stats[f]["norm"] += judgments_norm[f]
+                if judgments[f] == 0:
+                    strict_failures[f].append(sid)
+                if judgments[f] == 0 and judgments_norm[f] == 1:
+                    equivalence[f].append(sid)
+            comp_dec = all(judgments[f] is not None for f in CORE)
+            if comp_dec:
+                complete["decidable"] += 1
                 if all(judgments[f] == 1 for f in CORE):
-                    complete_correct += 1
+                    complete["strict"] += 1
+                if all(judgments_norm[f] == 1 for f in CORE):
+                    complete["norm"] += 1
             per_sample.append({
-                "sample_id": sid, "status": "judged",
-                "mode": "multi_person",
+                "sample_id": sid, "status": "judged", "mode": "multi_person",
                 "persons_extracted": len(ext_persons),
                 "persons_gold": len(gold_persons),
-                "judgments": judgments,
+                "judgments": judgments, "judgments_norm": judgments_norm,
                 "complete": (all(judgments[f] == 1 for f in CORE)
-                             if complete_decidable_inc else None),
+                             if comp_dec else None),
             })
             continue
 
-        judgments = {}
+        # 单人物（旧格式兼容）
+        judgments, judgments_norm = {}, {}
         fields = item.get("fields", {})
-        for f in CORE:
-            gold_v = g["fields"].get(f)
+        gfields = g.get("fields", {})
+        for f in ALL7:
+            gold_v = gfields.get(f)
             ext_v = fields.get(f)
-            j = judge_field(gold_v, ext_v, f)
-            judgments[f] = j
-            if j is None and ext_v is not None:
+            s_v, n_v = judge_pair(gold_v, ext_v, f)
+            judgments[f], judgments_norm[f] = s_v, n_v
+            if s_v is None and ext_v is not None:
                 gold_null_but_extracted.append(f"{sid}.{f}")
-            if j is not None:
-                field_decidable[f] += 1
-                field_correct[f] += j
-                if j == 0:
-                    field_failures[f].append(sid)
-        core_all = [judgments[f] for f in CORE]
-        complete_decidable_inc = all(j is not None for j in core_all)
-        if complete_decidable_inc:
-            complete_decidable += 1
-            if all(j == 1 for j in core_all):
-                complete_correct += 1
+            if s_v is not None:
+                stats[f]["decidable"] += 1
+                stats[f]["strict"] += s_v
+                stats[f]["norm"] += n_v
+                if s_v == 0:
+                    strict_failures[f].append(sid)
+                    if n_v == 1:
+                        equivalence[f].append(sid)
+        core_j = [judgments[f] for f in CORE]
+        comp_dec = all(j is not None for j in core_j)
+        if comp_dec:
+            complete["decidable"] += 1
+            if all(j == 1 for j in core_j):
+                complete["strict"] += 1
+        core_jn = [judgments_norm[f] for f in CORE]
+        if all(j is not None for j in core_jn) and all(j == 1 for j in core_jn):
+            complete["norm"] += 1
         per_sample.append({
             "sample_id": sid, "status": "judged",
-            "judgments": judgments,
-            # 完整记录只在五字段全部可判定时有 0/1 值，否则 None（台账留空）
-            "complete": (all(j == 1 for j in core_all)
-                         if complete_decidable_inc else None),
+            "judgments": judgments, "judgments_norm": judgments_norm,
+            "complete": (all(j == 1 for j in core_j) if comp_dec else None),
         })
 
     def pct(num, den):
         return round(100.0 * num / den, 2) if den else None
+
+    def field_block(mode: str, names) -> dict:
+        return {f: {"correct": stats[f][mode], "decidable": stats[f]["decidable"],
+                    "accuracy": pct(stats[f][mode], stats[f]["decidable"])}
+                for f in names}
+
+    fields_strict = field_block("strict", CORE)
+    fields_norm = field_block("norm", CORE)
+    below_90 = [f for f in CORE
+                if fields_strict[f]["accuracy"] is not None
+                and fields_strict[f]["accuracy"] < 90.0]
 
     metrics = {
         "route": raw.route_name,
@@ -186,14 +237,16 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
         "gold_ids_missing_from_route": sorted(set(gold_by_id) - set(seen_ids)),
         "valid_results": valid_count,
         "success_rate": pct(valid_count, len(gold_by_id)),
-        "fields": {
-            f: {"correct": field_correct[f], "decidable": field_decidable[f],
-                "accuracy": pct(field_correct[f], field_decidable[f])}
-            for f in CORE
-        },
+        "fields": fields_strict,
+        "fields_norm": fields_norm,
+        "fields_extra": field_block("strict", EXTRA),
+        "fields_extra_norm": field_block("norm", EXTRA),
         "complete_record": {
-            "correct": complete_correct, "decidable": complete_decidable,
-            "accuracy": pct(complete_correct, complete_decidable)},
+            "correct": complete["strict"], "decidable": complete["decidable"],
+            "accuracy": pct(complete["strict"], complete["decidable"])},
+        "complete_record_norm": {
+            "correct": complete["norm"], "decidable": complete["decidable"],
+            "accuracy": pct(complete["norm"], complete["decidable"])},
         "elapsed_s": {
             "avg": round(sum(elapsed) / len(elapsed), 3) if elapsed else None,
             "p95": _p95(elapsed), "n": len(elapsed)},
@@ -201,17 +254,14 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
                  "per_success": round(cost_total / valid_count, 6) if valid_count else None},
         "warnings": {
             "gold_null_but_extracted": gold_null_but_extracted,
-            "below_90_fields": [f for f in CORE
-                                if pct(field_correct[f], field_decidable[f]) is not None
-                                and pct(field_correct[f], field_decidable[f]) < 90.0],
-            # 任务3硬要求：低于90%的字段列出具体样本，进入复核队列
+            "below_90_fields": below_90,
+            # 任务3硬要求：低于90%字段列出具体样本；等价通过样本单列供人工裁决
             "review_queue": {
-                f: {"wrong_samples": field_failures[f],
+                f: {"wrong_samples": strict_failures[f],
+                    "equivalence_pending": equivalence[f],
                     "invalid_samples": [p["sample_id"] for p in per_sample
                                         if p.get("status") == "invalid_result"]}
-                for f in CORE
-                if pct(field_correct[f], field_decidable[f]) is not None
-                and pct(field_correct[f], field_decidable[f]) < 90.0
+                for f in CORE if f in below_90
             },
         },
         "per_sample": per_sample,
@@ -219,20 +269,8 @@ def evaluate_route(gold: dict, raw: RouteRaw) -> dict:
     return metrics
 
 
-def _p95(values: list[float]) -> float | None:
-    if not values:
-        return None
-    s = sorted(values)
-    idx = min(len(s) - 1, max(0, round(0.95 * (len(s) + 1)) - 1))
-    return round(s[idx], 3)
-
-
 def compare_and_gate(ocr_metrics: dict, mm_metrics: dict) -> dict:
-    """对照两路线并输出多模态启用结论（数据决定，不手填）。
-
-    优先用完整记录准确率；任一路线完整记录不可判定时（金标准未覆盖
-    全部五字段），回退为可判定字段的宏平均，并如实标注判定基础。
-    """
+    """对照两路线并输出多模态启用结论（数据决定，不手填）。"""
     def acc(m):
         return m["complete_record"]["accuracy"]
 
@@ -285,6 +323,9 @@ def run_evaluation(gold_path, ocr_raw_path, mm_raw_path, out_path) -> dict:
 
     report = {
         "gold_sample_set": gold.get("sample_set"),
+        "gold_revision": gold.get("revision"),
+        "judging": "主指标=严格0/1（仅空白归一）；fields_norm=归一化等价口径；"
+                   "等价通过样本见 warnings.review_queue[].equivalence_pending",
         "routes": routes,
         "gate": compare_and_gate(routes["ocr"], routes["multimodal"]),
         "timing_boundary": "收到 article bundle 到产出 extraction bundle（两路线一致）",

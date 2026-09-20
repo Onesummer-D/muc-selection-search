@@ -82,5 +82,89 @@
       "new": "昆明市委组织部",
       "basis": "补全截断（原文\"昆明市委组织部\"）"
     }
-  ]
+  ],
+  "v2_1": {
+    "adjudicated_at": "2026-09-19T23:46:11.931817+08:00",
+    "confirmed_by": "annotator-B（PR #5 裁决记录：全部经人工回看原图确认）",
+    "city_rule": "G-增补2：严格按海报原文，省级机关原文未写市→null（作废驻地市推断）",
+    "changes": [
+      {
+        "sample_id": "P02",
+        "person_index": 0,
+        "field": "city",
+        "old": "青海",
+        "new": null
+      },
+      {
+        "sample_id": "P02",
+        "person_index": 1,
+        "field": "city",
+        "old": "青海",
+        "new": null
+      },
+      {
+        "sample_id": "P04",
+        "person_index": 1,
+        "field": "city",
+        "old": "南宁",
+        "new": null
+      },
+      {
+        "sample_id": "P13",
+        "person_index": 1,
+        "field": "city",
+        "old": "太原",
+        "new": null
+      },
+      {
+        "sample_id": "P19",
+        "person_index": 2,
+        "field": "city",
+        "old": "太原",
+        "new": null
+      },
+      {
+        "sample_id": "P13",
+        "person_index": 0,
+        "field": "major",
+        "old": "环境科学",
+        "new": "环境科学（中外合作办学）"
+      },
+      {
+        "sample_id": "P06",
+        "person_index": 0,
+        "field": "major",
+        "old": "法律法学",
+        "new": "法律（法学）"
+      },
+      {
+        "sample_id": "P10",
+        "person_index": 1,
+        "field": "major",
+        "old": "法律法学",
+        "new": "法律（法学）"
+      },
+      {
+        "sample_id": "P13",
+        "person_index": 1,
+        "field": "position_or_unit",
+        "old": "山西省纪检委",
+        "new": "山西省纪委监委"
+      },
+      {
+        "sample_id": "P17",
+        "person_index": 1,
+        "field": "position_or_unit",
+        "old": "荆州区城南街道党政委办事处",
+        "new": "荆州区城南街道党政办试用期公务员"
+      },
+      {
+        "sample_id": "P05",
+        "person_index": 0,
+        "field": "major",
+        "old": "学科教学（英语)",
+        "new": "学科教学（英语）"
+      }
+    ]
+  }
 }
