@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "wall_seconds": 3.69,
+  "adapter_elapsed_s": 3.69,
+  "failure_reason": null,
+  "processing_status": "processed",
+  "records": [
+    {
+      "record_key": "smoke-001-01",
+      "cohort": "2025届",
+      "grade": null,
+      "education": "本科",
+      "college": null,
+      "major": "软件工程",
+      "city": "成都",
+      "position_or_unit": "成都市某区基层岗位",
+      "review_status": "processed",
+      "confidence": 0.75,
+      "evidence": [
+        {
+          "field": "cohort",
+          "text": "2025届",
+          "method": "multimodal",
+          "asset_id": "smoke-001-poster-01",
+          "bbox": null
+        },
+        {
+          "field": "education",
+          "text": "本科",
+          "method": "multimodal",
+          "asset_id": "smoke-001-poster-01",
+          "bbox": null
+        },
+        {
+          "field": "major",
+          "text": "软件工程",
+          "method": "multimodal",
+          "asset_id": "smoke-001-poster-01",
+          "bbox": null
+        },
+        {
+          "field": "city",
+          "text": "工作地点 成都",
+          "method": "multimodal",
+          "asset_id": "smoke-001-poster-01",
+          "bbox": null
+        },
+        {
+          "field": "position_or_unit",
+          "text": "成都市某区基层岗位",
+          "method": "multimodal",
+          "asset_id": "smoke-001-poster-01",
+          "bbox": null
+        }
+      ]
+    }
+  ],
+  "schema_errors": [],
+  "boundary": {
+    "provider": "zhipu",
+    "model": "glm-4v-flash",
+    "base_url": "https://open.bigmodel.cn/api/paas/v4",
+    "material_type": "程序合成测试海报（虚构人物，无真实个人信息，无照片）",
+    "authorization_basis": "软件工程课程内部评测，合成素材，非个人数据",
+    "price_date": "待登记（首次正式对照评测时按服务商定价页记录）",
+    "retention_policy": "烟测结果存 evidence/week1/B/；合成图用后即弃；不发送任何真实个人海报",
+    "smoke_at": "2026-09-19T15:04:13+0800"
+  }
+}

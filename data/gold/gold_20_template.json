@@ -1,0 +1,348 @@
+{
+  "sample_set": "week1-poster-gold-20",
+  "annotator": "B-annotator-1（人工标注，禁止用模型输出代填）",
+  "frozen_at": null,
+  "notes": "20 张样本在运行任何模型前冻结；原文未出现填 null，不把模糊内容解释为常见答案；冻结后不得增删替换样本。",
+  "samples": [
+    {
+      "sample_id": "P01",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P02",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P03",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P04",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P05",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P06",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P07",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P08",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P09",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P10",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P11",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P12",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P13",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P14",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P15",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P16",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P17",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P18",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P19",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    },
+    {
+      "sample_id": "P20",
+      "notice_id": null,
+      "asset_id": null,
+      "image_sha256": null,
+      "annotated_by": null,
+      "evidence_summary": null,
+      "fields": {
+        "cohort": null,
+        "education": null,
+        "major": null,
+        "city": null,
+        "position_or_unit": null
+      },
+      "is_multi_person": false,
+      "persons": []
+    }
+  ]
+}

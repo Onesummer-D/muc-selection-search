@@ -1,0 +1,73 @@
+{
+  "schema_version": "extraction_bundle.v1",
+  "notice_id": "348879",
+  "extractor_version": "rule-extract-0.1.0",
+  "records": [
+    {
+      "record_key": "348879-01",
+      "cohort": null,
+      "grade": null,
+      "education": null,
+      "college": null,
+      "major": null,
+      "city": "海口",
+      "position_or_unit": "公务员的其他情形的",
+      "review_status": "review_required",
+      "confidence": 0.0,
+      "evidence": [
+        {
+          "field": "education",
+          "text": "码（一）选调对象部分高校2025年全日制本科及以上学历的应届毕业生。（二）职位代码1",
+          "method": "html_rule",
+          "asset_id": null,
+          "bbox": null
+        },
+        {
+          "field": "education",
+          "text": "本科及以上应届毕业生（学历学位证书时间：硕士研究生、本科生2025年7月31日前，博",
+          "method": "html_rule",
+          "asset_id": null,
+          "bbox": null
+        },
+        {
+          "field": "education",
+          "text": "士研究生、本科生2025年7月31日前，博士研究生2025年12月31日前）。其中，",
+          "method": "html_rule",
+          "asset_id": null,
+          "bbox": null
+        },
+        {
+          "field": "major",
+          "text": "位。选调职位05（文化旅游类）：专业包括旅游管理、体育文化与管理、国际商务、竞赛组织管理",
+          "method": "html_rule",
+          "asset_id": null,
+          "bbox": null
+        },
+        {
+          "field": "major",
+          "text": "物馆、数字人文、艺术与设计学、文化产业、民族学、中国少数民族艺术、设计学、社会体育指导",
+          "method": "html_rule",
+          "asset_id": null,
+          "bbox": null
+        },
+        {
+          "field": "city",
+          "text": "选。面试由海南省委组织部统一组织，地点在海口，时间初定2025年5月中旬，具体事宜另",
+          "method": "html_rule",
+          "asset_id": null,
+          "bbox": null
+        },
+        {
+          "field": "position_or_unit",
+          "text": "问题的；13.具有法律法规规定不得录用为公务员的其他情形的。在录用过程中，发现报考人员存在上述不得",
+          "method": "html_rule",
+          "asset_id": null,
+          "bbox": null
+        }
+      ]
+    }
+  ],
+  "processing_status": "review_required",
+  "failure_reason": "ocr_error:asset_not_found",
+  "processed_at": "2026-09-19T21:04:25+08:00"
+}

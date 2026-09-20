@@ -1,0 +1,30 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\LEGION\.zcode\workspace\default\muc-selection-search\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\LEGION\.zcode\workspace\default\muc-selection-search
+collecting ... collected 22 items
+
+tests/extraction/test_html_rules.py::test_text_article_extracts_fields_with_html_rule_evidence PASSED [  4%]
+tests/extraction/test_html_rules.py::test_missing_field_is_null_and_goes_to_review PASSED [  9%]
+tests/extraction/test_html_rules.py::test_conflicting_values_keep_candidates_and_null PASSED [ 13%]
+tests/extraction/test_html_rules.py::test_publication_date_is_not_taken_as_cohort PASSED [ 18%]
+tests/extraction/test_html_rules.py::test_fullwidth_cohort_is_normalized PASSED [ 22%]
+tests/extraction/test_html_rules.py::test_empty_text_yields_empty_records PASSED [ 27%]
+tests/extraction/test_html_rules.py::test_poster_without_ocr_adapter_fails_honestly PASSED [ 31%]
+tests/extraction/test_html_rules.py::test_bundle_validates_against_repo_schema PASSED [ 36%]
+tests/extraction/test_html_rules.py::test_record_key_is_stable_across_runs PASSED [ 40%]
+tests/extraction/test_poster_rules.py::test_single_person_poster_creates_one_record_with_bbox_evidence PASSED [ 45%]
+tests/extraction/test_poster_rules.py::test_multi_person_poster_creates_distinct_record_keys PASSED [ 50%]
+tests/extraction/test_poster_rules.py::test_missing_fields_stay_null_and_go_to_review PASSED [ 54%]
+tests/extraction/test_poster_rules.py::test_conflicting_city_values_not_picked PASSED [ 59%]
+tests/extraction/test_poster_rules.py::test_low_confidence_ocr_goes_to_review PASSED [ 63%]
+tests/extraction/test_poster_rules.py::test_ocr_failure_and_empty_produce_failed_status PASSED [ 68%]
+tests/extraction/test_poster_rules.py::test_repeated_processing_keeps_record_keys_stable PASSED [ 72%]
+tests/extraction/test_poster_rules.py::test_mixed_poster_keeps_both_html_and_ocr_evidence PASSED [ 77%]
+tests/extraction/test_scenarios.py::test_fuzzy_ocr_text_yields_failure_not_garbage PASSED [ 81%]
+tests/extraction/test_scenarios.py::test_unknown_content_type_fails_with_reason PASSED [ 86%]
+tests/extraction/test_scenarios.py::test_removing_required_evidence_makes_schema_red_then_green PASSED [ 90%]
+tests/extraction/test_scenarios.py::test_evidence_pack_contains_required_keys_and_null_fields_stay_null PASSED [ 95%]
+tests/extraction/test_scenarios.py::test_no_evidence_means_no_non_null_field_value PASSED [100%]
+
+============================= 22 passed in 0.19s ==============================

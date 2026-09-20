@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "246592",
+  "title": "11月16日||MUC“共美”沙龙——广西定向选调经验分享",
+  "source_url": "https://my.muc.edu.cn/notice/246592",
+  "published_at": "2026-09-18T22:19:13+08:00",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "246592-poster-01",
+      "kind": "poster",
+      "local_ref": "private://246592/poster-01",
+      "sha256": "677ce946aa3b2a3ab408f468814eec39ae0695c83407e055fd30c0f414903a22"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T18:00:00+08:00"
+}

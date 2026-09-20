@@ -1,0 +1,749 @@
+{
+  "sample_set": "week1-poster-gold-20-v2",
+  "annotator": "annotator-B（人工盲填，工作簿原表存档于受控目录）",
+  "frozen_at": "2026-09-19T20:27:50.093371+08:00",
+  "revision": "v2：20 张全部为经验分享类人物海报。初版清单中的校友就业帖(246444) 与 5 张公告类移出（无人物五字段），6 张台账外经验分享补充入场（manual-*，来源受控交接 PDF，手工建 bundle）。 | v2.1：城市口径改严格按原文（未写市→null），",
+  "notes": "字段值逐字转录自标注人工作簿；用户表 P 编号与本清单不一致，映射关系见 app/extraction/build_gold_v2.py ROW_MAP（按海报内容核对）。；2026-09-19 差异裁决：10 处笔误/截断经标注人确认修正后冻结（见 adjudication_log.json）。；v2.1（2026-09-19）：11 处经标注人看图确认修正，见 adjudication_log.json v2_1。",
+  "samples": [
+    {
+      "sample_id": "P01",
+      "notice_id": "246193",
+      "image_sha256": "c33d4c220c92eb093ccc72a1a5c6db7a024d5c51b12123e0c708c27a1551a0f9",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2022",
+        "education": "硕士",
+        "college": "理学院",
+        "major": "应用统计",
+        "city": "滨州",
+        "position_or_unit": "阳信县发改局"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士",
+          "college": "理学院",
+          "major": "应用统计",
+          "city": "滨州",
+          "position_or_unit": "阳信县发改局"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士",
+          "college": "法学院",
+          "major": "法律（法学）",
+          "city": "潍坊",
+          "position_or_unit": "寒亭区司法局"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P02",
+      "notice_id": "246323",
+      "image_sha256": "e24e643770f2a297edd3c6e045d25389f7db7bbceeaa663324834136e47b2e6b",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "理学院",
+        "major": "信息与计算科学",
+        "city": null,
+        "position_or_unit": "青海省人力资源和社会保障厅"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "理学院",
+          "major": "信息与计算科学",
+          "city": null,
+          "position_or_unit": "青海省人力资源和社会保障厅"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士研究生",
+          "college": "信息工程学院",
+          "major": "现代教育技术",
+          "city": null,
+          "position_or_unit": "青海省教育厅"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P03",
+      "notice_id": "246590",
+      "image_sha256": "cd9554f43f9653f691a580b5b95820a207d221539542992f0247e65085e46da5",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "经济学院",
+        "major": "国际经济与贸易",
+        "city": "昆明",
+        "position_or_unit": "昆明市委组织部"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "经济学院",
+          "major": "国际经济与贸易",
+          "city": "昆明",
+          "position_or_unit": "昆明市委组织部"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士研究生",
+          "college": "信息工程学院",
+          "major": "电子信息",
+          "city": "昆明",
+          "position_or_unit": "盘龙区金辰街道办"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P04",
+      "notice_id": "246592",
+      "image_sha256": "677ce946aa3b2a3ab408f468814eec39ae0695c83407e055fd30c0f414903a22",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "历史文化学院",
+        "major": "中国与周边国家关系史实验班",
+        "city": "来宾",
+        "position_or_unit": "合山市委组织部"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "历史文化学院",
+          "major": "中国与周边国家关系史实验班",
+          "city": "来宾",
+          "position_or_unit": "合山市委组织部"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士研究生",
+          "college": "理学院",
+          "major": "应用统计专业",
+          "city": null,
+          "position_or_unit": "广西壮族自治区统计局"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P05",
+      "notice_id": "246674",
+      "image_sha256": "8743ed07a24277173501bf5774261eab9e535f5925b02898ba4de04bc68161cb",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2022",
+        "education": "硕士研究生",
+        "college": "外国语学院",
+        "major": "学科教学（英语）",
+        "city": "天津",
+        "position_or_unit": "河北区王串场街道公务员"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士研究生",
+          "college": "外国语学院",
+          "major": "学科教学（英语）",
+          "city": "天津",
+          "position_or_unit": "河北区王串场街道公务员"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士研究生",
+          "college": "新闻与传播学院",
+          "major": "新闻与传播专业",
+          "city": "天津",
+          "position_or_unit": "津南区农业农村委员会"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P06",
+      "notice_id": "246709",
+      "image_sha256": "dc1fcb653276ab47fc8a280196607085d1500ca6fa3951b0ec2d2fac43ce34ac",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2022",
+        "education": "硕士研究生",
+        "college": "法学院",
+        "major": "法律（法学）",
+        "city": "郑州",
+        "position_or_unit": "郑州市司法局"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士研究生",
+          "college": "法学院",
+          "major": "法律（法学）",
+          "city": "郑州",
+          "position_or_unit": "郑州市司法局"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士研究生",
+          "college": "理学院",
+          "major": "应用统计",
+          "city": "焦作",
+          "position_or_unit": "沁阳市发展和改革委员会"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P07",
+      "notice_id": "246757",
+      "image_sha256": "1e74b1df36d2626c5664a478f9b0d59dcea8530be6b91d6983cd0104611ce1fb",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "民族学与社会学学院",
+        "major": "文物与博物馆学",
+        "city": "石嘴山",
+        "position_or_unit": "惠农区红果子镇人民政府"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "民族学与社会学学院",
+          "major": "文物与博物馆学",
+          "city": "石嘴山",
+          "position_or_unit": "惠农区红果子镇人民政府"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士研究生",
+          "college": "文学院",
+          "major": "当代文学",
+          "city": "银川",
+          "position_or_unit": "银川市金凤区人民法院"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P08",
+      "notice_id": "246951",
+      "image_sha256": "192b05da923c43ad71276424ed48e778228a8d87f78a7ec29801b738c10526e8",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2021",
+        "education": "硕士研究生",
+        "college": "民族学与社会学学院",
+        "major": "文物与博物馆学",
+        "city": "株洲",
+        "position_or_unit": "炎陵县鹿原镇三口村党总支书记助理"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士研究生",
+          "college": "民族学与社会学学院",
+          "major": "文物与博物馆学",
+          "city": "株洲",
+          "position_or_unit": "炎陵县鹿原镇三口村党总支书记助理"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士研究生",
+          "college": "中国少数民族语言文学学院",
+          "major": "中国少数民族语言文学",
+          "city": "邵阳",
+          "position_or_unit": "双清区高崇山镇马杨村党总书记助理"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P09",
+      "notice_id": "247035",
+      "image_sha256": "ef1e062fa12da9d4d22e861dc38bc398da595bd42bb330ce65927378e378cc85",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "文学院",
+        "major": "汉语言文学",
+        "city": "晋江",
+        "position_or_unit": "英林镇三欧村村主任助理"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "文学院",
+          "major": "汉语言文学",
+          "city": "晋江",
+          "position_or_unit": "英林镇三欧村村主任助理"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士研究生",
+          "college": "民族学与社会学学院",
+          "major": "社会学",
+          "city": "三明",
+          "position_or_unit": "宁化县委社会工作部"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P10",
+      "notice_id": "247339",
+      "image_sha256": "e48401634cdcfac6c2f92e4033253eb6cb711c5824fd8d3dff35e6c2cbbfa79f",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "文学院",
+        "major": "汉语言文学",
+        "city": "深圳",
+        "position_or_unit": "宝安区新桥街道办"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "文学院",
+          "major": "汉语言文学",
+          "city": "深圳",
+          "position_or_unit": "宝安区新桥街道办"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士研究生",
+          "college": "法学院",
+          "major": "法律（法学）",
+          "city": "梅州",
+          "position_or_unit": "梅州市中级人民法院"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P11",
+      "notice_id": "247509",
+      "image_sha256": "064246b707037fb65dfbf556ad0054926a86b5a1012a7a27c160400a7ae9d8c9",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "法学院",
+        "major": "法学",
+        "city": "本溪",
+        "position_or_unit": "本溪市检察院"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "法学院",
+          "major": "法学",
+          "city": "本溪",
+          "position_or_unit": "本溪市检察院"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士",
+          "college": "新闻与传播学院",
+          "major": "新闻与传播专业",
+          "city": "大连",
+          "position_or_unit": "甘井子区辛寨子街道办事处"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P12",
+      "notice_id": "247586",
+      "image_sha256": "6130584ed81827c914e0c6910def99d752302b6accdb08209d5fa83363a9d71f",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "经济学院",
+        "major": "经济学",
+        "city": "吐鲁番",
+        "position_or_unit": "高昌区审计局"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "经济学院",
+          "major": "经济学",
+          "city": "吐鲁番",
+          "position_or_unit": "高昌区审计局"
+        }
+      ],
+      "is_multi_person": false
+    },
+    {
+      "sample_id": "P13",
+      "notice_id": "247746",
+      "image_sha256": "9b3bb07375819fb630370894c667843e00bdb1dd65af83c9015f463d04b09df9",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "生命与环境科学学院",
+        "major": "环境科学（中外合作办学）",
+        "city": "临汾",
+        "position_or_unit": "临汾市城联社"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "生命与环境科学学院",
+          "major": "环境科学（中外合作办学）",
+          "city": "临汾",
+          "position_or_unit": "临汾市城联社"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士",
+          "college": "哲学与宗教学学院",
+          "major": "宗教学",
+          "city": null,
+          "position_or_unit": "山西省纪委监委"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P14",
+      "notice_id": "247919",
+      "image_sha256": "21aaf2403d71f165d810f95a1247335ba785ed4990cea052ac67ed9a2cefe69c",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "管理学院",
+        "major": "行政管理",
+        "city": "保定",
+        "position_or_unit": "保定市徐水区财政局"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "管理学院",
+          "major": "行政管理",
+          "city": "保定",
+          "position_or_unit": "保定市徐水区财政局"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士研究生",
+          "college": "文学院",
+          "major": "汉语言文学",
+          "city": "唐山",
+          "position_or_unit": "唐山市纪检委"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P15",
+      "notice_id": "manual-guizhou-1018",
+      "image_sha256": "532e3aa1581d56410d295b460f7f650cbb36068d5b207980d9775d683a1ace44",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "文学院",
+        "major": "汉语言文学",
+        "city": "石阡",
+        "position_or_unit": "石阡县县委办公室"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "文学院",
+          "major": "汉语言文学",
+          "city": "石阡",
+          "position_or_unit": "石阡县县委办公室"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2021",
+          "education": "硕士研究生",
+          "college": "管理学院",
+          "major": "行政管理",
+          "city": "织金",
+          "position_or_unit": "织金县文体广电旅游局"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P16",
+      "notice_id": "manual-hebei-0312",
+      "image_sha256": "097bd1924b349df9f00767eb68dfd4b409ef04a3d0384d150e2446d537e0214f",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2023届",
+        "grade": "2019",
+        "education": "本科",
+        "college": "信息工程学院",
+        "major": "软件工程",
+        "city": "张家口",
+        "position_or_unit": "张家口市卫生健康委员会"
+      },
+      "persons": [
+        {
+          "cohort": "2023届",
+          "grade": "2019",
+          "education": "本科",
+          "college": "信息工程学院",
+          "major": "软件工程",
+          "city": "张家口",
+          "position_or_unit": "张家口市卫生健康委员会"
+        },
+        {
+          "cohort": "2023届",
+          "grade": "2020",
+          "education": "硕士研究生",
+          "college": "生命与环境科学学院",
+          "major": "环境科学",
+          "city": "石家庄",
+          "position_or_unit": "桥西区数据资源管理局"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P17",
+      "notice_id": "manual-hubei-1219",
+      "image_sha256": "1810c0d14b31002ec9e56774e60bf7060e569444115185ab7bb55e84e80ca09d",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2023届",
+        "grade": "2020",
+        "education": "硕士研究生",
+        "college": "经济学院",
+        "major": "金融学",
+        "city": "武汉",
+        "position_or_unit": "武汉市财政局"
+      },
+      "persons": [
+        {
+          "cohort": "2023届",
+          "grade": "2020",
+          "education": "硕士研究生",
+          "college": "经济学院",
+          "major": "金融学",
+          "city": "武汉",
+          "position_or_unit": "武汉市财政局"
+        },
+        {
+          "cohort": "2023届",
+          "grade": "2020",
+          "education": "硕士研究生",
+          "college": "民族学与社会学学院",
+          "major": "社会学",
+          "city": "荆州",
+          "position_or_unit": "荆州区城南街道党政办试用期公务员"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P18",
+      "notice_id": "manual-jiangxi-1024",
+      "image_sha256": "c7958b9505bd7aac9301b8171d7dc984d74d7f1bae1253cd9999a2acf3e7412c",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2024届",
+        "grade": "2020",
+        "education": "本科",
+        "college": "法学院",
+        "major": "法英",
+        "city": "南昌",
+        "position_or_unit": "新建区人民政府"
+      },
+      "persons": [
+        {
+          "cohort": "2024届",
+          "grade": "2020",
+          "education": "本科",
+          "college": "法学院",
+          "major": "法英",
+          "city": "南昌",
+          "position_or_unit": "新建区人民政府"
+        },
+        {
+          "cohort": "2024届",
+          "grade": "2022",
+          "education": "硕士",
+          "college": "外国语学院",
+          "major": "英语笔译",
+          "city": "上饶",
+          "position_or_unit": "上饶市委政研室"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P19",
+      "notice_id": "manual-shanxi-1227",
+      "image_sha256": "130d6a57b214ff4446b5ac00623fe3e2f6b8ef112c29a6b0971b3f9a65236522",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2023届",
+        "grade": "2019",
+        "education": "本科",
+        "college": "文学院",
+        "major": "汉语言文学",
+        "city": "长治",
+        "position_or_unit": "长治市劳动人事争议仲裁院"
+      },
+      "persons": [
+        {
+          "cohort": "2023届",
+          "grade": "2019",
+          "education": "本科",
+          "college": "文学院",
+          "major": "汉语言文学",
+          "city": "长治",
+          "position_or_unit": "长治市劳动人事争议仲裁院"
+        },
+        {
+          "cohort": "2023届",
+          "grade": "2019",
+          "education": "本科",
+          "college": "生命与环境科学学院",
+          "major": "生物科学",
+          "city": "晋城",
+          "position_or_unit": "晋城市教育局"
+        },
+        {
+          "cohort": "2023届",
+          "grade": "2021",
+          "education": "硕士",
+          "college": "新闻与传播学院",
+          "major": "新闻与传播专业",
+          "city": null,
+          "position_or_unit": "中共山西省委宣传部"
+        }
+      ],
+      "is_multi_person": true
+    },
+    {
+      "sample_id": "P20",
+      "notice_id": "manual-xinjiang-0314",
+      "image_sha256": "36494aaa525a903a7f3c72cdbaced3b777b790119453815575556c972ec9bb7b",
+      "annotated_by": "annotator-B",
+      "evidence_summary": "海报人物信息块（姓名徽章下方文字行）",
+      "fields": {
+        "cohort": "2023届",
+        "grade": "2019",
+        "education": "本科",
+        "college": "哲学与宗教学学院",
+        "major": "哲学",
+        "city": "乌鲁木齐",
+        "position_or_unit": "乌鲁木齐市委统战部"
+      },
+      "persons": [
+        {
+          "cohort": "2023届",
+          "grade": "2019",
+          "education": "本科",
+          "college": "哲学与宗教学学院",
+          "major": "哲学",
+          "city": "乌鲁木齐",
+          "position_or_unit": "乌鲁木齐市委统战部"
+        },
+        {
+          "cohort": "2022届",
+          "grade": "2018",
+          "education": "本科",
+          "college": "中国少数民族语言文学学院",
+          "major": "维吾尔语",
+          "city": "喀什",
+          "position_or_unit": "喀什地区疏附县委组织部"
+        }
+      ],
+      "is_multi_person": true
+    }
+  ]
+}
