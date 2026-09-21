@@ -1,0 +1,42 @@
+# 越权与权限测试输出（pytest 30/30）
+# 时间: 2026-09-21 21:01:26
+# 命令: python -m pytest tests/core/test_api.py tests/core/test_permissions.py -v
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.14, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\Administrator\.workbuddy\binaries\python\envs\default\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Administrator\WorkBuddy\2026-09-17-23-07-25\repo-week2
+collecting ... collected 30 items
+
+tests/core/test_api.py::ApiTests::test_answer_insufficient_evidence PASSED [  3%]
+tests/core/test_api.py::ApiTests::test_answer_with_evidence PASSED       [  6%]
+tests/core/test_api.py::ApiTests::test_auth_me_guest_default PASSED      [ 10%]
+tests/core/test_api.py::ApiTests::test_detail_draft_hidden_from_guest_but_admin_ok PASSED [ 13%]
+tests/core/test_api.py::ApiTests::test_detail_guest_desensitized PASSED  [ 16%]
+tests/core/test_api.py::ApiTests::test_detail_unknown_record_404 PASSED  [ 20%]
+tests/core/test_api.py::ApiTests::test_dev_role_invalid_value_rejected PASSED [ 23%]
+tests/core/test_api.py::ApiTests::test_dev_role_switch_disabled_returns_404 PASSED [ 26%]
+tests/core/test_api.py::ApiTests::test_dev_role_switch_enabled_allows_switch PASSED [ 30%]
+tests/core/test_api.py::ApiTests::test_healthz_ok PASSED                 [ 33%]
+tests/core/test_api.py::ApiTests::test_parse_missing_query_rejected PASSED [ 36%]
+tests/core/test_api.py::ApiTests::test_parse_non_json_rejected PASSED    [ 40%]
+tests/core/test_api.py::ApiTests::test_parse_ok PASSED                   [ 43%]
+tests/core/test_api.py::ApiTests::test_parse_unknown_body_field_rejected PASSED [ 46%]
+tests/core/test_api.py::ApiTests::test_search_bad_page_rejected PASSED   [ 50%]
+tests/core/test_api.py::ApiTests::test_search_empty_shows_latest PASSED  [ 53%]
+tests/core/test_api.py::ApiTests::test_search_ok PASSED                  [ 56%]
+tests/core/test_api.py::ApiTests::test_search_relaxations_offered PASSED [ 60%]
+tests/core/test_api.py::ApiTests::test_search_unknown_param_rejected PASSED [ 63%]
+tests/core/test_permissions.py::PresenterPermissionTests::test_admin_dto_full_and_queue PASSED [ 66%]
+tests/core/test_permissions.py::PresenterPermissionTests::test_guest_dto_has_zero_restricted_fields PASSED [ 70%]
+tests/core/test_permissions.py::PresenterPermissionTests::test_guest_sees_business_fields_and_evidence PASSED [ 73%]
+tests/core/test_permissions.py::PresenterPermissionTests::test_review_required_records_only_admin_visible PASSED [ 76%]
+tests/core/test_permissions.py::PresenterPermissionTests::test_student_dto_default_no_full_poster PASSED [ 80%]
+tests/core/test_permissions.py::PresenterPermissionTests::test_student_full_poster_requires_campus_flag PASSED [ 83%]
+tests/core/test_permissions.py::RolePolicyTests::test_capabilities_grow_with_role PASSED [ 86%]
+tests/core/test_permissions.py::RolePolicyTests::test_dev_switch_default_off PASSED [ 90%]
+tests/core/test_permissions.py::RolePolicyTests::test_dev_switch_env_on PASSED [ 93%]
+tests/core/test_permissions.py::RolePolicyTests::test_normalize_role_fallback_guest PASSED [ 96%]
+tests/core/test_permissions.py::RolePolicyTests::test_published_only_roles PASSED [100%]
+
+============================= 30 passed in 1.00s ==============================
