@@ -216,3 +216,11 @@
 2. 原图到达 → 3 张固定海报 OCR 烟测（补 B2 OCR 路径）+ 选 20 张评测集、冻结哈希、
    **人工标注** gold_20.json（B3，今晚 22:00；标注只能由 B 本人做）。
 3. 多模态 Key 放 .env → 脱敏烟测 → `run_evaluation` + `tracker_export` 产出对照报告与台账导入 CSV（B4，明天 18:00）。
+
+### 2026-09-21（第二周 D1：定向迁移核验 + 白名单清单）
+
+- [x] 切换 `feat/week2-B-quality`（C 集成基线 5c1cabc），读 week2 两份任务书。
+- [x] 迁移核验：白名单六目录与 week1 终版 git diff **零差异**（C 已原样集成），
+  `pytest tests/extraction` 55/55 全绿；金标准集合/SHA-256/gold/启用门槛未动。
+- [x] 白名单清单：`progress/week1/B/WEEK2_WHITELIST.md`（含禁止触碰目录核验命令）。
+- [x] `604170d` 提交推送；PR #12 建立（base main）。
