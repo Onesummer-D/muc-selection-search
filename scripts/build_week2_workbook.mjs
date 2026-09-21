@@ -37,7 +37,7 @@ writeTracker("总览", [
 ]);
 
 writeTracker("A验收", [
-  ["A-01", "A", "LAN 另一设备首页/healthz/搜索/详情", "首页/搜索/healthz 截图已收；设备/详情/录屏待补", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "", "", false, "截图证明 LAN 首页、搜索和健康检查；尚未凭此关闭另一设备与详情项"],
+  ["A-01", "A", "LAN 另一设备首页/healthz/搜索/详情", "首页/搜索/healthz 三张截图已收；访问设备：ASUS Vivobook S Flip（TN3604YA，Windows 11，192.168.43.110→组长机 192.168.43.50:5000）；访问时间 2026-09-19 20:36；详情页截图待补", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "", "", false, "设备/时间已于 2026-09-21 补记（lan-verification.md）；详情页与 C 接收确认待补"],
   ["A-02", "A", "开发角色开关关闭时 /api/dev/role=404", "已覆盖测试", "tests/core/test_api.py", "", "", true, ""],
   ["A-03", "A", "SQLite 备份恢复后三类行数一致", "", "evidence/week2/A/backup-restore.json", "", "", false, ""],
   ["A-04", "A", "HTTPS/CAS 条件式结论", "未提供服务器/域名/CAS", "progress/week2/A/deployment-blocker.md", "", "", true, "不得伪造公网 URL"],
@@ -100,7 +100,7 @@ rep.freezePanes.freezeRows(1);
 const idx = sheets["证据索引"];
 idx.getRange("A1:G1").values = [["证据ID", "角色", "证据路径", "类型", "提交Commit/PR", "接收人/时间", "状态"]];
 idx.getRange("A2:G13").values = [
-  ["E-01", "A", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "截图", "", "", "已收到，待补设备/时间"],
+  ["E-01", "A", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "截图", "", "", "设备/时间已补记（2026-09-21，见 lan-verification.md），详情页截图待补"],
   ["E-02", "A", "evidence/week2/A/backup-restore.json", "日志", "", "", "待补"],
   ["E-03", "A", "progress/week2/A/deployment-blocker.md", "阻塞记录", "", "", "待补"],
   ["E-04", "B", "evidence/week2/B/bundle-import-smoke.json", "导入日志", "", "", "待补"],
