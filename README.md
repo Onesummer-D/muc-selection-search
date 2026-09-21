@@ -2,11 +2,11 @@
 
 选调信息智能检索系统的可点击 Demo。
 
-项目面向校园选调经验检索场景，把分散的经验帖和海报整理成可以搜索、核验、比较和导出的信息。当前版本用于软件工程课程实验三的产品流程演示，使用少量虚构数据，不连接学校门户、CAS、OCR、数据库或大模型服务。
+项目面向校园选调经验检索场景，把分散的经验帖和海报整理成可以搜索、核验、比较和导出的信息。当前仓库同时保留旧静态原型与 Flask + React/SQLite 服务端主线；服务端使用脱敏演示数据，真实门户/CAS/OCR/多模态资源按部署条件接入。
 
-当前版本为 `v0.1.0-dev`，状态为静态 Demo。
+当前第二周集成基线为 `feat/week2-integration`。服务端主线已覆盖传统搜索、详情、权限、统计、对比、四 Sheet 导出、保存搜索、隐私、历史、提醒和无痕约束；公网 HTTPS/CAS 尚未在无真实资源时宣称上线。
 
-正式版本已确定采用 Flask API + React/TypeScript/Vite。当前三个静态文件只作为交互和视觉迁移基线，技术、视觉、认证、功能和部署决定见 [`docs/APPENDIX_G_DECISIONS.md`](docs/APPENDIX_G_DECISIONS.md)。
+技术、视觉、认证、功能和部署决定见 [`docs/APPENDIX_G_DECISIONS.md`](docs/APPENDIX_G_DECISIONS.md)；旧 `index.html/app.js/styles.css` 只作为交互迁移基线。
 
 ## 你可以用它做什么
 
@@ -24,7 +24,17 @@
 
 ## 快速运行
 
-项目没有构建步骤，也没有第三方依赖。
+服务端依赖见 `requirements.txt`，前端依赖见 `frontend/package.json`。
+
+### 启动服务端
+
+```powershell
+pip install -r requirements.txt
+python -m app.web.seed data/app.db
+flask --app app.web.app:create_app run --host 0.0.0.0 --port 5000
+```
+
+再执行 `cd frontend; npm install; npm run dev`，Vite 会把 `/api` 代理到 Flask。
 
 ### 直接打开
 
@@ -96,26 +106,24 @@ AI 搜索在当前版本里是交互和文案层面的演示。摘要由前端�
 
 ## Demo 边界
 
-以下内容属于演示替身，不能当作正式系统能力
+以下内容仍属于条件式或演示边界，不能当作已上线能力
 
-- 数据只有 3 条虚构记录，保存在浏览器内存中，刷新页面后不会持久化。
-- 角色切换只改变页面展示，不代表真实登录，也不能代替服务端鉴权和 RBAC。
+- `app.web.seed` 的 5 篇文章/7 条记录是脱敏演示样本；真实 100 篇全量快照和 LAN 另一设备证据仍需人工交接。
+- 开发角色开关只用于本地验收；生产必须由 CAS/SSO 提供 subject，不能把客户端 header 当作认证凭据。
 - 海报由 CSS 生成视觉模拟。正式版本必须由服务端生成游客可见的脱敏派生文件，不能把原图发送到前端后再用 CSS 遮挡。
 - 学校门户原文链接使用占位地址，当前没有接入真实数据源。
 - “已核验”和“待复核”是样例状态，不代表真实审核结果。
-- 收藏、关注、搜索历史和通知只展示产品结构，当前没有持久化服务。
-- AI 摘要、语义检索、OCR、Embedding、增量同步和管理员操作均未接入。
+- 保存搜索、搜索历史、站内通知和隐私设置已落 SQLite；真实 CAS、HTTPS、邮件/短信/ICS、Embedding 和聊天机器人不在本周范围。
+- B 多模态结论保持“不启用”；本周评测主判定采用归一化口径，严格逐样本文件作为审计附件。
 
 当前版本的目标是证明交互主链和架构边界，数据准确性、权限安全和服务稳定性需要在服务端版本中重新实现并测试。
 
-## 建议的后续接入顺序
+## 后续待收尾项
 
-1. 先建立 `Article`、`ExperienceRecord` 和 `Evidence` 的服务端数据结构，替换 `records` 固定数组。
-2. 把前端 `runSearch` 迁移为统一 `SearchService`，接入结构化过滤和中文全文检索。
-3. 用 `Repository` 隔离 SQLite，先保证已发布数据可以独立检索，再考虑数据库迁移。
-4. 接入门户适配器、OCR 或文本抽取、增量同步和人工复核流程。
-5. 将角色策略、详情字段、海报资源 URL 和导出范围放到服务端校验。
-6. 接入基于 Evidence Pack 的带引用回答；第一周不启用 Embedding，当前项目也不排期语义检索。
+1. 补齐第一周台账四元组、LAN 另一设备截图/录屏和游客 Network 脱敏证据。
+2. 在同一 20 样本/gold/SHA-256 上完成 B 归一化复评与复核队列交接。
+3. 取得真实 Portal/CAS/HTTPS 资源后执行条件式部署；资源不足时保留阻塞记录。
+4. 继续维护管理员复核发布链路和 100 篇全量处理状态；不新增 Embedding、ICS、邮件短信或聊天机器人。
 
 后续接入必须保留传统检索、详情、统计和对比能力。AI 或外部服务不可用时，已发布数据仍应可访问。
 
@@ -132,6 +140,9 @@ AI 搜索在当前版本里是交互和文案层面的演示。摘要由前端�
 - [独立审查报告](docs/week1/06_独立审查报告.md)
 - [附录 G 产品与技术决策](docs/APPENDIX_G_DECISIONS.md)
 - [部署与 HTTPS 执行清单](docs/DEPLOYMENT.md)
+- [第二周总体目标与协作执行手册](docs/week2/00_第二周总体目标与协作执行手册.docx)
+- [第二周验收台账](docs/week2/05_第二周验收台账.xlsx)
+- [第二周独立审查报告](docs/week2/06_独立审查报告.md)
 - [可直接交给 AI 的角色任务书](docs/week1/prompts/)
 
 共享数据必须通过 `article_bundle.v1` 和 `extraction_bundle.v1` 交接，对应机器校验文件位于 [`schemas`](schemas/) 目录。A、B先把实际指标、证据链接、Commit、PR 和接收确认登记到各自的 [`progress/week1`](progress/week1/) 目录或 PR 清单；C 是主验收 Excel 的唯一提交者，按固定时点统一回填，避免二进制冲突。
