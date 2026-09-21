@@ -1,0 +1,170 @@
+{
+  "adjudicated_at": "2026-09-19T20:27:50.093371+08:00",
+  "confirmed_by": "annotator-B（聊天逐条确认，全部按建议改；截断项一并修正）",
+  "changes": [
+    {
+      "sample_id": "P19",
+      "person_index": 1,
+      "field": "position_or_unit",
+      "old": "进程市教育局",
+      "new": "晋城市教育局",
+      "basis": "海报原文\"晋城市教育局\"，\"进程\"为笔误"
+    },
+    {
+      "sample_id": "P19",
+      "person_index": 2,
+      "field": "position_or_unit",
+      "old": "中共陕西省委宣传部",
+      "new": "中共山西省委宣传部",
+      "basis": "该海报为山西场次，\"陕西\"为笔误"
+    },
+    {
+      "sample_id": "P19",
+      "person_index": 2,
+      "field": "city",
+      "old": "山西",
+      "new": "太原",
+      "basis": "省级机关按驻地市"
+    },
+    {
+      "sample_id": "P04",
+      "person_index": 0,
+      "field": "city",
+      "old": "中共来宾",
+      "new": "来宾",
+      "basis": "岗位\"中共来宾合山市委组织部\"，城市取来宾"
+    },
+    {
+      "sample_id": "P04",
+      "person_index": 1,
+      "field": "city",
+      "old": "广西",
+      "new": "南宁",
+      "basis": "自治区级机关按驻地市"
+    },
+    {
+      "sample_id": "P13",
+      "person_index": 1,
+      "field": "city",
+      "old": "山西",
+      "new": "太原",
+      "basis": "山西省纪委监委按驻地市"
+    },
+    {
+      "sample_id": "P07",
+      "person_index": 1,
+      "field": "position_or_unit",
+      "old": "金凤区人民政府",
+      "new": "银川市金凤区人民法院",
+      "basis": "海报原文\"人民法院\"，\"政府\"为笔误"
+    },
+    {
+      "sample_id": "P14",
+      "person_index": 0,
+      "field": "position_or_unit",
+      "old": "徐水区财务局",
+      "new": "保定市徐水区财政局",
+      "basis": "海报原文\"财政局\"，\"财务\"为笔误"
+    },
+    {
+      "sample_id": "P02",
+      "person_index": 0,
+      "field": "position_or_unit",
+      "old": "青海省人力资源和社会保障厅",
+      "new": "青海省人力资源和社会保障厅",
+      "basis": "补全截断（原文带\"厅\"）"
+    },
+    {
+      "sample_id": "P03",
+      "person_index": 0,
+      "field": "position_or_unit",
+      "old": "昆明市市委组织",
+      "new": "昆明市委组织部",
+      "basis": "补全截断（原文\"昆明市委组织部\"）"
+    }
+  ],
+  "v2_1": {
+    "adjudicated_at": "2026-09-19T23:46:11.931817+08:00",
+    "confirmed_by": "annotator-B（PR #5 裁决记录：全部经人工回看原图确认）",
+    "city_rule": "G-增补2：严格按海报原文，省级机关原文未写市→null（作废驻地市推断）",
+    "changes": [
+      {
+        "sample_id": "P02",
+        "person_index": 0,
+        "field": "city",
+        "old": "青海",
+        "new": null
+      },
+      {
+        "sample_id": "P02",
+        "person_index": 1,
+        "field": "city",
+        "old": "青海",
+        "new": null
+      },
+      {
+        "sample_id": "P04",
+        "person_index": 1,
+        "field": "city",
+        "old": "南宁",
+        "new": null
+      },
+      {
+        "sample_id": "P13",
+        "person_index": 1,
+        "field": "city",
+        "old": "太原",
+        "new": null
+      },
+      {
+        "sample_id": "P19",
+        "person_index": 2,
+        "field": "city",
+        "old": "太原",
+        "new": null
+      },
+      {
+        "sample_id": "P13",
+        "person_index": 0,
+        "field": "major",
+        "old": "环境科学",
+        "new": "环境科学（中外合作办学）"
+      },
+      {
+        "sample_id": "P06",
+        "person_index": 0,
+        "field": "major",
+        "old": "法律法学",
+        "new": "法律（法学）"
+      },
+      {
+        "sample_id": "P10",
+        "person_index": 1,
+        "field": "major",
+        "old": "法律法学",
+        "new": "法律（法学）"
+      },
+      {
+        "sample_id": "P13",
+        "person_index": 1,
+        "field": "position_or_unit",
+        "old": "山西省纪检委",
+        "new": "山西省纪委监委"
+      },
+      {
+        "sample_id": "P17",
+        "person_index": 1,
+        "field": "position_or_unit",
+        "old": "荆州区城南街道党政委办事处",
+        "new": "荆州区城南街道党政办试用期公务员"
+      },
+      {
+        "sample_id": "P05",
+        "person_index": 0,
+        "field": "major",
+        "old": "学科教学（英语)",
+        "new": "学科教学（英语）"
+      }
+    ]
+  }
+}

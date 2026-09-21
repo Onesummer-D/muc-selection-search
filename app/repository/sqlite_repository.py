@@ -108,6 +108,48 @@ CREATE INDEX IF NOT EXISTS idx_records_notice ON experience_records(notice_id);
 CREATE INDEX IF NOT EXISTS idx_evidence_record ON evidence(record_key);
 CREATE INDEX IF NOT EXISTS idx_events_notice ON processing_events(notice_id);
 
+-- 第二周用户持久化：只保存白名单 QueryPlan，不保存自然语言原文
+CREATE TABLE IF NOT EXISTS app_users (
+  user_id TEXT PRIMARY KEY,
+  role TEXT NOT NULL CHECK (role IN ('student','teacher','admin')),
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS user_privacy (
+  user_id TEXT PRIMARY KEY REFERENCES app_users(user_id) ON DELETE CASCADE,
+  history_enabled INTEGER NOT NULL DEFAULT 0 CHECK (history_enabled IN (0,1)),
+  recommendation_enabled INTEGER NOT NULL DEFAULT 0 CHECK (recommendation_enabled IN (0,1)),
+  retention_days INTEGER NOT NULL DEFAULT 90 CHECK (retention_days = 90),
+  updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS saved_searches (
+  saved_search_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id TEXT NOT NULL REFERENCES app_users(user_id) ON DELETE CASCADE,
+  query_plan_json TEXT NOT NULL,
+  alert_frequency TEXT NOT NULL DEFAULT 'weekly' CHECK (alert_frequency IN ('off','daily','weekly')),
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_saved_searches_user ON saved_searches(user_id);
+CREATE TABLE IF NOT EXISTS search_history (
+  history_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id TEXT NOT NULL REFERENCES app_users(user_id) ON DELETE CASCADE,
+  query_plan_json TEXT NOT NULL,
+  occurred_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_search_history_user ON search_history(user_id, occurred_at);
+CREATE TABLE IF NOT EXISTS notifications (
+  notification_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id TEXT NOT NULL REFERENCES app_users(user_id) ON DELETE CASCADE,
+  saved_search_id INTEGER NOT NULL REFERENCES saved_searches(saved_search_id) ON DELETE CASCADE,
+  notice_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  read_at TEXT,
+  UNIQUE(user_id, saved_search_id, notice_id)
+);
+CREATE INDEX IF NOT EXISTS idx_notifications_user ON notifications(user_id, created_at);
+
 -- 文章全文索引：外部内容表 + trigram 分词（任务0已验证本机支持）
 CREATE VIRTUAL TABLE IF NOT EXISTS articles_fts USING fts5(
   title, clean_text, content='articles', content_rowid='rowid', tokenize='trigram'
@@ -466,6 +508,104 @@ class SQLiteRepository(Repository):
 
     def count_events(self) -> int:
         return self._count("processing_events")
+
+    # ---- 第二周用户功能持久化 ----
+
+    def ensure_user(self, user_id: str, role: str) -> None:
+        now = _now()
+        self._execute(
+            "INSERT INTO app_users(user_id, role, created_at, updated_at) VALUES (?, ?, ?, ?) "
+            "ON CONFLICT(user_id) DO UPDATE SET role=excluded.role, updated_at=excluded.updated_at",
+            (user_id, role, now, now),
+        )
+        self._execute(
+            "INSERT INTO user_privacy(user_id, history_enabled, recommendation_enabled, retention_days, updated_at) "
+            "VALUES (?, 0, 0, 90, ?) ON CONFLICT(user_id) DO NOTHING",
+            (user_id, now),
+        )
+
+    def get_privacy(self, user_id: str) -> dict:
+        row = self._query_one("SELECT history_enabled, recommendation_enabled, retention_days, updated_at FROM user_privacy WHERE user_id = ?", (user_id,))
+        if row is None:
+            return {"history_enabled": False, "recommendation_enabled": False, "retention_days": 90, "updated_at": None}
+        return {"history_enabled": bool(row["history_enabled"]), "recommendation_enabled": bool(row["recommendation_enabled"]), "retention_days": int(row["retention_days"]), "updated_at": row["updated_at"]}
+
+    def update_privacy(self, user_id: str, *, history_enabled: bool | None = None, recommendation_enabled: bool | None = None) -> dict:
+        current = self.get_privacy(user_id)
+        h = current["history_enabled"] if history_enabled is None else bool(history_enabled)
+        r = current["recommendation_enabled"] if recommendation_enabled is None else bool(recommendation_enabled)
+        self._execute("UPDATE user_privacy SET history_enabled=?, recommendation_enabled=?, retention_days=90, updated_at=? WHERE user_id=?", (int(h), int(r), _now(), user_id))
+        return self.get_privacy(user_id)
+
+    def create_saved_search(self, user_id: str, plan_json: str, alert_frequency: str = "weekly") -> dict:
+        now = _now()
+        with self._lock:
+            cur = self._conn.execute("INSERT INTO saved_searches(user_id, query_plan_json, alert_frequency, created_at, updated_at) VALUES (?, ?, ?, ?, ?)", (user_id, plan_json, alert_frequency, now, now))
+            return self._saved_search_row(cur.lastrowid)
+
+    def list_saved_searches(self, user_id: str) -> list[dict]:
+        rows = self._query_all("SELECT * FROM saved_searches WHERE user_id=? ORDER BY created_at DESC, saved_search_id DESC", (user_id,))
+        return [dict(row) for row in rows]
+
+    def update_saved_alert(self, user_id: str, saved_search_id: int, alert_frequency: str) -> dict | None:
+        self._execute("UPDATE saved_searches SET alert_frequency=?, updated_at=? WHERE saved_search_id=? AND user_id=?", (alert_frequency, _now(), saved_search_id, user_id))
+        return self._saved_search_row(saved_search_id, user_id)
+
+    def delete_saved_search(self, user_id: str, saved_search_id: int) -> bool:
+        with self._lock:
+            cur = self._conn.execute("DELETE FROM saved_searches WHERE saved_search_id=? AND user_id=?", (saved_search_id, user_id))
+            return cur.rowcount == 1
+
+    def _saved_search_row(self, saved_search_id: int, user_id: str | None = None) -> dict | None:
+        sql = "SELECT * FROM saved_searches WHERE saved_search_id=?" + (" AND user_id=?" if user_id is not None else "")
+        params = (saved_search_id,) if user_id is None else (saved_search_id, user_id)
+        row = self._query_one(sql, params)
+        return dict(row) if row else None
+
+    def add_search_history(self, user_id: str, plan_json: str) -> None:
+        self._execute("INSERT INTO search_history(user_id, query_plan_json, occurred_at) VALUES (?, ?, ?)", (user_id, plan_json, _now()))
+
+    def clear_search_history(self, user_id: str) -> int:
+        with self._lock:
+            cur = self._conn.execute("DELETE FROM search_history WHERE user_id=?", (user_id,))
+            return cur.rowcount
+
+    def insight_summary(self, user_id: str) -> dict:
+        row = self._query_one("SELECT COUNT(*) AS n FROM search_history WHERE user_id=?", (user_id,))
+        saved = self._query_one("SELECT COUNT(*) AS n FROM saved_searches WHERE user_id=?", (user_id,))
+        notes = self._query_one("SELECT COUNT(*) AS n FROM notifications WHERE user_id=? AND read_at IS NULL", (user_id,))
+        return {"history_count": int(row["n"]), "saved_search_count": int(saved["n"]), "unread_notification_count": int(notes["n"])}
+
+    def list_notifications(self, user_id: str) -> list[dict]:
+        rows = self._query_all("SELECT * FROM notifications WHERE user_id=? ORDER BY created_at DESC, notification_id DESC", (user_id,))
+        return [dict(row) for row in rows]
+
+    def emit_saved_search_notifications(self, user_id: str, notice_id: str, title: str) -> int:
+        """为 demo/导入钩子生成去重的站内提醒；不发送邮件、短信或 ICS。"""
+        now = _now()
+        with self._lock:
+            rows = self._conn.execute("SELECT saved_search_id FROM saved_searches WHERE user_id=? AND alert_frequency <> 'off'", (user_id,)).fetchall()
+            created = 0
+            for row in rows:
+                cur = self._conn.execute("INSERT OR IGNORE INTO notifications(user_id, saved_search_id, notice_id, title, created_at) VALUES (?, ?, ?, ?, ?)", (user_id, row["saved_search_id"], notice_id, title, now))
+                created += int(cur.rowcount == 1)
+            return created
+
+    def emit_notifications_for_notice(self, notice_id: str, title: str) -> int:
+        """published 事件的站内通知钩子；同一用户/保存查询/文章只生成一次。"""
+        now = _now()
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT user_id, saved_search_id FROM saved_searches WHERE alert_frequency <> 'off'"
+            ).fetchall()
+            created = 0
+            for row in rows:
+                cur = self._conn.execute(
+                    "INSERT OR IGNORE INTO notifications(user_id, saved_search_id, notice_id, title, created_at) VALUES (?, ?, ?, ?, ?)",
+                    (row["user_id"], row["saved_search_id"], notice_id, title, now),
+                )
+                created += int(cur.rowcount == 1)
+            return created
 
 
 # ---- 行 → 领域模型 ----

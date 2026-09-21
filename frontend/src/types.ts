@@ -135,6 +135,30 @@ export interface StatsResponse {
   review_status_distribution?: Record<string, number>
 }
 
+export interface SavedSearch {
+  saved_search_id: number
+  query_plan: QueryPlan
+  alert_frequency: 'off' | 'daily' | 'weekly'
+  created_at: string
+  updated_at: string
+}
+
+export interface PrivacySettings {
+  history_enabled: boolean
+  recommendation_enabled: boolean
+  retention_days: number
+  updated_at: string | null
+}
+
+export interface NotificationItem {
+  notification_id: number
+  saved_search_id: number
+  notice_id: string
+  title: string
+  created_at: string
+  read_at: string | null
+}
+
 export const FIELD_LABELS: Record<string, string> = {
   cohort: '届别',
   grade: '年级',

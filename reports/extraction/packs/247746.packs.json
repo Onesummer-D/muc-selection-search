@@ -1,0 +1,215 @@
+[
+  {
+    "record_key": "247746-01",
+    "notice_id": "247746",
+    "fields": {
+      "cohort": "2024届",
+      "grade": null,
+      "education": "本科",
+      "college": "生命与环境科学学院",
+      "major": null,
+      "city": "临汾",
+      "position_or_unit": "山西省临汾市城联社"
+    },
+    "core_fields": [
+      "cohort",
+      "education",
+      "major",
+      "city",
+      "position_or_unit"
+    ],
+    "field_evidence": {
+      "cohort": [
+        {
+          "text": "2024届山西定向选调生",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            463.0,
+            992.0,
+            1020.0,
+            1059.0
+          ]
+        }
+      ],
+      "education": [
+        {
+          "text": "(中外合作办学)专业本科生",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            498.0,
+            1126.0,
+            1163.0,
+            1196.0
+          ]
+        }
+      ],
+      "college": [
+        {
+          "text": "生命与环境科学学院2020级环境科学",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            466.0,
+            1055.0,
+            1347.0,
+            1127.0
+          ]
+        }
+      ],
+      "city": [
+        {
+          "text": "山西省临汾市城联社",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            470.0,
+            1199.0,
+            951.0,
+            1261.0
+          ]
+        }
+      ],
+      "position_or_unit": [
+        {
+          "text": "山西省临汾市城联社",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            470.0,
+            1199.0,
+            951.0,
+            1261.0
+          ]
+        }
+      ]
+    },
+    "source_url": "https://my.muc.edu.cn/notice/247746",
+    "review_status": "review_required",
+    "confidence": 0.0
+  },
+  {
+    "record_key": "247746-02",
+    "notice_id": "247746",
+    "fields": {
+      "cohort": "2024届",
+      "grade": null,
+      "education": "硕士",
+      "college": null,
+      "major": "哲学",
+      "city": null,
+      "position_or_unit": "山西省纪委监委"
+    },
+    "core_fields": [
+      "cohort",
+      "education",
+      "major",
+      "city",
+      "position_or_unit"
+    ],
+    "field_evidence": {
+      "cohort": [
+        {
+          "text": "2024届山西定向选调生",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            483.0,
+            1675.0,
+            1039.0,
+            1726.0
+          ]
+        }
+      ],
+      "education": [
+        {
+          "text": "业硕士生",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            484.0,
+            1811.0,
+            700.0,
+            1864.0
+          ]
+        }
+      ],
+      "college": [
+        {
+          "text": "哲学与宗教学学院2021级宗教学专",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            486.0,
+            1741.0,
+            1300.0,
+            1795.0
+          ]
+        },
+        {
+          "text": "哲学与宗教学学院",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            1235.0,
+            2749.0,
+            1710.0,
+            2807.0
+          ]
+        },
+        {
+          "text": "生命与环境科学学院",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            592.0,
+            2751.0,
+            1120.0,
+            2808.0
+          ]
+        }
+      ],
+      "major": [
+        {
+          "text": "哲学与宗教学学院2021级宗教学专",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            486.0,
+            1741.0,
+            1300.0,
+            1795.0
+          ]
+        },
+        {
+          "text": "哲学与宗教学学院",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            1235.0,
+            2749.0,
+            1710.0,
+            2807.0
+          ]
+        }
+      ],
+      "position_or_unit": [
+        {
+          "text": "山西省纪委监委",
+          "method": "ocr_rule",
+          "asset_id": "247746-poster-01",
+          "bbox": [
+            485.0,
+            1878.0,
+            858.0,
+            1932.0
+          ]
+        }
+      ]
+    },
+    "source_url": "https://my.muc.edu.cn/notice/247746",
+    "review_status": "review_required",
+    "confidence": 0.0
+  }
+]

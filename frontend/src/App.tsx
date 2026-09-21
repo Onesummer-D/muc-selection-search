@@ -6,7 +6,8 @@ import { DetailModal } from './components/DetailModal'
 import { QueryPlanPanel } from './components/QueryPlanPanel'
 import {
   REVIEW_STATUS_LABELS, type AnswerResponse, type MeResponse, type Role,
-  type SearchResponse, type StatsResponse,
+  type SearchResponse, type StatsResponse, type SavedSearch, type PrivacySettings,
+  type NotificationItem,
 } from './types'
 
 type Mode = 'traditional' | 'ai'
@@ -39,6 +40,11 @@ export default function App() {
   const [error, setError] = useState<string | null>(null)
   const [view, setView] = useState<'home' | 'results'>('home')
   const [detailKey, setDetailKey] = useState<string | null>(null)
+  const [incognito, setIncognito] = useState(false)
+  const [personalOpen, setPersonalOpen] = useState(false)
+  const [savedSearches, setSavedSearches] = useState<SavedSearch[]>([])
+  const [privacy, setPrivacy] = useState<PrivacySettings | null>(null)
+  const [notifications, setNotifications] = useState<NotificationItem[]>([])
 
   useEffect(() => {
     api.me().then(setMe).catch(() => setMe(null))
@@ -74,14 +80,14 @@ export default function App() {
           params.position_or_unit = plan.position_or_unit || undefined
           params.keywords = plan.keywords.length ? plan.keywords.join(' ') : undefined
         }
-        const result = await api.search(params)
+        const result = await api.search(params, incognito)
         setLastParams(params)
         setSearchResult(result)
         setAnswer(null)
         setCompareKeys([])
         void refreshStats(params)
       } else {
-        const result = await api.answer(nextText)
+        const result = await api.answer(nextText, incognito)
         setAnswer(result)
         setSearchResult(null)
         setCompareKeys([])
@@ -93,7 +99,7 @@ export default function App() {
     } finally {
       setLoading(false)
     }
-  }, [refreshStats])
+  }, [refreshStats, incognito])
 
   const applyRelaxation = useCallback((field: string) => {
     // 放宽 = 在上一次检索参数的基础上去掉该条件后重查
@@ -101,7 +107,7 @@ export default function App() {
     delete next[field]
     setLoading(true)
     setError(null)
-    api.search(next)
+    api.search(next, incognito)
       .then((result) => {
         setLastParams(next)
         setSearchResult(result)
@@ -114,7 +120,35 @@ export default function App() {
         setError(exc instanceof ApiError ? exc.detail : '网络错误，请确认服务已启动')
       })
       .finally(() => setLoading(false))
-  }, [lastParams, refreshStats])
+  }, [lastParams, refreshStats, incognito])
+
+  const records = searchResult?.results ?? answer?.records ?? []
+  const plan = searchResult?.query_plan ?? answer?.query_plan ?? null
+
+  const openPersonal = useCallback(async () => {
+    setError(null)
+    try {
+      const [saved, privacySettings, notes] = await Promise.all([
+        api.listSavedSearches(), api.privacy(), api.notifications(),
+      ])
+      setSavedSearches(saved.items)
+      setPrivacy(privacySettings)
+      setNotifications(notes.items)
+      setPersonalOpen(true)
+    } catch (exc) {
+      setError(exc instanceof ApiError ? exc.detail : '个人中心暂不可用')
+    }
+  }, [])
+
+  const saveCurrentSearch = useCallback(async () => {
+    if (!plan || !me?.authenticated) return
+    try {
+      const saved = await api.saveSearch(plan)
+      setSavedSearches((items) => [saved, ...items.filter((item) => item.saved_search_id !== saved.saved_search_id)])
+    } catch (exc) {
+      setError(exc instanceof ApiError ? exc.detail : '保存搜索失败')
+    }
+  }, [me?.authenticated, plan])
 
   const toggleCompare = useCallback((key: string) => {
     setCompareKeys((prev) => {
@@ -144,9 +178,6 @@ export default function App() {
     }
   }, [mode, text, filters, runSearch])
 
-  const records = searchResult?.results ?? answer?.records ?? []
-  const plan = searchResult?.query_plan ?? answer?.query_plan ?? null
-
   return (
     <div className="app">
       <header className="topbar">
@@ -159,6 +190,9 @@ export default function App() {
             <span className={`role-badge role-${me.role}`}>
               {me.role_label}
             </span>
+          )}
+          {me?.authenticated && (
+            <button className="btn-ghost" onClick={() => void openPersonal()}>个人中心</button>
           )}
           {me?.dev_switch_enabled && me.role && (
             <select
@@ -228,6 +262,10 @@ export default function App() {
           <p className="muted center">
             游客看到脱敏公开视图；登录后可见授权字段。所有结论都带可检查的字段证据。
           </p>
+          <label className="incognito-toggle">
+            <input type="checkbox" checked={incognito} onChange={(e) => setIncognito(e.target.checked)} />
+            无痕模式（不保存历史、对比、导出和推荐信号）
+          </label>
         </main>
       )}
 
@@ -271,6 +309,13 @@ export default function App() {
               >
                 对比{compareKeys.length > 0 ? `（${compareKeys.length}）` : ''}
               </button>
+              {me?.authenticated && (
+                <button className="btn-ghost" onClick={() => void saveCurrentSearch()} disabled={!plan || incognito}>保存查询</button>
+              )}
+              <label className="incognito-toggle">
+                <input type="checkbox" checked={incognito} onChange={(e) => setIncognito(e.target.checked)} />
+                无痕
+              </label>
               <a className="btn-ghost" href={exportUrl('csv')}>导出 CSV</a>
               <a className="btn-ghost" href={exportUrl('xlsx')}>导出 Excel</a>
             </div>
@@ -399,6 +444,51 @@ export default function App() {
 
       {showCompare && compareKeys.length >= 2 && (
         <CompareModal recordKeys={compareKeys} onClose={() => setShowCompare(false)} />
+      )}
+
+      {personalOpen && (
+        <div className="personal-panel" role="dialog" aria-label="个人中心">
+          <div className="personal-card">
+            <div className="personal-header">
+              <h2>个人中心</h2>
+              <button className="btn-ghost" onClick={() => setPersonalOpen(false)}>关闭</button>
+            </div>
+            <h3>隐私中心</h3>
+            <label className="privacy-row">
+              <input
+                type="checkbox"
+                checked={privacy?.history_enabled ?? false}
+                onChange={async (e) => setPrivacy(await api.updatePrivacy({ history_enabled: e.target.checked }))}
+              />
+              保存搜索历史（最多保留90天）
+            </label>
+            <label className="privacy-row">
+              <input
+                type="checkbox"
+                checked={privacy?.recommendation_enabled ?? false}
+                onChange={async (e) => setPrivacy(await api.updatePrivacy({ recommendation_enabled: e.target.checked }))}
+              />
+              允许系统生成我的画像摘要
+            </label>
+            <button className="btn-ghost" onClick={async () => { await api.clearHistory(); setPrivacy(await api.privacy()) }}>删除我的历史</button>
+            <h3>保存的查询</h3>
+            {savedSearches.length === 0 && <p className="muted">暂无保存查询</p>}
+            {savedSearches.map((saved) => (
+              <div className="saved-row" key={saved.saved_search_id}>
+                <span>{Object.entries(saved.query_plan).filter(([, value]) => value && (!Array.isArray(value) || value.length)).map(([key, value]) => `${key}=${Array.isArray(value) ? value.join('、') : value}`).join(' · ')}</span>
+                <select value={saved.alert_frequency} onChange={async (e) => {
+                  const updated = await api.updateSavedAlert(saved.saved_search_id, e.target.value as SavedSearch['alert_frequency'])
+                  setSavedSearches((items) => items.map((item) => item.saved_search_id === updated.saved_search_id ? updated : item))
+                }}>
+                  <option value="off">关闭提醒</option><option value="daily">每日</option><option value="weekly">每周</option>
+                </select>
+                <button className="btn-ghost" onClick={async () => { await api.deleteSavedSearch(saved.saved_search_id); setSavedSearches((items) => items.filter((item) => item.saved_search_id !== saved.saved_search_id)) }}>删除</button>
+              </div>
+            ))}
+            <h3>站内提醒</h3>
+            {notifications.length === 0 ? <p className="muted">暂无提醒</p> : notifications.map((note) => <p className="notification-row" key={note.notification_id}>{note.title} · {note.created_at.slice(0, 10)}</p>)}
+          </div>
+        </div>
       )}
 
       <footer className="footer">

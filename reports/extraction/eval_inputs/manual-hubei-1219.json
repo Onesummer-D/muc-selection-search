@@ -1,0 +1,20 @@
+{
+  "schema_version": "article_bundle.v1",
+  "notice_id": "manual-hubei-1219",
+  "title": "12月19日||\"共美\"沙龙——湖北选调经验分享",
+  "source_url": "manual://manual-hubei-1219",
+  "published_at": "2023-12-15 13:35",
+  "content_type": "poster",
+  "clean_text": null,
+  "asset_refs": [
+    {
+      "asset_id": "manual-hubei-1219-poster-01",
+      "kind": "poster",
+      "local_ref": "private://manual-hubei-1219/poster-01",
+      "sha256": "1810c0d14b31002ec9e56774e60bf7060e569444115185ab7bb55e84e80ca09d"
+    }
+  ],
+  "fetch_status": "processed",
+  "failure_reason": null,
+  "fetched_at": "2026-09-19T18:00:00+08:00"
+}
