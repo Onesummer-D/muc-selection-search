@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-09-21T13:21:01+08:00",
+  "bundle_count": 5,
+  "article_count": 5,
+  "record_count": 7,
+  "evidence_count": 51,
+  "items": [
+    {
+      "path": "reports\\extraction\\bundles\\247586.extraction.json",
+      "notice_id": "247586",
+      "records": 1,
+      "evidence": 6,
+      "repeat_records": 1,
+      "repeat_counts_unchanged": true,
+      "status": "processed"
+    },
+    {
+      "path": "reports\\extraction\\bundles\\247746.extraction.json",
+      "notice_id": "247746",
+      "records": 2,
+      "evidence": 13,
+      "repeat_records": 2,
+      "repeat_counts_unchanged": true,
+      "status": "review_required"
+    },
+    {
+      "path": "reports\\extraction\\bundles\\247919.extraction.json",
+      "notice_id": "247919",
+      "records": 2,
+      "evidence": 15,
+      "repeat_records": 2,
+      "repeat_counts_unchanged": true,
+      "status": "review_required"
+    },
+    {
+      "path": "reports\\extraction\\bundles\\348879.extraction.json",
+      "notice_id": "348879",
+      "records": 1,
+      "evidence": 7,
+      "repeat_records": 1,
+      "repeat_counts_unchanged": true,
+      "status": "review_required"
+    },
+    {
+      "path": "reports\\extraction\\bundles\\352508.extraction.json",
+      "notice_id": "352508",
+      "records": 1,
+      "evidence": 10,
+      "repeat_records": 1,
+      "repeat_counts_unchanged": true,
+      "status": "review_required"
+    }
+  ],
+  "visibility_policy": "import preserves draft; admin publish is separate"
+}

@@ -8,12 +8,16 @@
 from __future__ import annotations
 
 import io
+import os
+
+import json
 
 from flask import Blueprint, jsonify, request, send_file, session
 
 from ..domain.errors import ContractViolation
 from ..domain.presenter import RecordPresenter, assert_no_restricted_fields, role_label
 from ..domain.query_plan import MAX_PAGE_SIZE, QueryPlan
+from ..domain.models import ProcessingEvent
 from ..domain import role_policy
 from ..repository.base import Repository
 from ..search.answer_service import AnswerService
@@ -30,15 +34,41 @@ def current_role() -> str:
     return role_policy.normalize_role(session.get("role"))
 
 
+def current_user_id() -> str | None:
+    """开发模式用显式用户标识模拟 CAS subject；生产不接受客户端伪造身份。"""
+    role = current_role()
+    if role == "guest":
+        return None
+    if role_policy.dev_role_switch_enabled():
+        candidate = request.headers.get("X-Demo-User", "").strip()
+        return candidate[:80] if candidate else f"demo-{role}"
+    return session.get("user_id")
+
+
+def _require_user(repo: Repository) -> str | None:
+    role = current_role()
+    user_id = current_user_id()
+    if role == "guest" or not user_id:
+        return None
+    repo.ensure_user(user_id, role)  # type: ignore[attr-defined]
+    return user_id
+
+
 def build_api_blueprint(repo: Repository, search: SearchService,
                         answer: AnswerService) -> Blueprint:
     bp = Blueprint("api", __name__)
     presenter = RecordPresenter()
+    sync_state = {"status": "not_configured", "task_id": None, "cursor": None, "success_count": 0, "failure_count": 0, "failure_reason": "SYNC_PROVIDER_NOT_CONFIGURED"}
 
     @bp.get("/api/search")
     def api_search():
         plan = _plan_from_args()
-        outcome = search.search(plan, current_role())
+        role = current_role()
+        outcome = search.search(plan, role)
+        user_id = current_user_id()
+        if user_id and not _incognito() and getattr(repo, "get_privacy", lambda _u: {"history_enabled": False})(user_id).get("history_enabled", False):
+            repo.ensure_user(user_id, role)  # type: ignore[attr-defined]
+            repo.add_search_history(user_id, json.dumps(plan.to_dict(), ensure_ascii=False, sort_keys=True))  # type: ignore[attr-defined]
         return jsonify({
             "query_plan": outcome.plan.to_dict(),
             "total": outcome.total,
@@ -47,7 +77,7 @@ def build_api_blueprint(repo: Repository, search: SearchService,
             "results": outcome.items,
             "relaxations": outcome.relaxations,
             "empty_plan": outcome.empty_plan,
-            "role": current_role(),
+            "role": role,
         })
 
     @bp.get("/api/search/stats")
@@ -181,6 +211,132 @@ def build_api_blueprint(repo: Repository, search: SearchService,
             "campus_original_asset_enabled": role_policy.campus_original_asset_enabled(),
         })
 
+    # ---- 第二周：保存搜索、站内提醒、隐私与无痕 ----
+
+    @bp.get("/api/saved-searches")
+    def api_saved_searches_list():
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        rows = repo.list_saved_searches(user_id)  # type: ignore[attr-defined]
+        return jsonify({"items": [_saved_search_dto(row) for row in rows]})
+
+    @bp.post("/api/saved-searches")
+    def api_saved_searches_create():
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        body = _json_body(("query_plan", "alert_frequency"))
+        plan = QueryPlan.from_dict(body.get("query_plan"), allow_empty=False)
+        frequency = body.get("alert_frequency", "weekly")
+        if frequency not in ("off", "daily", "weekly"):
+            raise ContractViolation("alert_frequency: 只允许 off、daily、weekly")
+        row = repo.create_saved_search(user_id, json.dumps(plan.to_dict(), ensure_ascii=False, sort_keys=True), frequency)  # type: ignore[attr-defined]
+        return jsonify(_saved_search_dto(row)), 201
+
+    @bp.patch("/api/saved-searches/<int:saved_search_id>/alert")
+    def api_saved_search_alert(saved_search_id: int):
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        body = _json_body(("alert_frequency",))
+        frequency = body.get("alert_frequency")
+        if frequency not in ("off", "daily", "weekly"):
+            raise ContractViolation("alert_frequency: 只允许 off、daily、weekly")
+        row = repo.update_saved_alert(user_id, saved_search_id, frequency)  # type: ignore[attr-defined]
+        if row is None:
+            return jsonify({"error": "not_found"}), 404
+        return jsonify(_saved_search_dto(row))
+
+    @bp.delete("/api/saved-searches/<int:saved_search_id>")
+    def api_saved_search_delete(saved_search_id: int):
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        if not repo.delete_saved_search(user_id, saved_search_id):  # type: ignore[attr-defined]
+            return jsonify({"error": "not_found"}), 404
+        return jsonify({"deleted": True, "saved_search_id": saved_search_id})
+
+    @bp.get("/api/me/privacy")
+    def api_privacy_get():
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        return jsonify(repo.get_privacy(user_id))  # type: ignore[attr-defined]
+
+    @bp.patch("/api/me/privacy")
+    def api_privacy_patch():
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        body = _json_body(("history_enabled", "recommendation_enabled"))
+        for key in body:
+            if not isinstance(body[key], bool):
+                raise ContractViolation(f"{key}: 必须是布尔值")
+        return jsonify(repo.update_privacy(user_id, history_enabled=body.get("history_enabled"), recommendation_enabled=body.get("recommendation_enabled")))  # type: ignore[attr-defined]
+
+    @bp.delete("/api/me/history")
+    def api_history_delete():
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        return jsonify({"deleted_count": repo.clear_search_history(user_id)})  # type: ignore[attr-defined]
+
+    @bp.get("/api/me/insights")
+    def api_insights():
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        privacy = repo.get_privacy(user_id)  # type: ignore[attr-defined]
+        if not privacy["recommendation_enabled"]:
+            return jsonify({"enabled": False, "retention_days": 90, "insights": {}})
+        return jsonify({"enabled": True, "retention_days": 90, "insights": repo.insight_summary(user_id)})  # type: ignore[attr-defined]
+
+    @bp.get("/api/notifications")
+    def api_notifications():
+        user_id = _require_user(repo)
+        if not user_id:
+            return jsonify({"error": "unauthorized", "detail": "需要校内登录"}), 401
+        return jsonify({"items": repo.list_notifications(user_id)})  # type: ignore[attr-defined]
+
+    @bp.post("/api/admin/records/<record_key>/publish")
+    def api_publish_record(record_key: str):
+        if current_role() != "admin":
+            return jsonify({"error": "forbidden"}), 403
+        record = repo.get_record(record_key)
+        if record is None:
+            return jsonify({"error": "not_found"}), 404
+        repo.set_visibility(record_key, "published")
+        repo.record_event(ProcessingEvent(notice_id=record.notice_id, step="admin_publish", status="processed", occurred_at=_now_iso()))
+        repo.emit_notifications_for_notice(record.notice_id, record.notice_id)  # type: ignore[attr-defined]
+        return jsonify({"record_key": record_key, "visibility": "published"})
+
+    @bp.post("/api/admin/records/<record_key>/withdraw")
+    def api_withdraw_record(record_key: str):
+        if current_role() != "admin":
+            return jsonify({"error": "forbidden"}), 403
+        record = repo.get_record(record_key)
+        if record is None:
+            return jsonify({"error": "not_found"}), 404
+        repo.set_visibility(record_key, "withdrawn")
+        repo.record_event(ProcessingEvent(notice_id=record.notice_id, step="admin_withdraw", status="processed", occurred_at=_now_iso()))
+        return jsonify({"record_key": record_key, "visibility": "withdrawn"})
+
+    @bp.post("/api/admin/sync")
+    def api_admin_sync():
+        """同步契约入口；未注入真实 CAS/Portal 时明确返回条件式阻塞。"""
+        if current_role() != "admin":
+            return jsonify({"error": "forbidden"}), 403
+        if os.environ.get("SYNC_PROVIDER_CONFIGURED", "false").lower() != "true":
+            return jsonify({"error": "sync_not_configured", "detail": "需要真实 Portal/CAS 配置，未伪造同步结果", "status": sync_state}), 503
+        return jsonify({"error": "sync_runner_not_wired", "detail": "已配置资源但尚未绑定运行器", "status": sync_state}), 501
+
+    @bp.get("/api/admin/sync/status")
+    def api_admin_sync_status():
+        if current_role() != "admin":
+            return jsonify({"error": "forbidden"}), 403
+        return jsonify(sync_state)
+
     # ---- 开发角色开关：生产环境 404（附录 G G5） ----
 
     @bp.post("/api/dev/role")
@@ -268,3 +424,22 @@ def _to_int(value: str, name: str) -> int:
         return int(value)
     except (TypeError, ValueError) as exc:
         raise ContractViolation(f"{name}: 必须是整数") from exc
+
+
+def _incognito() -> bool:
+    return request.headers.get("X-Incognito-Mode", "0") == "1"
+
+
+def _saved_search_dto(row: dict) -> dict:
+    return {
+        "saved_search_id": row["saved_search_id"],
+        "query_plan": json.loads(row["query_plan_json"]),
+        "alert_frequency": row["alert_frequency"],
+        "created_at": row["created_at"],
+        "updated_at": row["updated_at"],
+    }
+
+
+def _now_iso() -> str:
+    from datetime import datetime
+    return datetime.now().astimezone().isoformat(timespec="seconds")
