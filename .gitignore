@@ -46,6 +46,11 @@ storage_state.json
 # Keep only deliberately committed sample DBs
 !data/samples/*.db
 
+# Backup artifacts produced by scripts/backup_sqlite.py
+# Step1-step6 .txt logs may be tracked; binary db + manifest must never be
+evidence/**/_artifacts/*.db
+evidence/**/_artifacts/*.manifest.json
+
 # =========================
 # Sensitive / raw project data
 # =========================

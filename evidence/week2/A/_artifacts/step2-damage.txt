@@ -1,0 +1,8 @@
+BEFORE damage:
+  articles: 5
+  experience_records: 7
+  evidence: 11
+AFTER damage:
+  articles: 3
+  experience_records: 4
+  evidence: 5
