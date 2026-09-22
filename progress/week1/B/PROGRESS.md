@@ -224,3 +224,16 @@
   `pytest tests/extraction` 55/55 全绿；金标准集合/SHA-256/gold/启用门槛未动。
 - [x] 白名单清单：`progress/week1/B/WEEK2_WHITELIST.md`（含禁止触碰目录核验命令）。
 - [x] `604170d` 提交推送；PR #12 建立（base main）。
+
+### 2026-09-22（第二周 D2：5 篇 bundle/pack 导入 C SQLite 烟测）
+
+- [x] 烟测实现 `app/extraction/import_smoke.py`（消费 C 的 BundleImporter/SQLiteRepository 公开接口），
+  回归测试 `tests/extraction/test_import_smoke.py`；56/56 全绿。
+- [x] 结果（`evidence/week1/B/import-smoke.txt`）：
+  Schema 预检 article 5/5 + extraction 5/5 通过；
+  首次导入 articles=5 assets=4 records=7 evidence=51（与 bundle 声明一致）；
+  **幂等通过**——整批重复导入后四业务表行数不变，processing_events 10→20（审计日志有意追加，符合导入器文档语义）。
+- [x] 交叉核对发现并修复：packs 证据条数计数曾按字段数误算；
+  修正后 packs 51 条 = 导入 evidence 51 行，逐 notice 核对一致。
+  期间用当前分段重写后的代码重新生成了 5 篇 bundle + packs（旧 packs 为重写前产物）。
+- 交付命令：`python -m app.extraction.import_smoke`；`python -m pytest tests/extraction/test_import_smoke.py`

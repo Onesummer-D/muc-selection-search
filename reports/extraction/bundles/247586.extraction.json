@@ -6,7 +6,7 @@
     {
       "record_key": "247586-01",
       "cohort": "2024届",
-      "grade": null,
+      "grade": "2020",
       "education": "本科",
       "college": "经济学院",
       "major": "经济学",
@@ -25,6 +25,18 @@
             1274.0,
             1204.0,
             1341.0
+          ]
+        },
+        {
+          "field": "grade",
+          "text": "经济学院2020级经济学",
+          "method": "ocr_rule",
+          "asset_id": "247586-poster-01",
+          "bbox": [
+            487.0,
+            1362.0,
+            1202.0,
+            1426.0
           ]
         },
         {
@@ -53,14 +65,14 @@
         },
         {
           "field": "major",
-          "text": "经济学院2020级经济学",
+          "text": "专业本科生",
           "method": "ocr_rule",
           "asset_id": "247586-poster-01",
           "bbox": [
-            487.0,
-            1362.0,
-            1202.0,
-            1426.0
+            488.0,
+            1447.0,
+            834.0,
+            1512.0
           ]
         },
         {
@@ -92,5 +104,5 @@
   ],
   "processing_status": "processed",
   "failure_reason": null,
-  "processed_at": "2026-09-19T21:02:06+08:00"
+  "processed_at": "2026-09-22T14:45:45+08:00"
 }

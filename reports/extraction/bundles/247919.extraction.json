@@ -6,14 +6,14 @@
     {
       "record_key": "247919-01",
       "cohort": "2024届",
-      "grade": null,
-      "education": null,
+      "grade": "2020",
+      "education": "本科",
       "college": null,
       "major": "行政管理",
       "city": "保定",
       "position_or_unit": "保定市徐水区财政局",
       "review_status": "review_required",
-      "confidence": 0.0,
+      "confidence": 0.85,
       "evidence": [
         {
           "field": "cohort",
@@ -28,7 +28,7 @@
           ]
         },
         {
-          "field": "college",
+          "field": "grade",
           "text": "管理学院2020级行政管理专业本",
           "method": "ocr_rule",
           "asset_id": "247919-poster-01",
@@ -40,15 +40,27 @@
           ]
         },
         {
-          "field": "college",
-          "text": "管理学院2020级行政管理专业本",
+          "field": "education",
+          "text": "2024届河北定向选调生管理学院2020级行政管理专业本科生保定市徐水区财政局试用期公务员（不定职级）",
           "method": "ocr_rule",
           "asset_id": "247919-poster-01",
           "bbox": [
-            515.0,
-            1053.0,
+            510.0,
+            988.0,
             1284.0,
-            1122.0
+            1323.0
+          ]
+        },
+        {
+          "field": "college",
+          "text": "2024届河北定向选调生管理学院2020级行政管理专业本科生保定市徐水区财政局试用期公务员（不定职级）",
+          "method": "ocr_rule",
+          "asset_id": "247919-poster-01",
+          "bbox": [
+            510.0,
+            988.0,
+            1284.0,
+            1323.0
           ]
         },
         {
@@ -92,14 +104,14 @@
     {
       "record_key": "247919-02",
       "cohort": "2024届",
-      "grade": null,
+      "grade": "2021",
       "education": "硕士",
-      "college": null,
+      "college": "文学院",
       "major": "汉语言文字学",
       "city": "唐山",
       "position_or_unit": "唐山市纪委监委",
-      "review_status": "review_required",
-      "confidence": 0.0,
+      "review_status": "processed",
+      "confidence": 0.76,
       "evidence": [
         {
           "field": "cohort",
@@ -114,15 +126,27 @@
           ]
         },
         {
-          "field": "education",
-          "text": "硕士研究生",
+          "field": "grade",
+          "text": "文学院2021级汉语言文字学专业",
           "method": "ocr_rule",
           "asset_id": "247919-poster-01",
           "bbox": [
-            523.0,
-            1831.0,
+            520.0,
+            1759.0,
+            1284.0,
+            1814.0
+          ]
+        },
+        {
+          "field": "education",
+          "text": "米硕士研究生",
+          "method": "ocr_rule",
+          "asset_id": "247919-poster-01",
+          "bbox": [
+            0.0,
+            1786.0,
             788.0,
-            1880.0
+            1954.0
           ]
         },
         {
@@ -135,42 +159,6 @@
             1759.0,
             1284.0,
             1814.0
-          ]
-        },
-        {
-          "field": "college",
-          "text": "管理学院",
-          "method": "ocr_rule",
-          "asset_id": "247919-poster-01",
-          "bbox": [
-            739.0,
-            2697.0,
-            1035.0,
-            2770.0
-          ]
-        },
-        {
-          "field": "college",
-          "text": "管理学院",
-          "method": "ocr_rule",
-          "asset_id": "247919-poster-01",
-          "bbox": [
-            739.0,
-            2697.0,
-            1035.0,
-            2770.0
-          ]
-        },
-        {
-          "field": "college",
-          "text": "文学院",
-          "method": "ocr_rule",
-          "asset_id": "247919-poster-01",
-          "bbox": [
-            1246.0,
-            2703.0,
-            1471.0,
-            2771.0
           ]
         },
         {
@@ -214,5 +202,5 @@
   ],
   "processing_status": "review_required",
   "failure_reason": null,
-  "processed_at": "2026-09-19T21:04:25+08:00"
+  "processed_at": "2026-09-22T14:48:01+08:00"
 }
