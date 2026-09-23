@@ -237,3 +237,22 @@
   修正后 packs 51 条 = 导入 evidence 51 行，逐 notice 核对一致。
   期间用当前分段重写后的代码重新生成了 5 篇 bundle + packs（旧 packs 为重写前产物）。
 - 交付命令：`python -m app.extraction.import_smoke`；`python -m pytest tests/extraction/test_import_smoke.py`
+
+### 2026-09-23（第二周 D3：专业/城市/岗位通用规则修正）
+
+- [x] 复核队列错例聚类（四簇）→ 通用规则修正（非样本硬编码）：
+  1. **教育枚举粒度**：最长命中（硕士研究生 优先于 硕士）+ 裸「研究生」按
+     硕士研究生（确定性规则），文本/海报双路径同步；
+  2. **城市回退链**：单位行无市级地名 → 整块回退（三明市在入职行）→
+     县级回退（石阡县/织金县）；扫描起点排除 OCR 项目符号噪声（米/木）；
+     单位行多候选按「入职/录用」标记消歧（现任职行不再误占）；
+  3. **职务词后缀**：书记助理/主任助理/副主任/副书记/旅游局 入单位行锚点
+     （修 P08/P09 岗位漏检——OCR 框切断「党总支」跨框）；
+  4. **归一口径统一**（主判定）：括号全半角（法律（法学）== 法律(法学)）、
+     专业尾部「专业」粒度差异等价、grade「2020级≡2020」；严格口径原样保留。
+- [x] 回归测试 `tests/extraction/test_week2_rule_fixes.py` 9 项（含丢括号内容
+  仍判真错的反向断言）；全套 65 项 extraction + 217 项全仓通过。
+- [x] 规则 diff 摘要：fields.py（EDUCATION_TERMS_BY_LEN/BARE_GRADUATE_RE/
+  职务词后缀/旅游局）、poster_rules.py（教育块、城市规则2/3、噪声剥离、
+  单位行消歧、_geo_city 县剥离）、rules.py（文本路径教育）、evaluation.py（_norm 四条）。
+- 实测重跑见 9/24 evaluation_report_v2。

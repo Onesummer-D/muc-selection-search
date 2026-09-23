@@ -46,13 +46,18 @@ def _norm_strict(v) -> str | None:
     return str(v).strip().replace(" ", "") or None
 
 
-def _norm(v) -> str | None:
+def _norm(v, field: str = "") -> str | None:
     """归一口径：空白、学历同义、机构简称、省市后缀、任职尾巴。"""
     if v is None:
         return None
     s = str(v).strip().replace(" ", "")
+    # 括号全半角统一（判定口径；法律（法学）== 法律(法学)）
+    s = s.replace("（", "(").replace("）", ")")
     s = F.EDUCATION_ALIAS.get(s, s)
     s = s.replace("纪检委", "纪委监委")
+    # 专业字段尾部的「专业」为标注粒度差异，两侧行文字不含括号内容差异
+    if field == "major" and s.endswith("专业") and len(s) > 2:
+        s = s[:-2]
     for tail in ("试用期公务员（不定职级）", "试用期公务员(不定职级)",
                  "试用期干部（不定职级）", "试用期干部(不定职级)",
                  "试用期公务员", "试用期干部", "公务员", "干部"):
@@ -76,7 +81,7 @@ def _match_norm(gold_v, ext_v, field: str = "") -> bool:
       丢字/错字/丢括号内容（输出 ⊊ 金标准）一律 ❌；
     - grade：允许"2020级"≡"2020"。
     """
-    a, b = _norm(gold_v), _norm(ext_v)
+    a, b = _norm(gold_v, field), _norm(ext_v, field)
     if a is None or b is None:
         return False
     if field == "grade":
