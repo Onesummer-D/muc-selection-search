@@ -256,3 +256,11 @@
   职务词后缀/旅游局）、poster_rules.py（教育块、城市规则2/3、噪声剥离、
   单位行消歧、_geo_city 县剥离）、rules.py（文本路径教育）、evaluation.py（_norm 四条）。
 - 实测重跑见 9/24 evaluation_report_v2。
+
+### 2026-09-23（续：规则修正实测验证）
+
+- [x] OCR 路线 fresh 重跑（同 20 样本/SHA-256/gold），归一化主口径对比：
+  education 75→**100%**、city 57.9→**89.5%**、完整记录 26.3→**57.9%**；
+  cohort/grade/position 持平（100/95/85%）；major 70% 持平（剩余为版面块错配
+  与 gold 粒度个案，留复核队列）。单张耗时 88→185s（行拼接处理加重，如实登记）。
+- 修正实效符合预期；本数据为验证快照，官方 evaluation_report_v2 于 9/24 全量重评产出。
