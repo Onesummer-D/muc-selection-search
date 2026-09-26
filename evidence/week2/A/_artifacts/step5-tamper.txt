@@ -1,0 +1,18 @@
+tampered (delete 1 article):
+  articles: 4
+  experience_records: 7
+  evidence: 11
+FAIL: SHA-256 不一致
+backup:            evidence\week2\A\_artifacts\tampered.db
+backup_size_bytes: 135168
+backup_sha256:     1d5a118db233bce86f5762d4c76f4678f912b3e7116255c4520a6cccf4681fd0
+backup_row[articles]: 4
+backup_row[experience_records]: 7
+backup_row[evidence]: 11
+manifest_sha256:   b343c3b4d5b2f2190778d9963521e6e7c2f9a55305f58fbc221bec372077d076
+manifest_row[articles]: 5
+manifest_row[experience_records]: 7
+manifest_row[evidence]: 11
+sha_match:         False
+row_count_match:   False
+exit=2

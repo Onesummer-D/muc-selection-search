@@ -37,9 +37,9 @@ writeTracker("总览", [
 ]);
 
 writeTracker("A验收", [
-  ["A-01", "A", "LAN 另一设备首页/healthz/搜索/详情", "首页/搜索/healthz 截图已收；设备/详情/录屏待补", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "", "", false, "截图证明 LAN 首页、搜索和健康检查；尚未凭此关闭另一设备与详情项"],
-  ["A-02", "A", "开发角色开关关闭时 /api/dev/role=404", "已覆盖测试", "tests/core/test_api.py", "", "", true, ""],
-  ["A-03", "A", "SQLite 备份恢复后三类行数一致", "", "evidence/week2/A/backup-restore.json", "", "", false, ""],
+  ["A-01", "A", "LAN 另一设备首页/healthz/搜索/详情", "首页/搜索/healthz 三张截图已收；访问设备：ASUS Vivobook S Flip（TN3604YA，Windows 11，192.168.43.110→组长机 192.168.43.50:5000）；访问时间 2026-09-19 20:36；详情页截图待补", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "", "", false, "设备/时间已于 2026-09-21 补记（lan-verification.md）；详情页与 C 接收确认待补"],
+  ["A-02", "A", "开发角色开关关闭时 /api/dev/role=404", "pytest 30/30 + 真实 HTTP 活体验证 4 场景全 PASS（开关关闭 404 / 6 种伪造 header 提权失败 / 开关显式开启才可用）", "evidence/week2/A/role-isolation-live.txt; role-isolation-test-output.txt; auth-contract.md; scripts/run_role_isolation.py", "", "", true, "接收确认待 C 填写；契约文档已落地"],
+  ["A-03", "A", "SQLite 备份恢复后三类行数一致", "data/app.db (5/7/11) → 模拟破坏 (3/4/5) → 恢复到 data/app-restored.db (5/7/11，SHA b343c3b4…077d076 与备份一致)；6 个敏感字段全 NULL、非敏感字段保留；篡改检测 exit=2、错误路径 exit=3", "evidence/week2/A/backup-recovery.md; _artifacts/step1-step6.txt", "bb160a1（feat/week2-A-platform）", "", true, "禁字面量扫描 0 命中；A-03 验收项关闭，C 接收确认待补"],
   ["A-04", "A", "HTTPS/CAS 条件式结论", "未提供服务器/域名/CAS", "progress/week2/A/deployment-blocker.md", "", "", true, "不得伪造公网 URL"],
 ]);
 sheets["A验收"].getRange("D:D").format.columnWidth = 36;
@@ -100,7 +100,7 @@ rep.freezePanes.freezeRows(1);
 const idx = sheets["证据索引"];
 idx.getRange("A1:G1").values = [["证据ID", "角色", "证据路径", "类型", "提交Commit/PR", "接收人/时间", "状态"]];
 idx.getRange("A2:G13").values = [
-  ["E-01", "A", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "截图", "", "", "已收到，待补设备/时间"],
+  ["E-01", "A", "evidence/week2/A/lan-home.png; lan-search.png; lan-healthz.png", "截图", "", "", "设备/时间已补记（2026-09-21，见 lan-verification.md），详情页截图待补"],
   ["E-02", "A", "evidence/week2/A/backup-restore.json", "日志", "", "", "待补"],
   ["E-03", "A", "progress/week2/A/deployment-blocker.md", "阻塞记录", "", "", "待补"],
   ["E-04", "B", "evidence/week2/B/bundle-import-smoke.json", "导入日志", "", "", "待补"],

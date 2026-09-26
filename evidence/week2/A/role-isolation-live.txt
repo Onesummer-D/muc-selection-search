@@ -1,0 +1,28 @@
+# 越权活体验证（真实 HTTP 服务 127.0.0.1:5077）
+# 时间: 2026-09-21T21:02:04
+# 复现命令: python scripts/run_role_isolation.py（本仓库根目录）
+
+## A. 开关关闭时 POST /api/dev/role（生产默认）
+   状态码: 404（预期 404）  响应: {'error': 'not_found'}
+   结论: PASS - 生产环境入口不可达
+
+## B. 伪造客户端 header 后 GET /api/auth/me（应仍为 guest）
+   {"X-Role": "admin"}                        → 200  role=guest  PASS
+   {"X-Forwarded-User": "admin"}              → 200  role=guest  PASS
+   {"X-Remote-User": "admin"}                 → 200  role=guest  PASS
+   {"Authorization": "Bearer admin"}          → 200  role=guest  PASS
+   {"Role": "admin"}                          → 200  role=guest  PASS
+   {"X-Role": "admin", "X-Forwarded-User": "admin"} → 200  role=guest  PASS
+   结论: PASS - 客户端 header 无法伪造身份
+
+## D. 开关关闭 + 伪造 header 打 /api/dev/role（应仍 404）
+   状态码: 404（预期 404）  响应: {'error': 'not_found'}
+   结论: PASS - 伪造 header 不改变开关可达性
+
+## C. ENABLE_DEV_ROLE_SWITCH=true（仅开发）时开关行为
+   切换为 student: 200  响应: {'role': 'student', 'role_label': '校内学生'}
+   /api/auth/me: 200  role=student
+   非法角色 superadmin: 400（预期 400）
+   DELETE 复位: 200  响应: {'role': 'guest'}
+   复位后 role=guest（预期 guest）
+   结论: PASS - 开关仅在环境变量显式开启时可用
