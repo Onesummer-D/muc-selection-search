@@ -1,0 +1,340 @@
+{
+  "evidence": "guest-network.json",
+  "generated_at": "2026-09-27T00:23:35+08:00",
+  "server": "127.0.0.1:5057 (loopback, Flask dev server)",
+  "command": "python scripts/week2_c_evidence.py",
+  "db": "tempfile SQLite + app.web.seed 脱敏演示数据（5 文章/7 记录）",
+  "scenario": "游客脱敏与 review_required 不公开",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/api/dev/role",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "role": "admin",
+        "role_label": "管理员"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/healthz",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "components": {
+          "database": "ok",
+          "embedding": "disabled_by_decision",
+          "llm": "not_configured",
+          "search": "ok"
+        },
+        "status": "ok"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/search",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "empty_plan": false,
+        "page": 1,
+        "page_size": 10,
+        "query_plan": {
+          "city": null,
+          "cohort": null,
+          "college": null,
+          "education": "本科",
+          "keywords": [],
+          "major": "计算机",
+          "page": 1,
+          "page_size": 10,
+          "position_or_unit": null
+        },
+        "relaxations": [],
+        "results": [
+          {
+            "confidence": 0.9,
+            "display_name": "匿名记录 portal-10001-01",
+            "evidence_count": 2,
+            "fields": {
+              "city": "成都",
+              "cohort": "2026届",
+              "college": "信息学院",
+              "education": "本科",
+              "grade": null,
+              "major": "计算机科学与技术",
+              "position_or_unit": "基层岗位"
+            },
+            "match_reasons": [
+              {
+                "field": "education",
+                "label": "学历匹配：本科",
+                "weight": 3
+              },
+              {
+                "field": "major",
+                "label": "专业匹配：计算机",
+                "weight": 5
+              }
+            ],
+            "notice_id": "portal-10001",
+            "record_key": "portal-10001-01",
+            "review_status": "processed",
+            "score": 8,
+            "source": {
+              "content_type": "poster",
+              "published_at": "2026-09-10T08:00:00+08:00",
+              "title": "2026届选调经验分享（一）"
+            },
+            "visibility": "published"
+          }
+        ],
+        "role": "guest",
+        "total": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/portal-10004-01",
+      "request_headers": {},
+      "status": 404,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "detail": "记录不存在",
+        "error": "not_found"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/portal-10005-01",
+      "request_headers": {},
+      "status": 404,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "detail": "记录不存在",
+        "error": "not_found"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/portal-10001-01",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "confidence": 0.9,
+        "display_name": "匿名记录 portal-10001-01",
+        "evidence": [
+          {
+            "bbox": [
+              102,
+              315,
+              386,
+              361
+            ],
+            "field": "city",
+            "method": "ocr_rule",
+            "text": "工作地点 成都"
+          },
+          {
+            "bbox": [
+              40,
+              210,
+              350,
+              246
+            ],
+            "field": "major",
+            "method": "ocr_rule",
+            "text": "专业 计算机科学与技术"
+          }
+        ],
+        "fields": {
+          "city": "成都",
+          "cohort": "2026届",
+          "college": "信息学院",
+          "education": "本科",
+          "grade": null,
+          "major": "计算机科学与技术",
+          "position_or_unit": "基层岗位"
+        },
+        "notice_id": "portal-10001",
+        "poster": {
+          "full_access": false,
+          "note": "完整海报默认关闭，需学校授权后由策略开关启用"
+        },
+        "record_key": "portal-10001-01",
+        "review_status": "processed",
+        "source": {
+          "content_type": "poster",
+          "published_at": "2026-09-10T08:00:00+08:00",
+          "title": "2026届选调经验分享（一）"
+        },
+        "visibility": "published"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/saved-searches",
+      "request_headers": {},
+      "status": 401,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "detail": "需要校内登录",
+        "error": "unauthorized"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/me/privacy",
+      "request_headers": {},
+      "status": 401,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "detail": "需要校内登录",
+        "error": "unauthorized"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/admin/records/portal-10005-01/publish",
+      "request_headers": {},
+      "status": 403,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "error": "forbidden"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/portal-10004-01",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "confidence": 0.41,
+        "display_name": "匿名记录 portal-10004-01",
+        "evidence": [
+          {
+            "asset_id": "portal-10004-poster-01",
+            "bbox": [
+              10,
+              20,
+              30,
+              40
+            ],
+            "field": "college",
+            "method": "ocr_rule",
+            "text": "经济学院"
+          }
+        ],
+        "extractor_version": "ocr-rule-0.1.0",
+        "fields": {
+          "city": null,
+          "cohort": null,
+          "college": "经济学院",
+          "education": null,
+          "grade": null,
+          "major": null,
+          "position_or_unit": null
+        },
+        "notice_id": "portal-10004",
+        "person": {
+          "avatar_ref": null,
+          "contact_info": null,
+          "meeting_entry": null,
+          "original_asset_ref": null,
+          "person_name": null,
+          "qr_code_ref": null,
+          "source_sso_url": null
+        },
+        "poster": {
+          "full_access": true,
+          "note": "管理员复核视图"
+        },
+        "record_key": "portal-10004-01",
+        "review_status": "review_required",
+        "source": {
+          "content_type": "poster",
+          "published_at": "2026-09-13T16:00:00+08:00",
+          "title": "经院基层选调信息帖（待复核）",
+          "url": "https://portal.example.invalid/notice/portal-10004"
+        },
+        "visibility": "draft"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "check": "游客可访问 /healthz 且状态 ok",
+      "pass": true
+    },
+    {
+      "check": "游客可搜索且返回结果",
+      "pass": true
+    },
+    {
+      "check": "游客结果全部为 published",
+      "pass": true
+    },
+    {
+      "check": "review_required/draft 记录不出现在游客结果",
+      "pass": true
+    },
+    {
+      "check": "游客搜索 DTO 无受限字段（服务端 assert_no_restricted_fields 等价校验）",
+      "pass": true
+    },
+    {
+      "check": "游客访问 review_required/draft 详情均 404",
+      "pass": true
+    },
+    {
+      "check": "游客可查看 published 详情",
+      "pass": true
+    },
+    {
+      "check": "游客详情无 person 对象与来源 URL",
+      "pass": true
+    },
+    {
+      "check": "游客详情 DTO 无受限字段",
+      "pass": true
+    },
+    {
+      "check": "游客访问个人数据接口 401",
+      "pass": true
+    },
+    {
+      "check": "游客调用管理员发布 403",
+      "pass": true
+    },
+    {
+      "check": "管理员复核视图可见同一 review_required 记录（对照）",
+      "pass": true
+    }
+  ]
+}

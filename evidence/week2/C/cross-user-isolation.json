@@ -1,0 +1,150 @@
+{
+  "evidence": "cross-user-isolation.json",
+  "generated_at": "2026-09-27T00:23:35+08:00",
+  "server": "127.0.0.1:5057 (loopback, Flask dev server)",
+  "command": "python scripts/week2_c_evidence.py",
+  "db": "tempfile SQLite + app.web.seed 脱敏演示数据（5 文章/7 记录）",
+  "scenario": "跨用户隔离（U-01）：保存搜索按 user_id 隔离",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/api/dev/role",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "role": "student",
+        "role_label": "校内学生"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/dev/role",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "role": "student",
+        "role_label": "校内学生"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/saved-searches",
+      "request_headers": {},
+      "status": 201,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "alert_frequency": "weekly",
+        "created_at": "2026-09-27T00:23:35+08:00",
+        "query_plan": {
+          "city": null,
+          "cohort": null,
+          "college": null,
+          "education": null,
+          "keywords": [],
+          "major": "计算机",
+          "page": 1,
+          "page_size": 10,
+          "position_or_unit": null
+        },
+        "saved_search_id": 1,
+        "updated_at": "2026-09-27T00:23:35+08:00"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/saved-searches",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "items": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/saved-searches/1",
+      "request_headers": {},
+      "status": 404,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "error": "not_found"
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/saved-searches/1/alert",
+      "request_headers": {},
+      "status": 404,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "error": "not_found"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/saved-searches",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "items": [
+          {
+            "alert_frequency": "weekly",
+            "created_at": "2026-09-27T00:23:35+08:00",
+            "query_plan": {
+              "city": null,
+              "cohort": null,
+              "college": null,
+              "education": null,
+              "keywords": [],
+              "major": "计算机",
+              "page": 1,
+              "page_size": 10,
+              "position_or_unit": null
+            },
+            "saved_search_id": 1,
+            "updated_at": "2026-09-27T00:23:35+08:00"
+          }
+        ]
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "check": "alice 创建保存搜索（weekly）",
+      "pass": true
+    },
+    {
+      "check": "接口不回显自然语言原文（只存 QueryPlan 白名单）",
+      "pass": true
+    },
+    {
+      "check": "bob 看不到 alice 的保存搜索",
+      "pass": true
+    },
+    {
+      "check": "bob 改/删 alice 的保存搜索均 404",
+      "pass": true
+    },
+    {
+      "check": "alice 自己仍可见且提醒为 weekly（默认值验证）",
+      "pass": true
+    }
+  ]
+}

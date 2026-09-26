@@ -1,0 +1,368 @@
+{
+  "evidence": "incognito-zero-write.json",
+  "generated_at": "2026-09-27T00:23:35+08:00",
+  "server": "127.0.0.1:5057 (loopback, Flask dev server)",
+  "command": "python scripts/week2_c_evidence.py",
+  "db": "tempfile SQLite + app.web.seed 脱敏演示数据（5 文章/7 记录）",
+  "scenario": "X-Incognito-Mode: 1 全链路零写入（搜索/对比/导出）",
+  "steps": [
+    {
+      "method": "POST",
+      "path": "/api/dev/role",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "role": "student",
+        "role_label": "校内学生"
+      }
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/me/privacy",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "history_enabled": true,
+        "recommendation_enabled": true,
+        "retention_days": 90,
+        "updated_at": "2026-09-27T00:23:35+08:00"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/search",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "empty_plan": false,
+        "page": 1,
+        "page_size": 10,
+        "query_plan": {
+          "city": null,
+          "cohort": null,
+          "college": null,
+          "education": null,
+          "keywords": [],
+          "major": "计算机",
+          "page": 1,
+          "page_size": 10,
+          "position_or_unit": null
+        },
+        "relaxations": [],
+        "results": [
+          {
+            "confidence": 0.9,
+            "display_name": "匿名记录 portal-10001-01",
+            "evidence_count": 2,
+            "fields": {
+              "city": "成都",
+              "cohort": "2026届",
+              "college": "信息学院",
+              "education": "本科",
+              "grade": null,
+              "major": "计算机科学与技术",
+              "position_or_unit": "基层岗位"
+            },
+            "match_reasons": [
+              {
+                "field": "major",
+                "label": "专业匹配：计算机",
+                "weight": 5
+              }
+            ],
+            "notice_id": "portal-10001",
+            "record_key": "portal-10001-01",
+            "review_status": "processed",
+            "score": 5,
+            "source": {
+              "content_type": "poster",
+              "published_at": "2026-09-10T08:00:00+08:00",
+              "title": "2026届选调经验分享（一）",
+              "url": "https://portal.example.invalid/notice/portal-10001"
+            },
+            "visibility": "published"
+          }
+        ],
+        "role": "student",
+        "total": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/me/insights",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "enabled": true,
+        "insights": {
+          "history_count": 1,
+          "saved_search_count": 0,
+          "unread_notification_count": 0
+        },
+        "retention_days": 90
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/search",
+      "request_headers": {
+        "X-Incognito-Mode": "1"
+      },
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "empty_plan": false,
+        "page": 1,
+        "page_size": 10,
+        "query_plan": {
+          "city": "成都",
+          "cohort": null,
+          "college": null,
+          "education": null,
+          "keywords": [],
+          "major": null,
+          "page": 1,
+          "page_size": 10,
+          "position_or_unit": null
+        },
+        "relaxations": [],
+        "results": [
+          {
+            "confidence": 0.9,
+            "display_name": "匿名记录 portal-10001-01",
+            "evidence_count": 2,
+            "fields": {
+              "city": "成都",
+              "cohort": "2026届",
+              "college": "信息学院",
+              "education": "本科",
+              "grade": null,
+              "major": "计算机科学与技术",
+              "position_or_unit": "基层岗位"
+            },
+            "match_reasons": [
+              {
+                "field": "city",
+                "label": "城市匹配：成都",
+                "weight": 4
+              }
+            ],
+            "notice_id": "portal-10001",
+            "record_key": "portal-10001-01",
+            "review_status": "processed",
+            "score": 4,
+            "source": {
+              "content_type": "poster",
+              "published_at": "2026-09-10T08:00:00+08:00",
+              "title": "2026届选调经验分享（一）",
+              "url": "https://portal.example.invalid/notice/portal-10001"
+            },
+            "visibility": "published"
+          }
+        ],
+        "role": "student",
+        "total": 1
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/compare",
+      "request_headers": {
+        "X-Incognito-Mode": "1"
+      },
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "records": [
+          {
+            "confidence": 0.9,
+            "display_name": "匿名记录 portal-10001-01",
+            "evidence": [
+              {
+                "asset_id": "portal-10001-poster-01",
+                "bbox": [
+                  102,
+                  315,
+                  386,
+                  361
+                ],
+                "field": "city",
+                "method": "ocr_rule",
+                "text": "工作地点 成都"
+              },
+              {
+                "asset_id": "portal-10001-poster-01",
+                "bbox": [
+                  40,
+                  210,
+                  350,
+                  246
+                ],
+                "field": "major",
+                "method": "ocr_rule",
+                "text": "专业 计算机科学与技术"
+              }
+            ],
+            "fields": {
+              "city": "成都",
+              "cohort": "2026届",
+              "college": "信息学院",
+              "education": "本科",
+              "grade": null,
+              "major": "计算机科学与技术",
+              "position_or_unit": "基层岗位"
+            },
+            "notice_id": "portal-10001",
+            "poster": {
+              "full_access": false,
+              "note": "完整海报默认关闭，需学校授权后由策略开关启用"
+            },
+            "record_key": "portal-10001-01",
+            "review_status": "processed",
+            "source": {
+              "content_type": "poster",
+              "published_at": "2026-09-10T08:00:00+08:00",
+              "title": "2026届选调经验分享（一）",
+              "url": "https://portal.example.invalid/notice/portal-10001"
+            },
+            "visibility": "published"
+          },
+          {
+            "confidence": 0.9,
+            "display_name": "匿名记录 portal-10002-01",
+            "evidence": [
+              {
+                "bbox": null,
+                "field": "major",
+                "method": "html_rule",
+                "text": "软件工程专业"
+              },
+              {
+                "bbox": null,
+                "field": "city",
+                "method": "html_rule",
+                "text": "绵阳市某县基层岗"
+              }
+            ],
+            "fields": {
+              "city": "绵阳",
+              "cohort": "2025届",
+              "college": "信息学院",
+              "education": "本科",
+              "grade": null,
+              "major": "软件工程",
+              "position_or_unit": "基层岗位"
+            },
+            "notice_id": "portal-10002",
+            "poster": {
+              "full_access": false,
+              "note": "完整海报默认关闭，需学校授权后由策略开关启用"
+            },
+            "record_key": "portal-10002-01",
+            "review_status": "processed",
+            "source": {
+              "content_type": "text",
+              "published_at": "2026-09-11T09:00:00+08:00",
+              "title": "软件工程四川选调心得",
+              "url": "https://portal.example.invalid/notice/portal-10002"
+            },
+            "visibility": "published"
+          }
+        ],
+        "role": "student"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/export",
+      "request_headers": {
+        "X-Incognito-Mode": "1"
+      },
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "text/csv; charset=utf-8"
+      },
+      "response": {
+        "_non_json_body": "﻿记录编号,届别,年级,学历,学院,专业,城市,岗位/单位,复核状态,发布状态,来源标题,发布日期,来源链接\r\nportal-10003-01,2024届,,硕士,信息学院,电子信息,昆明,省级机关岗位,processed,published,硕士学姐的云南选调记录,2026-09-12,https://portal.example.invalid/notice/portal-10003\r\npor"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/me/insights",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "enabled": true,
+        "insights": {
+          "history_count": 1,
+          "saved_search_count": 0,
+          "unread_notification_count": 0
+        },
+        "retention_days": 90
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/me/history",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "deleted_count": 1
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/me/insights",
+      "request_headers": {},
+      "status": 200,
+      "response_headers": {
+        "Content-Type": "application/json"
+      },
+      "response": {
+        "enabled": true,
+        "insights": {
+          "history_count": 0,
+          "saved_search_count": 0,
+          "unread_notification_count": 0
+        },
+        "retention_days": 90
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "check": "普通搜索写入历史 1 条",
+      "pass": true
+    },
+    {
+      "check": "无痕搜索/对比/导出后历史仍为 1（零写入）",
+      "pass": true
+    },
+    {
+      "check": "删除后为 0",
+      "pass": true
+    }
+  ]
+}
