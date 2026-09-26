@@ -60,7 +60,15 @@ def extract_from_text(raw_text: str) -> dict[str, FieldResult]:
     )
 
     # 学历：明确出现的词；同一词重复不冲突
-    out["education"] = _resolve(_unique_hits(F.EDUCATION_TERMS, text), text=text)
+    # 学历：最长命中（硕士研究生 优先于 硕士）；裸「研究生」按硕士研究生
+    edu = next((t for t in F.EDUCATION_TERMS_BY_LEN if t in text), None)
+    if edu is None and F.BARE_GRADUATE_RE.search(text):
+        edu = "硕士研究生"
+    out["education"] = (
+        FieldResult(value=edu, confidence=0.92,
+                    evidence=[{"text": F.context_of(text, text.find(edu),
+                                               text.find(edu) + len(edu))}])
+        if edu else FieldResult())
 
     # 学院与专业：分开记录；学院名不得顶替专业
     out["college"] = _resolve(_unique_hits(F.COLLEGE_TERMS, text), text=text)

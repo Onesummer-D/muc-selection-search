@@ -1,0 +1,6 @@
+[1] Schema 预检：article 5/5 + extraction 5/5 = 通过
+[2] 首次导入行数：articles=5 assets=4 records=7 evidence=51 events=10
+    bundle 声明合计：{'articles': 5, 'assets': 4, 'records': 7, 'evidence': 51}
+[3] evidence pack 交叉核对：packs 字段证据 51 条 vs 导入 evidence 51 行
+[4] 重复导入后行数：articles=5 assets=4 records=7 evidence=51 events=20
+[5] 幂等核验（四业务表行数不变）：通过；processing_events 10→20 （审计日志有意追加）

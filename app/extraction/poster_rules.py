@@ -18,6 +18,10 @@ from .rules import FieldResult
 
 _COHORT_RE = F.COHORT_RE
 _GRADE_RE = re.compile(r"(20\d{2})\s*级")
+# 城市扫描：起点排除 OCR 项目符号噪声字符（米/木/点）
+_CITY_SCAN_RE = re.compile(r"((?:(?![米木·])[一-龥]){1,6}?(?:市|盟|地区))")
+_LAST_COUNTY_RE = re.compile(r"([一-龥]{2,6}县)")
+_NOISE_LEADING_RE = re.compile(r"^[米木·]+")
 _MAJOR_SUFFIX_RE = re.compile(r"(?<![:：])([\u4e00-\u9fa5（）()]{2,14})专业")
 _GRADE_PREFIX_RE = re.compile(r"^\d{0,4}级?")
 _FOOTER_RE = re.compile(r"扫码|腾讯会议|二维码|招生就业工作处|报名|通知群")
@@ -111,7 +115,7 @@ def _geo_city(raw: str) -> str:
     注意不剥「州」——荆州/兰州/郑州等本身是市名。
     """
     raw = raw.split("省")[-1].split("自治区")[-1]
-    for suffix in ("地区", "盟", "市"):
+    for suffix in ("地区", "盟", "市", "县"):
         if raw.endswith(suffix) and len(raw) > len(suffix):
             return raw[: -len(suffix)]
     return raw
@@ -165,15 +169,17 @@ def extract_person_fields(line_texts):
         line = next((t for t in line_texts if _GRADE_RE.search(t)), joined)
         set_value("grade", m.group(1), line, 0.85)
 
-    # 学历（唯一词典命中）
-    hits = _unique_term(F.EDUCATION_TERMS, joined)
-    if len(hits) == 1:
-        set_value("education", hits[0],
-                  next((t for t in line_texts if hits[0] in t), joined), 0.92)
-    elif len(hits) > 1:
-        res["education"] = FieldResult(confidence=0.0, conflict=True,
-                                       evidence=[{"text": t} for t in line_texts
-                                                 if any(h in t for h in hits)])
+    # 学历（最长命中：硕士研究生 优先于 硕士；裸「研究生」按硕士研究生）
+    edu = None
+    for term in F.EDUCATION_TERMS_BY_LEN:
+        if term in joined:
+            edu = term
+            break
+    if edu is None and F.BARE_GRADUATE_RE.search(joined):
+        edu = "硕士研究生"
+    if edu is not None:
+        set_value("education", edu,
+                  next((t for t in line_texts if edu in t), joined), 0.92)
 
     # 学院（唯一词典命中）
     hits = _unique_term(F.COLLEGE_TERMS, joined)
@@ -189,6 +195,7 @@ def extract_person_fields(line_texts):
     m = _MAJOR_SUFFIX_RE.search(joined)
     if m:
         value = _GRADE_PREFIX_RE.sub("", m.group(1))
+        value = _NOISE_LEADING_RE.sub("", value)  # OCR 项目符号噪声（米/木）
         line = next((t for t in line_texts if "专业" in t), joined)
         set_value("major", value, line, 0.9)
     else:
@@ -213,7 +220,14 @@ def extract_person_fields(line_texts):
     elif len(unit_lines) == 1:
         unit_line = unit_lines[0]
     elif len(unit_lines) > 1:
-        unit_conflict = True  # 多个候选单位行且无从消歧 → 冲突，不擅自选
+        # 多候选：入职/录用/考取 行优先（gold 口径=录用单位）；
+        # 恰有一条带标记则消歧，否则冲突
+        marked = [t for t in unit_lines
+                  if re.search(r"入职|录用|考取", t)]
+        if len(marked) == 1:
+            unit_line = marked[0]
+        else:
+            unit_conflict = True
 
     # 城市：单位行（或整块）内最后一个「XX市」级匹配；多单位行 → 冲突
     if unit_conflict:
@@ -242,11 +256,22 @@ def extract_person_fields(line_texts):
             # 规则2：动词短语打断后，最后一个市级匹配（最具体，如 泉州市晋江市→晋江）
             scope2 = re.sub(r"(?:录用为|考取|考录|任职于|任命为|聘任为)", "，", scope)
             hits = [_geo_city(m.group(1))
-                    for m in re.finditer(r"([\u4e00-\u9fa5]{1,6}?(?:市|盟|地区))",
-                                         scope2)]
+                    for m in _CITY_SCAN_RE.finditer(scope2)]
             hits = [c for c in hits if c]
             if hits:
                 value = hits[-1]
+            elif scope is not joined:
+                # 规则3：单位行无市级地名 → 整块回退（「XX市」在入职行），
+                # 仍无再县级回退（石阡县→石阡）
+                hits = [_geo_city(m.group(1))
+                        for m in _CITY_SCAN_RE.finditer(joined)]
+                hits = [c for c in hits if c]
+                if hits:
+                    value = hits[-1]
+                else:
+                    m = _LAST_COUNTY_RE.search(joined)
+                    if m:
+                        value = _geo_city(m.group(1))
         if value is None and unit_line is None:
             # 无单位行时按行找城市词典命中，跨行不同值视为冲突
             per_line = sorted({t for t in F.CITY_TERMS

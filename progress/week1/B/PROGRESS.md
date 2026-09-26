@@ -216,3 +216,51 @@
 2. 原图到达 → 3 张固定海报 OCR 烟测（补 B2 OCR 路径）+ 选 20 张评测集、冻结哈希、
    **人工标注** gold_20.json（B3，今晚 22:00；标注只能由 B 本人做）。
 3. 多模态 Key 放 .env → 脱敏烟测 → `run_evaluation` + `tracker_export` 产出对照报告与台账导入 CSV（B4，明天 18:00）。
+
+### 2026-09-21（第二周 D1：定向迁移核验 + 白名单清单）
+
+- [x] 切换 `feat/week2-B-quality`（C 集成基线 5c1cabc），读 week2 两份任务书。
+- [x] 迁移核验：白名单六目录与 week1 终版 git diff **零差异**（C 已原样集成），
+  `pytest tests/extraction` 55/55 全绿；金标准集合/SHA-256/gold/启用门槛未动。
+- [x] 白名单清单：`progress/week1/B/WEEK2_WHITELIST.md`（含禁止触碰目录核验命令）。
+- [x] `604170d` 提交推送；PR #12 建立（base main）。
+
+### 2026-09-22（第二周 D2：5 篇 bundle/pack 导入 C SQLite 烟测）
+
+- [x] 烟测实现 `app/extraction/import_smoke.py`（消费 C 的 BundleImporter/SQLiteRepository 公开接口），
+  回归测试 `tests/extraction/test_import_smoke.py`；56/56 全绿。
+- [x] 结果（`evidence/week1/B/import-smoke.txt`）：
+  Schema 预检 article 5/5 + extraction 5/5 通过；
+  首次导入 articles=5 assets=4 records=7 evidence=51（与 bundle 声明一致）；
+  **幂等通过**——整批重复导入后四业务表行数不变，processing_events 10→20（审计日志有意追加，符合导入器文档语义）。
+- [x] 交叉核对发现并修复：packs 证据条数计数曾按字段数误算；
+  修正后 packs 51 条 = 导入 evidence 51 行，逐 notice 核对一致。
+  期间用当前分段重写后的代码重新生成了 5 篇 bundle + packs（旧 packs 为重写前产物）。
+- 交付命令：`python -m app.extraction.import_smoke`；`python -m pytest tests/extraction/test_import_smoke.py`
+
+### 2026-09-23（第二周 D3：专业/城市/岗位通用规则修正）
+
+- [x] 复核队列错例聚类（四簇）→ 通用规则修正（非样本硬编码）：
+  1. **教育枚举粒度**：最长命中（硕士研究生 优先于 硕士）+ 裸「研究生」按
+     硕士研究生（确定性规则），文本/海报双路径同步；
+  2. **城市回退链**：单位行无市级地名 → 整块回退（三明市在入职行）→
+     县级回退（石阡县/织金县）；扫描起点排除 OCR 项目符号噪声（米/木）；
+     单位行多候选按「入职/录用」标记消歧（现任职行不再误占）；
+  3. **职务词后缀**：书记助理/主任助理/副主任/副书记/旅游局 入单位行锚点
+     （修 P08/P09 岗位漏检——OCR 框切断「党总支」跨框）；
+  4. **归一口径统一**（主判定）：括号全半角（法律（法学）== 法律(法学)）、
+     专业尾部「专业」粒度差异等价、grade「2020级≡2020」；严格口径原样保留。
+- [x] 回归测试 `tests/extraction/test_week2_rule_fixes.py` 9 项（含丢括号内容
+  仍判真错的反向断言）；全套 65 项 extraction + 217 项全仓通过。
+- [x] 规则 diff 摘要：fields.py（EDUCATION_TERMS_BY_LEN/BARE_GRADUATE_RE/
+  职务词后缀/旅游局）、poster_rules.py（教育块、城市规则2/3、噪声剥离、
+  单位行消歧、_geo_city 县剥离）、rules.py（文本路径教育）、evaluation.py（_norm 四条）。
+- 实测重跑见 9/24 evaluation_report_v2。
+
+### 2026-09-23（续：规则修正实测验证）
+
+- [x] OCR 路线 fresh 重跑（同 20 样本/SHA-256/gold），归一化主口径对比：
+  education 75→**100%**、city 57.9→**89.5%**、完整记录 26.3→**57.9%**；
+  cohort/grade/position 持平（100/95/85%）；major 70% 持平（剩余为版面块错配
+  与 gold 粒度个案，留复核队列）。单张耗时 88→185s（行拼接处理加重，如实登记）。
+- 修正实效符合预期；本数据为验证快照，官方 evaluation_report_v2 于 9/24 全量重评产出。

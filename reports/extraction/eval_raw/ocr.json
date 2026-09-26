@@ -3,7 +3,7 @@
     {
       "sample_id": "P01",
       "valid": true,
-      "elapsed_s": 66.68,
+      "elapsed_s": 68.96,
       "cost": 0.0,
       "persons": [
         {
@@ -31,7 +31,7 @@
     {
       "sample_id": "P02",
       "valid": true,
-      "elapsed_s": 64.89,
+      "elapsed_s": 63.97,
       "cost": 0.0,
       "persons": [
         {
@@ -45,7 +45,7 @@
         },
         {
           "cohort": "2024届",
-          "education": null,
+          "education": "硕士研究生",
           "major": "现代教育技术",
           "city": null,
           "position_or_unit": "青海省教育厅",
@@ -59,7 +59,7 @@
     {
       "sample_id": "P03",
       "valid": true,
-      "elapsed_s": 63.36,
+      "elapsed_s": 62.58,
       "cost": 0.0,
       "persons": [
         {
@@ -73,7 +73,7 @@
         },
         {
           "cohort": "2024届",
-          "education": null,
+          "education": "硕士研究生",
           "major": null,
           "city": "昆明",
           "position_or_unit": "云南省昆明市盘龙区金辰街道办",
@@ -87,7 +87,7 @@
     {
       "sample_id": "P04",
       "valid": true,
-      "elapsed_s": 471.68,
+      "elapsed_s": 63.52,
       "cost": 0.0,
       "persons": [
         {
@@ -101,7 +101,7 @@
         },
         {
           "cohort": "2024届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "应用统计",
           "city": null,
           "position_or_unit": "广西壮族自治区统计局",
@@ -115,12 +115,12 @@
     {
       "sample_id": "P05",
       "valid": true,
-      "elapsed_s": 84.91,
+      "elapsed_s": 62.94,
       "cost": 0.0,
       "persons": [
         {
           "cohort": "2024届",
-          "education": null,
+          "education": "硕士研究生",
           "major": "学科教学（英语）",
           "city": "天津",
           "position_or_unit": "天津市河北区王串场街道",
@@ -129,26 +129,26 @@
         },
         {
           "cohort": "2024届",
-          "education": null,
+          "education": "硕士研究生",
           "major": "新闻与传播",
-          "city": "米天津",
+          "city": "天津",
           "position_or_unit": "米天津市津南区农业农村委员会",
           "grade": "2022",
           "college": "新闻与传播学院"
         }
       ],
-      "status": "review_required",
+      "status": "processed",
       "failure_reason": null
     },
     {
       "sample_id": "P06",
       "valid": true,
-      "elapsed_s": 85.65,
+      "elapsed_s": 2178.07,
       "cost": 0.0,
       "persons": [
         {
           "cohort": "2024届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "法律（法学）",
           "city": "郑州",
           "position_or_unit": "郑州市司法局",
@@ -157,7 +157,7 @@
         },
         {
           "cohort": "2024届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "应用统计",
           "city": "沁阳",
           "position_or_unit": "米焦作市沁阳市发展和改革委员会",
@@ -171,7 +171,7 @@
     {
       "sample_id": "P07",
       "valid": true,
-      "elapsed_s": 62.23,
+      "elapsed_s": 63.02,
       "cost": 0.0,
       "persons": [
         {
@@ -185,9 +185,9 @@
         },
         {
           "cohort": "2024届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "中国现当代文学",
-          "city": "米银川",
+          "city": "银川",
           "position_or_unit": "米银川市金凤区人民法院",
           "grade": "2021",
           "college": "文学院"
@@ -199,15 +199,15 @@
     {
       "sample_id": "P08",
       "valid": true,
-      "elapsed_s": 86.57,
+      "elapsed_s": 89.98,
       "cost": 0.0,
       "persons": [
         {
           "cohort": "2024届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "文物与博物馆",
           "city": "株洲",
-          "position_or_unit": null,
+          "position_or_unit": "党总支书记助理",
           "grade": "2021",
           "college": "民族学与社会学学院"
         },
@@ -216,18 +216,18 @@
           "education": "硕士",
           "major": "中国少数民族语言文学",
           "city": "邵阳",
-          "position_or_unit": null,
+          "position_or_unit": "村党总支书记助理",
           "grade": "2021",
           "college": "民族学与社会学学院"
         }
       ],
-      "status": "review_required",
+      "status": "processed",
       "failure_reason": null
     },
     {
       "sample_id": "P09",
       "valid": true,
-      "elapsed_s": 88.53,
+      "elapsed_s": 90.73,
       "cost": 0.0,
       "persons": [
         {
@@ -241,9 +241,9 @@
         },
         {
           "cohort": "2024届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "社会学",
-          "city": null,
+          "city": "三明",
           "position_or_unit": "现任职翠江镇中山村党支部",
           "grade": "2021",
           "college": null
@@ -255,7 +255,7 @@
     {
       "sample_id": "P10",
       "valid": true,
-      "elapsed_s": 83.81,
+      "elapsed_s": 88.13,
       "cost": 0.0,
       "persons": [
         {
@@ -269,21 +269,21 @@
         },
         {
           "cohort": "2024届",
-          "education": null,
+          "education": "硕士研究生",
           "major": "法律（法学）",
-          "city": "米梅州",
+          "city": "梅州",
           "position_or_unit": "米梅州市中级人民法院",
           "grade": "2022",
           "college": "法学院"
         }
       ],
-      "status": "review_required",
+      "status": "processed",
       "failure_reason": null
     },
     {
       "sample_id": "P11",
       "valid": true,
-      "elapsed_s": 87.08,
+      "elapsed_s": 90.01,
       "cost": 0.0,
       "persons": [
         {
@@ -299,7 +299,7 @@
           "cohort": "2024届",
           "education": "硕士",
           "major": "新闻与传播",
-          "city": "米大连",
+          "city": "大连",
           "position_or_unit": "米大连市甘井子区辛寨子街道办事处",
           "grade": "2022",
           "college": "新闻与传播学院"
@@ -311,7 +311,7 @@
     {
       "sample_id": "P12",
       "valid": true,
-      "elapsed_s": 81.03,
+      "elapsed_s": 85.76,
       "cost": 0.0,
       "persons": [
         {
@@ -330,7 +330,7 @@
     {
       "sample_id": "P13",
       "valid": true,
-      "elapsed_s": 85.24,
+      "elapsed_s": 86.99,
       "cost": 0.0,
       "persons": [
         {
@@ -358,7 +358,7 @@
     {
       "sample_id": "P14",
       "valid": true,
-      "elapsed_s": 84.26,
+      "elapsed_s": 84.89,
       "cost": 0.0,
       "persons": [
         {
@@ -372,7 +372,7 @@
         },
         {
           "cohort": "2024届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "汉语言文字学",
           "city": "唐山",
           "position_or_unit": "唐山市纪委监委",
@@ -386,23 +386,23 @@
     {
       "sample_id": "P15",
       "valid": true,
-      "elapsed_s": 86.13,
+      "elapsed_s": 86.1,
       "cost": 0.0,
       "persons": [
         {
           "cohort": "2024届",
           "education": "本科",
           "major": "汉语言文学",
-          "city": null,
+          "city": "石阡",
           "position_or_unit": "贵州省石阡县县委办公室",
           "grade": "2020",
           "college": "文学院"
         },
         {
           "cohort": "2024届",
-          "education": null,
+          "education": "硕士研究生",
           "major": "行政管理",
-          "city": null,
+          "city": "织金",
           "position_or_unit": "贵州省织金县文体广电旅游局",
           "grade": "2021",
           "college": null
@@ -414,7 +414,7 @@
     {
       "sample_id": "P16",
       "valid": true,
-      "elapsed_s": 86.59,
+      "elapsed_s": 87.07,
       "cost": 0.0,
       "persons": [
         {
@@ -428,7 +428,7 @@
         },
         {
           "cohort": "2023届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "环境米科学与工程",
           "city": "石家庄",
           "position_or_unit": "石家庄市桥西区数据资源管理局",
@@ -442,12 +442,12 @@
     {
       "sample_id": "P17",
       "valid": true,
-      "elapsed_s": 85.21,
+      "elapsed_s": 85.95,
       "cost": 0.0,
       "persons": [
         {
           "cohort": "2023届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "金融学",
           "city": "武汉",
           "position_or_unit": "武汉市财政局",
@@ -456,7 +456,7 @@
         },
         {
           "cohort": "2023届",
-          "education": "硕士",
+          "education": "硕士研究生",
           "major": "社会学",
           "city": "荆州",
           "position_or_unit": "荆州市荆州区城南街道党政办",
@@ -470,7 +470,7 @@
     {
       "sample_id": "P18",
       "valid": true,
-      "elapsed_s": 86.01,
+      "elapsed_s": 85.68,
       "cost": 0.0,
       "persons": [
         {
@@ -498,7 +498,7 @@
     {
       "sample_id": "P19",
       "valid": true,
-      "elapsed_s": 88.61,
+      "elapsed_s": 89.71,
       "cost": 0.0,
       "persons": [
         {
@@ -535,14 +535,14 @@
     {
       "sample_id": "P20",
       "valid": true,
-      "elapsed_s": 87.16,
+      "elapsed_s": 86.45,
       "cost": 0.0,
       "persons": [
         {
           "cohort": "2023届",
           "education": "本科",
           "major": "哲学",
-          "city": "乌鲁木齐",
+          "city": "齐",
           "position_or_unit": "乌鲁木齐市委统战部",
           "grade": "2019",
           "college": "哲学与宗教学学院"
@@ -550,7 +550,7 @@
         {
           "cohort": "2022届",
           "education": "本科",
-          "major": "米级维吾尔语",
+          "major": "级维吾尔语",
           "city": "喀什",
           "position_or_unit": "喀什地区疏附县委组织部",
           "grade": null,

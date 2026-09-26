@@ -2,7 +2,7 @@
   "gold_sample_set": "week1-poster-gold-20-v2",
   "gold_revision": "v2：20 张全部为经验分享类人物海报。初版清单中的校友就业帖(246444) 与 5 张公告类移出（无人物五字段），6 张台账外经验分享补充入场（manual-*，来源受控交接 PDF，手工建 bundle）。 | v2.1：城市口径改严格按原文（未写市→null），",
   "judging": "主指标=严格0/1（仅空白归一）；fields_norm=归一化等价口径；fields_adjudicated=人工裁决后口径（最终采纳）；等价通过样本见 warnings.review_queue[].equivalence_pending",
-  "adjudicated_source": "data\\gold\\equivalence_adjudicated.json",
+  "adjudicated_source": "C:\\Users\\LEGION\\.zcode\\workspace\\default\\muc-selection-search\\data\\gold\\equivalence_adjudicated.json",
   "routes": {
     "ocr": {
       "route": "ocr",
@@ -18,9 +18,9 @@
           "accuracy": 100.0
         },
         "education": {
-          "correct": 7,
+          "correct": 19,
           "decidable": 20,
-          "accuracy": 35.0
+          "accuracy": 95.0
         },
         "major": {
           "correct": 8,
@@ -28,9 +28,9 @@
           "accuracy": 40.0
         },
         "city": {
-          "correct": 11,
+          "correct": 16,
           "decidable": 19,
-          "accuracy": 57.89
+          "accuracy": 84.21
         },
         "position_or_unit": {
           "correct": 1,
@@ -45,19 +45,19 @@
           "accuracy": 100.0
         },
         "education": {
-          "correct": 15,
+          "correct": 20,
           "decidable": 20,
-          "accuracy": 75.0
+          "accuracy": 100.0
         },
         "major": {
-          "correct": 10,
+          "correct": 14,
           "decidable": 20,
-          "accuracy": 50.0
+          "accuracy": 70.0
         },
         "city": {
-          "correct": 15,
+          "correct": 17,
           "decidable": 19,
-          "accuracy": 78.95
+          "accuracy": 89.47
         },
         "position_or_unit": {
           "correct": 17,
@@ -95,9 +95,9 @@
         "accuracy": 0.0
       },
       "complete_record_norm": {
-        "correct": 5,
+        "correct": 11,
         "decidable": 19,
-        "accuracy": 26.32
+        "accuracy": 57.89
       },
       "fields_adjudicated": {
         "cohort": {
@@ -106,9 +106,9 @@
           "accuracy": 100.0
         },
         "education": {
-          "correct": 19,
+          "correct": 20,
           "decidable": 20,
-          "accuracy": 95.0
+          "accuracy": 100.0
         },
         "major": {
           "correct": 13,
@@ -139,13 +139,13 @@
         }
       },
       "complete_record_adjudicated": {
-        "correct": 9,
+        "correct": 10,
         "decidable": 19,
-        "accuracy": 47.37
+        "accuracy": 52.63
       },
       "elapsed_s": {
-        "avg": 100.781,
-        "p95": 471.68,
+        "avg": 185.025,
+        "p95": 2178.07,
         "n": 20
       },
       "cost": {
@@ -155,40 +155,11 @@
       "warnings": {
         "gold_null_but_extracted": [],
         "below_90_fields": [
-          "education",
           "major",
           "city",
           "position_or_unit"
         ],
         "review_queue": {
-          "education": {
-            "wrong_samples": [
-              "P02",
-              "P03",
-              "P04",
-              "P05",
-              "P06",
-              "P07",
-              "P08",
-              "P09",
-              "P10",
-              "P14",
-              "P15",
-              "P16",
-              "P17"
-            ],
-            "equivalence_pending": [
-              "P04",
-              "P06",
-              "P07",
-              "P08",
-              "P09",
-              "P14",
-              "P16",
-              "P17"
-            ],
-            "invalid_samples": []
-          },
           "major": {
             "wrong_samples": [
               "P01",
@@ -205,7 +176,11 @@
               "P20"
             ],
             "equivalence_pending": [
+              "P01",
+              "P05",
               "P07",
+              "P11",
+              "P19",
               "P20"
             ],
             "invalid_samples": []
@@ -213,19 +188,11 @@
           "city": {
             "wrong_samples": [
               "P04",
-              "P05",
               "P06",
-              "P07",
-              "P09",
-              "P10",
-              "P11",
-              "P15"
+              "P20"
             ],
             "equivalence_pending": [
-              "P05",
-              "P07",
-              "P10",
-              "P11"
+              "P20"
             ],
             "invalid_samples": []
           },
@@ -292,7 +259,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 1,
             "position_or_unit": 1,
             "grade": 1,
@@ -308,7 +275,7 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
             "city": null,
             "position_or_unit": 0,
@@ -317,7 +284,7 @@
           },
           "judgments_norm": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
             "city": null,
             "position_or_unit": 0,
@@ -334,7 +301,7 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 0,
             "city": 1,
             "position_or_unit": 0,
@@ -343,7 +310,7 @@
           },
           "judgments_norm": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 0,
             "city": 1,
             "position_or_unit": 1,
@@ -360,7 +327,7 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 0,
             "city": 0,
             "position_or_unit": 0,
@@ -386,17 +353,17 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 0,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 0,
             "grade": 1,
             "college": 1
           },
           "judgments_norm": {
             "cohort": 1,
-            "education": 0,
-            "major": 0,
+            "education": 1,
+            "major": 1,
             "city": 1,
             "position_or_unit": 1,
             "grade": 1,
@@ -412,7 +379,7 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
             "city": 0,
             "position_or_unit": 0,
@@ -438,9 +405,9 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 0,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 0,
             "grade": 1,
             "college": 1
@@ -490,9 +457,9 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 0,
             "grade": 1,
             "college": 0
@@ -501,7 +468,7 @@
             "cohort": 1,
             "education": 1,
             "major": 1,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 0,
             "grade": 1,
             "college": 0
@@ -516,16 +483,16 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 0,
             "grade": 1,
             "college": 1
           },
           "judgments_norm": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
             "city": 1,
             "position_or_unit": 1,
@@ -544,7 +511,7 @@
             "cohort": 1,
             "education": 1,
             "major": 0,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 0,
             "grade": 1,
             "college": 1
@@ -552,7 +519,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 1,
             "position_or_unit": 1,
             "grade": 1,
@@ -620,7 +587,7 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 0,
             "city": 1,
             "position_or_unit": 0,
@@ -646,18 +613,18 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 0,
             "grade": 1,
             "college": 0
           },
           "judgments_norm": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
-            "city": 0,
+            "city": 1,
             "position_or_unit": 1,
             "grade": 1,
             "college": 0
@@ -672,7 +639,7 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 0,
             "city": 1,
             "position_or_unit": 0,
@@ -698,7 +665,7 @@
           "persons_gold": 2,
           "judgments": {
             "cohort": 1,
-            "education": 0,
+            "education": 1,
             "major": 1,
             "city": 1,
             "position_or_unit": 0,
@@ -760,7 +727,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 1,
             "position_or_unit": 1,
             "grade": 1,
@@ -778,7 +745,7 @@
             "cohort": 1,
             "education": 1,
             "major": 0,
-            "city": 1,
+            "city": 0,
             "position_or_unit": 1,
             "grade": 0,
             "college": 0
@@ -842,9 +809,9 @@
           "accuracy": 95.0
         },
         "major": {
-          "correct": 13,
+          "correct": 18,
           "decidable": 20,
-          "accuracy": 65.0
+          "accuracy": 90.0
         },
         "city": {
           "correct": 16,
@@ -887,9 +854,9 @@
         "accuracy": 0.0
       },
       "complete_record_norm": {
-        "correct": 1,
+        "correct": 2,
         "decidable": 19,
-        "accuracy": 5.26
+        "accuracy": 10.53
       },
       "fields_adjudicated": {
         "cohort": {
@@ -987,9 +954,14 @@
             ],
             "equivalence_pending": [
               "P03",
+              "P04",
+              "P05",
               "P07",
               "P08",
-              "P16"
+              "P11",
+              "P16",
+              "P18",
+              "P19"
             ],
             "invalid_samples": []
           },
@@ -1160,7 +1132,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 0,
             "position_or_unit": 0,
             "grade": 1,
@@ -1186,7 +1158,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 1,
             "position_or_unit": 1,
             "grade": 1,
@@ -1342,7 +1314,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 1,
             "position_or_unit": 0,
             "grade": 1,
@@ -1524,7 +1496,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 1,
             "position_or_unit": 0,
             "grade": 1,
@@ -1550,7 +1522,7 @@
           "judgments_norm": {
             "cohort": 1,
             "education": 1,
-            "major": 0,
+            "major": 1,
             "city": 0,
             "position_or_unit": 1,
             "grade": 1,
@@ -1598,12 +1570,12 @@
       "enablement_basis": "完整记录准确率差 0.0pp（门槛 ≥5.0pp）"
     },
     "adjudicated_gate": {
-      "ocr_complete_accuracy": 47.37,
+      "ocr_complete_accuracy": 52.63,
       "multimodal_complete_accuracy": 36.84,
-      "diff_percentage_points": -10.53,
+      "diff_percentage_points": -15.79,
       "gate_pass": false,
       "multimodal_enablement": "不启用",
-      "enablement_basis": "裁决后完整记录准确率差 -10.53pp（门槛 ≥5.0pp；等价通过样本见 equivalence_adjudicated.json）"
+      "enablement_basis": "裁决后完整记录准确率差 -15.79pp（门槛 ≥5.0pp；等价通过样本见 equivalence_adjudicated.json）"
     },
     "ocr_reference_accuracy": 0.0,
     "multimodal_accuracy": 0.0,
@@ -1615,7 +1587,7 @@
       "multimodal": false
     },
     "multimodal_enablement": "不启用",
-    "enablement_basis": "最终采纳裁决后口径：完整记录准确率差 -10.53pp（门槛 ≥5.0pp）；严格口径差 0.0pp 并列保留"
+    "enablement_basis": "最终采纳裁决后口径：完整记录准确率差 -15.79pp（门槛 ≥5.0pp）；严格口径差 0.0pp 并列保留"
   },
   "timing_boundary": "收到 article bundle 到产出 extraction bundle（两路线一致）",
   "recomputable": "所有指标均由 per_sample 0/1 判断汇总，可重算"
